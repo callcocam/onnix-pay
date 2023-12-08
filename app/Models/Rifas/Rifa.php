@@ -26,7 +26,7 @@ class Rifa extends AbstractModel
         return $this->hasOne(Sale::class );
     }
 
-    public function getPriceBrlAtribute()
+    public function getPriceBrlAttribute()
     {
         return number_format($this->price, 2, ',', '.');
     }
