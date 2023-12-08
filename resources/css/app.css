@@ -1,0 +1,13 @@
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+
+ .bg {
+     @apply bg-gradient-to-r dark:from-indigo-500 dark:via-gray-900 dark:to-indigo-800 from-navy-50 via-navy-100 to-navy-50
+ }
+ .bg-footer {
+     @apply bg-gradient-to-r dark:from-navy-500 dark:via-gray-900 dark:to-navy-800 from-navy-50 via-navy-100 to-navy-50
+ }
+ .bg-btn {
+     @apply bg-gradient-to-r dark:from-indigo-500 dark:via-gray-900 dark:to-indigo-800 from-navy-50 via-navy-100 to-navy-50;
+ }

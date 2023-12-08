@@ -1,0 +1,1 @@
+<x-filament::button wire:target='submit' type="submit" size="sm" icon="heroicon-o-check">Finish</x-filament::button>
