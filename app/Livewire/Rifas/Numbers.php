@@ -50,7 +50,7 @@ class Numbers extends Component
                 'rifa_id' => $this->rifa->id,
                 'description' => 'Rifa de ' . $this->rifa->name,
             ]);
-
+            $this->dispatch('cart-number-updated');
             $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
             $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
             $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
