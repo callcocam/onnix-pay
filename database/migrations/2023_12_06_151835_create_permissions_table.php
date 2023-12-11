@@ -30,8 +30,8 @@ class CreatePermissionsTable extends Migration
                 $table->ulid('tenant_id')->nullable();
                 $table->foreignUlid('access_group_id')->nullable()->constrained('access_groups')->onDelete('cascade');
             }
-            $table->string('name', 255)->unique();
-            $table->string('slug', 255)->unique();
+            $table->string('name', 255)->nullable();
+            $table->string('slug', 255)->nullable();
             $table->enum('status', ['draft', 'published'])->default('published');
             $table->text('description')->nullable();
             $table->timestamps();
