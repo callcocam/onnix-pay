@@ -28,8 +28,8 @@ class CreateAccessGroupsTable extends Migration
                 $table->ulid('id')->primary();
                 $table->ulid('tenant_id')->nullable();
             }
-            $table->string('name', 255)->unique();
-            $table->string('slug', 255)->unique();
+            $table->string('name', 255)->nullable();
+            $table->string('slug', 255)->nullable();
             $table->enum('status', ['draft', 'published'])->default('published');
             $table->text('description')->nullable();
             $table->timestamps();
