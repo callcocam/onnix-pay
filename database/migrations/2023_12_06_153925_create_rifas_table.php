@@ -18,7 +18,6 @@ return new class extends Migration
             $table->ulid('category_id')->nullable()->comment('Categoria da rifa');
             $table->string('name')->nullable()->comment('Nome da rifa');
             $table->string('slug')->unique()->comment('Slug da rifa');
-            $table->string('description')->nullable()->comment('Descrição da rifa');
             $table->string('image')->nullable()->comment('Imagem da rifa');
             $table->string('status')->default('draft')->comment('Status da rifa');
             $table->string('type')->default('free')->comment('Tipo da rifa');
@@ -31,6 +30,7 @@ return new class extends Migration
             $table->string('draw_local')->nullable()->comment('Local do sorteio da rifa');
             $table->string('draw_local_link')->nullable()->comment('Link do local do sorteio da rifa'); 
             $table->integer('ordering')->default(0)->comment('Ordem da rifa');
+            $table->text('description')->nullable()->comment('Descrição da rifa');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -23,6 +23,7 @@ Route::get('/sobre-nos', \App\Livewire\AboutComponent::class)->name('about');
 Route::get('/contato', \App\Livewire\ContactComponent::class)->name('contact');
 Route::get('/termos-de-uso', \App\Livewire\TermsComponent::class)->name('terms');
 Route::get('/politica-de-privacidade', \App\Livewire\PrivacyComponent::class)->name('privacy');
+Route::get('/new', \App\Livewire\NewPage::class)->name('new');
 Route::middleware('auth')->get('/finalizar-compra', \App\Livewire\Checkouts\CheckoutComponent::class)->name('checkout');
 
 

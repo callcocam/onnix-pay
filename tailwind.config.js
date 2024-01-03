@@ -20,6 +20,8 @@ const navyColor = {
 };
 
 const customColors = {
+    "banner-primary": '#380455',
+    "banner-secundary": '#aa206d',
     navy: navyColor,
     "slate-150": "#E9EEF5",
     primary: colors.indigo["600"],
