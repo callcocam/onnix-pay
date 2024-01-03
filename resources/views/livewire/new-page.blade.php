@@ -23,9 +23,9 @@
             </div>
         </x-content>
     </x-slot>
-    <div class="flex w-full flex-col items-center justify-center md:mx-auto md:max-w-7xl">
+    <div class="flex w-full flex-col items-center justify-center">
         <div class="my-16 flex flex-col">
-            <div class="relative mx-auto mt-5 flex w-full flex-col items-center md:gap-2">
+            <div class="relative mx-auto mt-5 flex w-full flex-col items-center md:mx-auto md:max-w-7xl md:gap-2">
                 <div class="flex w-full flex-col items-center md:items-start">
                     <h2 class="text-2xl text-yellow-500">Precisa saber sobre</h2>
                     <h3 class="mb-4 text-4xl font-semibold md:text-6xl">COMO JOGAR</h3>
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <!-- CUURENT CONTEST -->
-            <div class="my-16 flex w-full">
+            <div class="w-ful my-16 flex md:mx-auto md:max-w-7xl">
                 <div class="flex w-full flex-col justify-center">
                     <div class="flex w-full flex-col items-center justify-center">
                         <p class="text-lg text-yellow-400">Tente sua chance de ganhar</p>
@@ -191,6 +191,27 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative flex h-72 w-full flex-col items-center justify-center bg-no-repeat" style="background-image: url(https://pixner.net/rifa1/demo/assets/images/bg/winner.jpg)">
+            <div class="flex max-w-[90%] flex-col items-center py-10">
+                <h2 class="text-lg text-yellow-400">Os maiores ganhadores de rifas</h2>
+                <h1 class="text-center text-4xl text-white md:text-6xl">DEZ ÚLTIMOS VENCEDORES</h1>
+                <p class="text-center text-white">Ouve varios ganhadores, más alguns ganhadores tiveram mais sorte do que outros</p>
+            </div>
+            <div class="from-banner-secundary to-banner-primary absolute top-64 mx-auto h-80 w-full bg-gradient-to-t md:max-w-7xl">
+                <div class="absolute top-10 -left-5">
+                    <img src="https://pixner.net/rifa1/demo/assets/images/elements/car.png" alt="" />
+                </div>
+                <div class="absolute right-10 top-8">
+                    <img src="https://pixner.net/rifa1/demo/assets/images/winner/w-1.png" alt="" class="h-72 object-cover mx-auto" />
+                    <div class="p-2 w-64 -translate-y-full rounded-t-2xl bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 flex flex-col items-center">
+                        <span class="text-white"> Claudio Campos</span>
+                        <span class="text-purple-800"> O sorteio aconteceu no dia</span>
+                        <span class="text-white text-2xl font-bold"> 19/04/2023 </span>
                     </div>
                 </div>
             </div>
