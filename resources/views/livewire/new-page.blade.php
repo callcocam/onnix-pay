@@ -224,7 +224,7 @@
                 <h1 class="text-4xl font-bold text-slate-500 md:text-6xl">ÚLTIMOS VENCEDORES</h1>
                 <p>Verifique o número do seu bilhete para ver se você é um ganhador do AFORTUNADOS DA SORTE.</p>
             </div>
-            <div class="flexw-full mb-10 h-36 flex-col items-center overflow-hidden border-b md:max-w-7xl md:flex-row md:justify-between">
+            <div class="flex w-full mb-10 h-36 flex-col items-center overflow-hidden border-b md:max-w-7xl md:flex-row md:justify-between">
                 <button class="flex w-full flex-col items-center border-b-4 border-orange-500 py-6">
                     <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/1.png" alt="DREAM CAR" />
                     <span>CARRO DO SONHOS</span>
@@ -268,7 +268,7 @@
                             </div>
                             <div class="flex w-full flex-col items-center md:flex-row md:justify-around">
                                 <div class="flex flex-col">
-                                    <p class="text-lg text-white">Winning Numbers:</p>
+                                    <p class="text-lg text-white md:ml-4">Winning Numbers:</p>
                                     <ul class="mt-2 flex space-x-2 md:w-full">
                                         <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-red-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">88</li>
                                         <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-red-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">11</li>
@@ -293,8 +293,8 @@
                         </div>
                         <div class="relative flex w-full flex-col justify-center bg-gradient-to-t from-pink-400 to-indigo-500 px-2 py-4">
                             <div class="mx-auto md:absolute md:-translate-x-10"><img src="https://pixner.net/rifa1/demo/assets/images/winner/4.png" alt="image" /></div>
-                            <div class="flex w-full flex-col justify-around border-b text-center">
-                                <div class="left md:my-5">
+                            <div class="flex w-full justify-around border-b text-center">
+                                <div class="left my-5">
                                     <h5 class="text-2xl text-white">The Breeze Zodiac IX</h5>
                                 </div>
                                 <div class="right my-5">
@@ -304,7 +304,7 @@
                             </div>
                             <div class="flex w-full flex-col items-center md:flex-row md:justify-around">
                                 <div class="flex flex-col">
-                                    <p class="text-lg text-white">Winning Numbers:</p>
+                                    <p class="text-lg text-white md:ml-4">Winning Numbers:</p>
                                     <ul class="mt-2 flex space-x-2 md:w-full">
                                         <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-red-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">88</li>
                                         <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-red-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">11</li>
