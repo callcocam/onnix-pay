@@ -103,6 +103,7 @@ export default {
         divideOpacity: false,
         placeholderOpacity: false,
         ringOpacity: false,
+        aspectRatio: false,
     },
-    plugins: [forms, typography],
+    plugins: [require('@tailwindcss/aspect-ratio'), forms, typography],
 }
