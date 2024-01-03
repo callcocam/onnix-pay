@@ -31,7 +31,7 @@ class RifaFactory extends Factory
             'end_date' => $this->faker->date(),
             'draw_date' => $this->faker->date(),
             'draw_time' => $this->faker->time(),
-            'draw_local' => $this->faker->text,
+            'draw_local' => $this->faker->name,
             'draw_local_link' => $this->faker->url,
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
