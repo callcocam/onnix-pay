@@ -23,16 +23,16 @@
             </div>
         </x-content>
     </x-slot>
-    <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
+    <div class="md:mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
         <div class="my-16 flex flex-col">
-            <div class="relative mx-auto mt-5 flex w-full flex-col items-center gap-2">
-                <div class="flex w-full flex-col">
+            <div class="relative mx-auto mt-5 flex w-full flex-col items-center md:gap-2">
+                <div class="flex w-full flex-col items-center md:items-start">
                     <h2 class="text-2xl text-yellow-500">Need to know about</h2>
-                    <h3 class="mb-4 text-6xl font-semibold">HOW TO PLAY</h3>
+                    <h3 class="mb-4 text-4xl md:text-6xl font-semibold">HOW TO PLAY</h3>
                     <p class="mb-10 text-sm">Follow these 3 easy steps!</p>
                 </div>
                 <div class="flex w-full flex-col md:flex-row">
-                    <div class="grid w-full grid-cols-1 justify-stretch gap-3 md:w-4/6 md:grid-cols-3">
+                    <div class="grid w-full max-w-[90%] md:max-w-full  grid-cols-1 justify-stretch gap-y-3 md:gap-3  md:w-4/6 md:grid-cols-3  mx-auto">
                         <div class="bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 flex min-h-80 flex-col items-center space-y-5 rounded-md p-2 py-5">
                             <div class="relative mx-auto flex h-36 w-36 items-center justify-center rounded-full border">
                                 <img src="https://pixner.net/rifa1/demo/assets/images/icon/play/1.png" alt="" class="rounded-full p-6 shadow-inner shadow-purple-600 hover:shadow-lg" />
@@ -71,33 +71,33 @@
                 <div class="flex w-full flex-col justify-center">
                     <div class="flex w-full flex-col items-center justify-center">
                         <p class="text-lg text-yellow-400">Try your chance at winning</p>
-                        <h2 class="py-4 text-4xl font-bold text-slate-700 md:text-6xl">CURRENT CONTEST</h2>
-                        <p class="font-sans text-slate-500">Participants buy tickets and lots are drawn to determine the winners.</p>
+                        <h2 class="py-4 text-4xl font-bold text-slate-700 md:text-6xl  text-center">CURRENT CONTEST</h2>
+                        <p class="font-sans text-slate-500 text-center ">Participants buy tickets and lots are drawn to determine the winners.</p>
                         <div class="mt-10 flex w-full items-center justify-center space-x-5">
-                            <button type="button" class="w-52 rounded-full bg-gradient-to-t from-purple-500 to-yellow-300 py-3 text-white">
+                            <button type="button" class="md:w-52 rounded-full bg-gradient-to-t from-purple-500 to-yellow-300 py-3 px-2 text-white">
                                 <span> DREAM CAR </span>
                             </button>
-                            <button type="button" class="w-52 rounded-full bg-gradient-to-l from-purple-700 to-purple-400 py-3 text-white">
+                            <button type="button" class="md:w-52 rounded-full bg-gradient-to-l from-purple-700 to-purple-400 py-3 px-2 text-white">
                                 <span> ALL LIFESTYLE </span>
                             </button>
                         </div>
                     </div>
-                    <div class="mx-5 mt-10 grid grid-cols-1 gap-3 rounded p-4 text-center md:grid-cols-3">
+                    <div class="mt-10 grid grid-cols-1 gap-3 rounded p-4 text-center md:grid-cols-3">
                         <div class="flex flex-col items-center bg-indigo-500 shadow-inner">
                             <div class="mb-5 flex w-full cursor-pointer items-center justify-center bg-indigo-400 min-h-52">
                                 <img src="https://pixner.net/rifa1/demo/assets/images/contest/1.png" alt="" class="object-cover p-6 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
                             </div>
                             <div class="relative flex w-full flex-col items-center">
-                                <div class="absolute -top-[35%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
+                                <div class="absolute -top-[50%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
                                     <p class="text-xs text-white">Contest Now</p>
                                     <span class="text-lg font-bold text-white">X9U</span>
                                 </div>
-                                <div class="mb-4 grid w-full grid-cols-2 text-white">
-                                    <div class="ml-5 flex flex-col items-start">
+                                <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
+                                    <div class="ml-2 flex flex-col items-start">
                                         <span class="text-2xl"> The De Sol </span>
                                         <span> Trabilblazer </span>
                                     </div>
-                                    <div class="mr-5 flex flex-col items-end">
+                                    <div class="mr-2 flex flex-col items-end">
                                         <span class="font-serif text-2xl font-bold text-green-500">R$ 9,99 </span>
                                         <span> Trabilblazer </span>
                                     </div>
@@ -124,16 +124,16 @@
                                 <img src="https://pixner.net/rifa1/demo/assets/images/contest/3.png" alt="" class="object-cover p-6 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
                             </div>
                             <div class="relative flex w-full flex-col items-center">
-                                <div class="absolute -top-[35%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
+                                <div class="absolute -top-[50%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
                                     <p class="text-xs text-white">Contest Now</p>
                                     <span class="text-lg font-bold text-white">X9U</span>
                                 </div>
-                                <div class="mb-4 grid w-full grid-cols-2 text-white">
-                                    <div class="ml-5 flex flex-col items-start">
+                                <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
+                                    <div class="ml-2 flex flex-col items-start">
                                         <span class="text-2xl"> The De Sol </span>
                                         <span> Trabilblazer </span>
                                     </div>
-                                    <div class="mr-5 flex flex-col items-end">
+                                    <div class="mr-2 flex flex-col items-end">
                                         <span class="font-serif text-2xl font-bold text-green-500">R$ 9,99 </span>
                                         <span> Trabilblazer </span>
                                     </div>
@@ -160,16 +160,16 @@
                                 <img src="https://pixner.net/rifa1/demo/assets/images/contest/2.png" alt="" class="object-cover p-6 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
                             </div>
                             <div class="relative flex w-full flex-col items-center">
-                                <div class="absolute -top-[35%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
+                                <div class="absolute -top-[50%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
                                     <p class="text-xs text-white">Contest Now</p>
                                     <span class="text-lg font-bold text-white">X9U</span>
                                 </div>
-                                <div class="mb-4 grid w-full grid-cols-2 text-white">
-                                    <div class="ml-5 flex flex-col items-start">
+                                <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
+                                    <div class="ml-2 flex flex-col items-start">
                                         <span class="text-2xl"> The De Sol </span>
                                         <span> Trabilblazer </span>
                                     </div>
-                                    <div class="mr-5 flex flex-col items-end">
+                                    <div class="mr-2 flex flex-col items-end">
                                         <span class="font-serif text-2xl font-bold text-green-500">R$ 9,99 </span>
                                         <span> Trabilblazer </span>
                                     </div>
