@@ -11,6 +11,7 @@ namespace App\Filament\Resources\Rifas;
 use App\Filament\Resources\Rifas\RifaResource\Pages;
 use App\Filament\Resources\Rifas\RifaResource\RelationManagers;
 use App\Models\Rifas\Rifa;
+use Callcocam\Tenant\Traits\HasUploadFormField;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,8 @@ use Leandrocfe\FilamentPtbrFormFields\Money;
 
 class RifaResource extends Resource
 {
+    use HasUploadFormField;
+
     protected static ?string $model = Rifa::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -43,9 +46,8 @@ class RifaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image')
-                    ->columnSpanFull()
-                    ->image(),
+                static::getUploadFormFieldset('image')
+                    ->columnSpanFull(),
                 Forms\Components\Radio::make('status')
                     ->options([
                         'draft' => 'Draft',

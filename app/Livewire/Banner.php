@@ -13,19 +13,22 @@ use Livewire\Component;
 
 class Banner extends Component
 {
+
+    public $banner;
+
     public function render()
     {
         return view('livewire.banner');
     }
 
-    #[Computed]
-    public function banner()
-    {
-        return \App\Models\Banner::query()->where('status', 'published')
-            ->whereDate('start_date', '<=', now())
-            ->orderBy('ordering', 'asc')
-            ->first();
-    }
+    // #[Computed]
+    // public function banner()
+    // {
+    //     return \App\Models\Banner::query()->where('status', 'published')
+    //         ->whereDate('start_date', '<=', now())
+    //         ->orderBy('ordering', 'asc')
+    //         ->first();
+    // }
 
     public function click()
     {
