@@ -14,7 +14,7 @@ class Rifa extends AbstractModel
 {
     use HasFactory;
 
-    protected $appends = ['price_brl'];
+    protected $appends = ['priceBrl'];
 
     public function category()
     {

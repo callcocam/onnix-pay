@@ -1,24 +1,24 @@
-@section('title', __('Reset password'))
+@section('title', __('Redefinir senha'))
 
-<div>
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+<div class="w-full my-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-lg">
         <a href="{{ route('home') }}">
             <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-100 leading-9">
-            {{ __('Reset password') }}
+            {{ __('Redefinir senha') }}
         </h2>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 shadow sm:rounded-lg sm:px-10">
             <form wire:submit.prevent="resetPassword">
                 <input wire:model="token" type="hidden">
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-50 leading-5">
-                        {{ __('Email address') }}
+                        {{ __('Endereço de email') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -32,7 +32,7 @@
 
                 <div class="mt-6">
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-50 leading-5">
-                        {{ __('Password') }}
+                        {{ __('Senha') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -46,7 +46,7 @@
 
                 <div class="mt-6">
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-50 leading-5">
-                        {{ __('Confirm password') }}
+                        {{ __('Confirme sua senha') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -57,7 +57,7 @@
                 <div class="mt-6">
                     <span class="block w-full rounded-md shadow-sm">
                         <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            {{ __('Reset password') }}
+                            {{ __('Redefinir senha') }}
                         </button>
                     </span>
                 </div>

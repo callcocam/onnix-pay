@@ -14,6 +14,13 @@ class RifasComponent extends Component
     #[Url]
     public $c;
 
+    public $limit = 12;
+
+    public function mount($limit = 12)
+    {
+        $this->limit = $limit;
+    }
+
     public function render()
     {
         return view('livewire.rifas.rifas-component');
@@ -31,16 +38,7 @@ class RifasComponent extends Component
                 });
             })
             ->orderBy('ordering', 'asc')
-        ->paginate(12);
-    }
-    #[Computed]
-    public function category()
-    {
-        return Category::query()->whereNull('category_id')->first();
-    }
-
-    public function loadCategory($slug)
-    {
-        $this->c = $slug;
-    }
+        ->paginate($this->limit);
+    } 
+     
 }

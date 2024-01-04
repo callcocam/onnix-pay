@@ -1,30 +1,30 @@
-@section('title', __('Sign in to your account'))
+@section('title', __(''))
 
-<div>
-    <div class="sm:mx-auto sm:w-full sm:max-w-md mt-12">
+<div class="w-full my-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-lg mt-12">
         <a href="{{ route('home') }}">
             <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-100 leading-9">
-            {{ __('Sign in to your account') }}
+            {{ __('Faça login em sua conta') }}
         </h2>
         @if (Route::has('register'))
         <p class="mt-2 text-sm text-center text-gray-600 dark:text-gray-50 leading-5 max-w">
-            {{ __('Or') }}
+            {{ __('OU') }}
             <a href="{{ route('register') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                {{ __('create a new account') }}
+                {{ __('Criar uma nova conta') }}
             </a>
         </p>
         @endif
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="my-8 sm:mx-auto sm:w-full sm:max-w-lg ">
         <div class="px-4 py-8   shadow sm:rounded-lg sm:px-10">
             <form wire:submit.prevent="authenticate">
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-50 leading-5">
-                        {{ __('Email address') }}
+                        {{ __('Endereço de email') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -38,7 +38,7 @@
 
                 <div class="mt-6">
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-50 leading-5">
-                        {{ __('Password') }}
+                        {{ __('Senha') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -54,13 +54,13 @@
                     <div class="flex items-center">
                         <input wire:model.lazy="remember" id="remember" type="checkbox" class="form-checkbox w-4 h-4 text-indigo-600 transition duration-150 ease-in-out" />
                         <label for="remember" class="block ml-2 text-sm text-gray-900 dark:text-gray-100 leading-5">
-                            {{ __('Remember me') }}
+                            {{ __('Lembre de mim') }}
                         </label>
                     </div>
 
                     <div class="text-sm leading-5">
                         <a href="{{ route('password.request') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                            {{ __('Forgot your password?') }}
+                            {{ __('Esqueceu sua senha?') }}
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="mt-6">
                     <span class="block w-full rounded-md shadow-sm">
                         <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            {{ __('Sign in') }}
+                            {{ __('Entra') }}
                         </button>
                     </span>
                 </div>
