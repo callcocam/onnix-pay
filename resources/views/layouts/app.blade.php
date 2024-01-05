@@ -20,7 +20,7 @@
     @stack('scripts')
 </head>
 
-<body class="relative" x-data="{}"  >
+<body class="relative" x-data="{}">
     <!-- <div class="preloader">
         <svg class="mainSVG" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -99,22 +99,21 @@
                     <div class="flex my-4">
                         <ul class="flex  short-links md:justify-end justify-center">
                             <li>
-                                <a href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"> Início </a>
+                                <a href="{{ route('dashboard') }}" active="{{request()->routeIs('dashboard')}}"> Início </a>
                             </li>
                             <li>
-                                <a href="{{ route('rifas.list') }}" :active="request()->routeIs('rifas.list')"> Rifas </a>
+                                <a href="{{ route('rifas.list') }}" active="{{request()->routeIs('rifas.list')}}"> Rifas </a>
                             </li>
                             <li>
-                                <a href="{{ route('about') }}" :active="request()->routeIs('about')"> Sobre Nós </a>
+                                <a href="{{ route('about') }}" active="{{request()->routeIs('about')}}"> Sobre Nós </a>
                             </li>
                             <li>
-                                <a href="{{ route('contact') }}" :active="request()->routeIs('contact')"> Contato </a>
+                                <a href="{{ route('contact') }}" active="{{request()->routeIs('contact')}}"> Contato </a>
+                            <li>
+                                <a href="{{ route('privacy') }}" active="{{request()->routeIs('privacy')}}"> Politica </a>
                             </li>
                             <li>
-                                <a href="{{ route('privacy') }}" :active="request()->routeIs('privacy')"> Politica </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('terms') }}" :active="request()->routeIs('terms')"> Termos </a>
+                                <a href="{{ route('terms') }}" active="{{request()->routeIs('terms')}}"> Termos </a>
                             </li>
                         </ul>
                     </div>

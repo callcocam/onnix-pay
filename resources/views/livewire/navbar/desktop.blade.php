@@ -1,17 +1,17 @@
 <ul class="flex w-full flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:justify-center  md:space-x-16 px-4 font-bold text-purple-200">
     <li>
-        <a href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"> Início </a>
+        <a href="{{ route('dashboard') }}" active="{{request()->routeIs('dashboard')}}"> Início </a>
     </li>
     <li>
-        <a href="{{ route('rifas.list') }}" :active="request()->routeIs('rifas.list')"> Rifas </a>
+        <a href="{{ route('rifas.list') }}" active="{{request()->routeIs('rifas.list')}}"> Rifas </a>
     </li>
     <li>
-        <a href="{{ route('about') }}" :active="request()->routeIs('about')"> Sobre Nós </a>
+        <a href="{{ route('about') }}" active="{{request()->routeIs('about')}}"> Sobre Nós </a>
     </li>
     <li>
-        <a href="{{ route('contact') }}" :active="request()->routeIs('contact')"> Contato </a>
+        <a href="{{ route('contact') }}" active="{{request()->routeIs('contact')}}"> Contato </a>
     </li>
-    <li class="w-full  md:w-64 text-center flex items-center justify-center">
+    <!-- <li class="w-full  md:w-64 text-center flex items-center justify-center">
         <a href="" class="from-banner-secundary to-banner-primary flex items-center  rounded-full bg-gradient-to-r px-8 py-2 shadow-md shadow-white w-full">
             <div class="flex items-center justify-center space-x-3 w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 -rotate-45">
@@ -20,5 +20,5 @@
                 <span>BUY TICKTS</span>
             </div>
         </a>
-    </li>
+    </li> -->
 </ul>

@@ -3,6 +3,8 @@
 namespace App\Livewire\Rifas;
 
 use App\Models\Rifas\Rifa;
+use Carbon\Carbon;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class ShowComponent extends Component
@@ -15,9 +17,9 @@ class ShowComponent extends Component
     public function mount(Rifa $record)
     {
         $this->rifa = $record;
-        $this->sale = $record->sale ; 
+        $this->sale = $record->sale;
         $user = auth()->user();
-        $user->load('address');  
+        $user->load('address');
     }
 
     public function addCart()
@@ -32,6 +34,19 @@ class ShowComponent extends Component
             $this->dispatch('cart-updated');
         }
     }
+    #[Computed]
+    public function numberProgress()
+    {
+        $totalNumbers = $this->rifa->quantity;
+
+        $soldNumbers = $this->rifa->sale()->where('status', 'pay')->count();
+        
+        $percentageSold = ($soldNumbers / $totalNumbers) * 100;
+
+        return sprintf('%0.2f', $percentageSold);
+    }
+
+
 
     public function render()
     {

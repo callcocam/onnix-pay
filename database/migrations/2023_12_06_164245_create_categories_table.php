@@ -18,7 +18,7 @@ return new class extends Migration
             $table->ulid('category_id')->nullable()->comment('Categoria pai');
             $table->string('name')->nullable()->comment('Nome da categoria');
             $table->string('slug')->nullable()->comment('Slug da categoria');
-            $table->string('description')->nullable()->comment('Descrição da categoria');
+            $table->text('description')->nullable()->comment('Descrição da categoria');
             $table->string('image')->nullable()->comment('Imagem da categoria');
             $table->string('status')->nullable()->comment('Status da categoria');
             $table->string('type')->nullable()->comment('Tipo da categoria');

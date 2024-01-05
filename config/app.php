@@ -184,6 +184,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Countdown' => \App\Core\Helpers\Countdown\Facades\CountdownFacade::class,
     ])->toArray(),
 
 ];

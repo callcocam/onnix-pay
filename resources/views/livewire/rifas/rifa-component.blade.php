@@ -4,8 +4,8 @@
     </a>
     <div class="relative flex w-full flex-col items-center">
         <div class="absolute -top-[50%] flex h-24 w-24 flex-col items-center justify-center rounded-full bg-pink-600 shadow-lg">
-            <p class="text-xs text-white">Rifa agora</p>
-            <span class="text-lg font-bold text-white">X9U</span>
+            <p class="text-xs text-white">Código</p>
+            <span class="text-lg font-bold text-white">{{ $rifa->code }}</span>
         </div>
         <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
