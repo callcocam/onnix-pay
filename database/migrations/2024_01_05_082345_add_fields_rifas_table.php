@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('rifas', function (Blueprint $table) {
             $table->text('preview')->nullable()->after('image');
             $table->string('code')->nullable()->after('preview');
-            $table->json('gallery')->nullable()->after('code');
+            $table->longText('gallery')->nullable()->after('code');
         });
     }
 
