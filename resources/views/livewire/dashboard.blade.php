@@ -1,10 +1,12 @@
 <div class="flex flex-col">
+   @if($banner = $this->banner)
    <x-slot name="header">
-   <livewire:banner />
+      <livewire:banner :banner="$banner"/>
    </x-slot>
+   @endif
    <div class="flex w-full flex-col items-center justify-center">
       <div class="md:my-16 flex flex-col">
-          <x-help />
+         <x-help />
          <!-- CUURENT CONTEST -->
          <div class="w-ful my-16 flex md:mx-auto md:max-w-7xl">
             <div class="flex w-full flex-col justify-center">
@@ -21,7 +23,7 @@
                      </button>
                   </div>
                </div>
-                <livewire:rifas.rifas-component limit="3"/>
+               <livewire:rifas.rifas-component limit="3" />
             </div>
          </div>
       </div>
