@@ -1,4 +1,4 @@
-<ul class="flex w-full flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:justify-center  md:space-x-16 px-4 font-bold text-purple-200">
+<ul class="flex w-full  flex-row items-start md:items-center justify-between  md:justify-center space-x-2 md:space-x-16 px-4 font-bold text-purple-200">
     <li>
         <a href="{{ route('dashboard') }}" active="{{request()->routeIs('dashboard')}}"> Início </a>
     </li>

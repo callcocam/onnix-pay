@@ -12,10 +12,10 @@
         </div>
 
     </x-slot>
-    <div class="relative w-full flex items-center justify-center -mt-80">
+    <div class="relative w-full flex items-center justify-center mt-50 md:-mt-60">
         <div class="bg-indigo-800 py-10 mb-12">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="mx-auto flex max-w-2xl flex-col   justify-between gap-16 lg:mx-0 lg:max-w-none lg:flex-row">
+                <div class="mx-auto flex max-w-2xl flex-col justify-between gap-16 lg:mx-0 lg:max-w-none lg:flex-row">
                     <div class="w-full lg:max-w-lg lg:flex-auto">
                         <img src="{{ Storage::url($rifa->image) }}" alt="{{ $rifa->name }}" class="  aspect-[6/5] w-full rounded-2xl shadow-lg bg-indigo-400 object-contain lg:aspect-auto lg:h-[34.5rem]">
                     </div>

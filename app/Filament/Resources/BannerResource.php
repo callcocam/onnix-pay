@@ -26,6 +26,11 @@ class BannerResource extends Resource
 
     protected static ?string $model = Banner::class;
 
+    protected static ?string $modelLabel = 'Banners';
+    
+    protected static ?string $pluralModelLabel = 'Banners';
+
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -83,35 +88,31 @@ class BannerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([ 
+            ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('link')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
+                    ->label('Início')
+                    ->date()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('end_date')
+                    ->label('Fim')
+                    ->date()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ordering')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('clicks')
+                    ->label('Cliques')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Criado em')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Atualizado em')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
