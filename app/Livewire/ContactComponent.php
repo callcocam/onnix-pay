@@ -55,6 +55,7 @@ class ContactComponent extends Component
             'email' => 'required|email',
             'firstName' => 'required',
             'lastName' => 'required',
+            'phone' => 'required',
             'description' => 'required',
         ]);
 
