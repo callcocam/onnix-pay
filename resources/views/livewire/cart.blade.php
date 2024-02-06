@@ -1,7 +1,7 @@
 <x-filament::modal id="cart" :slideOver="true">
     <x-slot name="heading">Carrinho</x-slot>
     <div>
-        @if( $this->cartItems->count())
+        @if( $this->cartItems && $this->cartItems->count())
         <div class="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
             <div class="flow-root">
                 <ul role="list" class="-my-6 divide-y divide-gray-200">
