@@ -9,4 +9,13 @@ namespace App\Services\Onixpay;
 class AuthService extends OnnixPayService
 {
      
+
+    public function login($data)
+    {
+        $response = $this->http->post('login', [
+            'json' => $data
+        ]);
+        return json_decode($response->getBody()->getContents());
+    }
+ 
 }

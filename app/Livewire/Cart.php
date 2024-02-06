@@ -16,6 +16,9 @@ class Cart extends Component
 
     public function mount(): void
     { 
+        if (!auth()->check()) {
+            return;
+        }
         $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get(); 
     }
 
