@@ -26,6 +26,9 @@ class Checkout extends FormsComponent
 
     public function mount(): void
     {
+        if (!auth()->check()) {
+            return;
+        }
         $user = auth()->user();
         $user->load('address');
         $this->form->fill($user->toArray());
