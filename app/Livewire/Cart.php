@@ -19,12 +19,14 @@ class Cart extends Component
         if (!auth()->check()) {
             return;
         }
-        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get(); 
+        
     }
 
     #[Computed]
     public function cartItems()
     {
+
+        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get(); 
 
         return  $this->sales;
     }
@@ -56,6 +58,12 @@ class Cart extends Component
         $this->sales = Sale::query()->where('user_id', auth()->id())->where('status', 'pending')->get();
     }
 
+    public function removeItem($id)
+    {
+        $sale = Sale::find($id);
+        $sale->delete();
+        $this->updateCartList();
+    }
 
     public function render()
     {

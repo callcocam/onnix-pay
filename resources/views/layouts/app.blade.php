@@ -95,10 +95,7 @@
                         <h3 class="title text-sm">Para obter benefícios exclusivos</h3>
                     </div>
                     <div class="right">
-                        <form class="subscribe-form">
-                            <input type="email" name="subscribe_email" placeholder="Enter Your Email">
-                            <button type="submit">Subscribe</button>
-                        </form>
+                        @livewire('subscribe')
                     </div>
                 </div>
             </div>

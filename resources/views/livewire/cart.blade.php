@@ -25,7 +25,7 @@
                                 <p class="text-gray-500 dark:text-gray-300">Quantidade {{ $item->numbers->count()}}</p>
 
                                 <div class="flex">
-                                    <button type="button" class="font-medium text-primary-600 hover:text-primary-500">Remove</button>
+                                    <button wire:click="removeItem('{{ $item->id }}')" type="button" class="font-medium text-primary-600 hover:text-primary-500">Remove</button>
                                 </div>
                             </div>
                         </div>
