@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Rifas\Sales\Sale;
 use Callcocam\Acl\Traits\HasUlids;
 use Callcocam\Tenant\BelongsToTenants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,4 +50,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

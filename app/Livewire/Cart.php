@@ -15,8 +15,8 @@ class Cart extends Component
     public $sales;
 
     public function mount(): void
-    {
-        $this->sales = Sale::query()->where('user_id', auth()->id())->where('status', 'pending')->get();
+    { 
+        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get(); 
     }
 
     #[Computed]
@@ -32,7 +32,7 @@ class Cart extends Component
 
         return  $this->sales->map(function ($sale) {
             return $sale->rifa->price * $sale->numbers->count();
-        })->sum();;
+        })->sum();
     }
 
     public function checkout(): void

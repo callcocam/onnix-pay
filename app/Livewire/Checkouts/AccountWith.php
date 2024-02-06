@@ -34,6 +34,7 @@ trait AccountWith
     {
         return [
             TextInput::make('zip')
+                ->label('CEP')
                 ->extraAlpineAttributes(['x-mask' => '99999-999'])
                 ->required()
                 ->columnSpan(2)
@@ -60,20 +61,26 @@ trait AccountWith
                         });
                 }),
             TextInput::make('street')
+                ->label('Rua')
                 ->required()
                 ->columnSpan(4),
             TextInput::make('number')
+                ->label('Número')
                 ->required()
                 ->columnSpan(2),
             TextInput::make('complement')
+                ->label('Complemento')
                 ->columnSpan(4),
             TextInput::make('district')
+                ->label('Bairro')
                 ->required()
                 ->columnSpan(3),
             TextInput::make('city')
+                ->label('Cidade')
                 ->required()
                 ->columnSpan(3),
             Select::make('state')
+                ->label('Estado')
                 ->searchable()
                 ->options(File::json(public_path('data/states.json')))
                 ->required()

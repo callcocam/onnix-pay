@@ -20,7 +20,7 @@
                         <img src="{{ Storage::url($rifa->image) }}" alt="{{ $rifa->name }}" class="  aspect-[6/5] w-full rounded-2xl shadow-lg bg-indigo-400 object-contain lg:aspect-auto lg:h-[34.5rem]">
                     </div>
                     <div class="w-full lg:max-w-xl lg:flex-auto">
-                        <h3 class="sr-only">Job openings</h3>
+                        <h3 class="sr-only"> {{ $rifa->name}}</h3>
                         <ul class="-my-8 divide-y divide-gray-100">
                             <li class="py-8 ">
                                 <dl class="relative flex  flex-col flex-wrap gap-x-3">
@@ -76,11 +76,12 @@
 
                         </ul>
                         <div class="mt-8 flex border-t border-gray-100 pt-8 text-gray-50">
-                            {!! $rifa->description !!}
+                       
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>      
     </div>
+    @livewire('rifas.numbers', ['rifa' => $rifa])
 </div>

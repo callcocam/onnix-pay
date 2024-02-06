@@ -35,16 +35,21 @@ class Checkout extends FormsComponent
         return $form
             ->schema([
                 Wizard::make([
-                    Step::make('account')->schema($this->getAccountSchema()),
+                    Step::make('account')
+                    ->label('Minha Conta')
+                    ->schema($this->getAccountSchema()),
                     Step::make('address')
+                    ->label('Endereço')
                         ->statePath('address')
                         ->afterValidation(function ($state) {
                             $this->getAccountAddressAfterValidation($state);
                         })
                         ->schema($this->getAccountAddressSchema())->columns(6),
                     Step::make('payment')
+                    ->label('Pagamento')
                         ->schema([
                             Radio::make('payment_method')
+                                ->label('Meio de Pagamento')
                                 ->options([
                                     'credit_card' => 'Cartão de Crédito',
                                     'paypal' => 'PayPal',
@@ -57,7 +62,7 @@ class Checkout extends FormsComponent
                                 ->required(),
 
                             Fieldset::make('credit_card')->schema( $this->getAccountCreditCardSchema())
-                                ->label('Credit Card')
+                                ->label('Cartão de Crédito')
                                 ->visible(fn ($get): bool => $get('payment_method') === 'credit_card'),
 
                             Fieldset::make('paypal')->schema($this->getAccountPayPalSchema())

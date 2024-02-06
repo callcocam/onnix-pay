@@ -1,8 +1,8 @@
-<div class="md:grid md:grid-cols-1 md:divide-x md:divide-gray-200 mt-5">
+<div class="md:grid md:grid-cols-1 md:divide-x md:divide-gray-200 my-5">
     <div class="col-span-12 w-full  my-2">
         <div class="flex items-center justify-between gap-2">
             <div class="border rounded flex w-full text-center p-2 bg-navy-600 text-white">Todos ({{ $this->quantity }})</div>
-            <div class="border rounded flex w-full text-center p-2 bg-gray-700 dark:text-gray-900 dark:bg-gray-100">Livres ({{ $this->livres }})</div>
+            <div class="border rounded flex w-full text-center p-2 bg-gray-700 dark:text-gray-900 dark:bg-gray-100 text-white">Livres ({{ $this->livres }})</div>
             <div class="border rounded flex w-full text-center p-2 bg-orange-600 text-white">Reservados ({{ $this->reservados }})</div>
             <div class="border rounded flex w-full text-center p-2 bg-green-600 text-white">Meus Numeros ({{ $this->pagos }})</div>
         </div>

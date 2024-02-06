@@ -28,7 +28,8 @@ class Numbers extends Component
     {
         $this->rifa = $rifa;
 
-        $this->sale = $this->rifa->sale;
+
+        $this->sale = $this->rifa->sale; 
 
         if ($this->sale) {
             $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
@@ -39,6 +40,13 @@ class Numbers extends Component
 
     public function addNumber($number)
     {
+        if (!$this->sale) {
+            $this->sale = auth()->user()->sales()->create([
+                'rifa_id' => $this->rifa->id,
+                'description' => 'Rifa de ' . $this->rifa->name,
+            ]);
+        }
+
         if (!$this->sale->numbers()
             ->where('user_id', auth()->id())
             ->where('status', 'pending')

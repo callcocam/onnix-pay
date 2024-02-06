@@ -26,6 +26,10 @@ Route::get('/politica-de-privacidade', \App\Livewire\PrivacyComponent::class)->n
 Route::get('/new', \App\Livewire\NewPage::class)->name('new');
 Route::middleware('auth')->get('/finalizar-compra', \App\Livewire\Checkouts\CheckoutComponent::class)->name('checkout');
 
+Route::middleware('auth')->get('/minha-conta', \App\Livewire\Profile\ShowComponent::class)->name('profile.show');
+
+Route::get('/onixpay/callback', \App\Http\Controllers\OnixpayCallbackController::class)->name('onixpay.callback');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('login', \App\Livewire\Auth\Login::class)
