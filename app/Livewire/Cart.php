@@ -15,11 +15,10 @@ class Cart extends Component
     public $sales;
 
     public function mount(): void
-    { 
+    {
         if (!auth()->check()) {
             return;
         }
-        
     }
 
     #[Computed]
@@ -28,7 +27,7 @@ class Cart extends Component
         if (!auth()->check()) {
             return;
         }
-        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get(); 
+        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get();
 
         return  $this->sales;
     }
@@ -38,7 +37,10 @@ class Cart extends Component
     {
 
         return  $this->sales->map(function ($sale) {
-            return $sale->rifa->price * $sale->numbers->count();
+            if ($sale->rifa) {
+                return $sale->rifa->price * $sale->numbers->count();
+            }
+            return 0;
         })->sum();
     }
 
