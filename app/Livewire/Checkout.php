@@ -89,12 +89,10 @@ class Checkout extends FormsComponent
     }
 
     public function submit(): void
-    {
-        sleep(1);
+    { 
         $data = $this->form->getState();
 
-
-        dd($data);
+ 
 
         $this->dispatch('close-modal', ['id' => 'checkout']);
 
