@@ -10,7 +10,9 @@
         <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
                 <span class="text-2xl"> {{ $rifa->name }} </span>
-                <span> {{ $rifa->category->name }} </span>
+                @of($category = $rifa->category)
+                <span> {{ $category->name }} </span>
+                @endof
             </div>
             <div class="mr-2 flex flex-col items-end">
                 <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->priceBrl}} </span>
