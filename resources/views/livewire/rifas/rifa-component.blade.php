@@ -10,7 +10,7 @@
         <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
                 <span class="text-2xl"> {{ $rifa->name }} </span>
-                @of($category = $rifa->category)
+                @if($category = $rifa->category)
                 <span> {{ $category->name }} </span>
                 @endof
             </div>
