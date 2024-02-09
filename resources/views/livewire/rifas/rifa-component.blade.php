@@ -12,7 +12,7 @@
                 <span class="text-2xl"> {{ $rifa->name }} </span>
                 @if($category = $rifa->category)
                 <span> {{ $category->name }} </span>
-                @endof
+                @endif
             </div>
             <div class="mr-2 flex flex-col items-end">
                 <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->priceBrl}} </span>
