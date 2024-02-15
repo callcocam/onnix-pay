@@ -1,5 +1,8 @@
 <?php
 
+use App\Services\Onixpay\AuthService;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,4 +69,10 @@ Route::get('/billing-portal', function (Request $request) {
     return view('update-payment-method', [
         'intent' => $request->user()->createSetupIntent()
     ]);
+});
+
+
+Route::get('/pix', function () {
+    $res = AuthService::make()->login( );
+    return response()->json($res);
 });

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Checkouts\AccountWith;
+use App\Services\Onixpay\AuthService;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
@@ -11,6 +12,7 @@ use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
 use Filament\Forms\FormsComponent;
 use Filament\Notifications\Notification;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\HtmlString;
 
 class Checkout extends FormsComponent
@@ -19,16 +21,20 @@ class Checkout extends FormsComponent
 
     public ?array $data = [];
 
+    protected $authService;
+
     public function init(): void
     {
         //$this->dispatch('open-modal', ['id' => 'checkout']);
+
     }
 
-    public function mount(): void
+    public function mount( ): void
     {
         if (!auth()->check()) {
             return;
-        }
+        } 
+
         $user = auth()->user();
         $user->load('address');
         $this->form->fill($user->toArray());
@@ -39,17 +45,17 @@ class Checkout extends FormsComponent
             ->schema([
                 Wizard::make([
                     Step::make('account')
-                    ->label('Minha Conta')
-                    ->schema($this->getAccountSchema()),
+                        ->label('Minha Conta')
+                        ->schema($this->getAccountSchema()),
                     Step::make('address')
-                    ->label('Endereço')
+                        ->label('Endereço')
                         ->statePath('address')
                         ->afterValidation(function ($state) {
                             $this->getAccountAddressAfterValidation($state);
                         })
                         ->schema($this->getAccountAddressSchema())->columns(6),
                     Step::make('payment')
-                    ->label('Pagamento')
+                        ->label('Pagamento')
                         ->schema([
                             Radio::make('payment_method')
                                 ->label('Meio de Pagamento')
@@ -64,7 +70,7 @@ class Checkout extends FormsComponent
                                 ->inline(true)
                                 ->required(),
 
-                            Fieldset::make('credit_card')->schema( $this->getAccountCreditCardSchema())
+                            Fieldset::make('credit_card')->schema($this->getAccountCreditCardSchema())
                                 ->label('Cartão de Crédito')
                                 ->visible(fn ($get): bool => $get('payment_method') === 'credit_card'),
 
@@ -89,10 +95,11 @@ class Checkout extends FormsComponent
     }
 
     public function submit(): void
-    { 
+    {
         $data = $this->form->getState();
 
- 
+        $res =   AuthService::make()->login();
+        dd($res);
 
         $this->dispatch('close-modal', ['id' => 'checkout']);
 
