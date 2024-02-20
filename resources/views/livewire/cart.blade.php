@@ -20,7 +20,9 @@
                                             </h3>
                                             <p class="ml-4">R$ {{ $rifa->price  }}</p>
                                         </div>
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ $rifa->category->name  }}</p>
+                                        @if($category = $rifa->category)
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ $category->name  }}</p>
+                                        @endif
                                     </div>
                                     <div class="flex items-end justify-between flex-1 text-sm">
                                         <p class="text-gray-500 dark:text-gray-300">Quantidade {{ $item->numbers->count()}}</p>
