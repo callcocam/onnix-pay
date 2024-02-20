@@ -18,7 +18,7 @@ class AuthService extends OnnixPayService
     public function login($data = [])
     { 
         
-        $response = Http::acceptJson()->baseUrl(config('onnixpay.base_uri', 'https://onnixpay.com/api/v1/'))
+        $response = Http::acceptJson()->baseUrl(config('onnixpay.base_uri', 'https://onnixpay.com/api/'))
         ->withBasicAuth($this->getUsername(), $this->getPassword())
             ->post('auth', $data);  
         return $response->json();
