@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('status')->default('draft')->comment('Status do pedido');
             $table->string('payment_method')->default('credit_card')->comment('Método de pagamento');
             $table->text('description')->nullable()->comment('Descrição do pedido');
-            $table->json('data')->nullable()->comment('Dados do pedido');
+            $table->longText('data')->nullable()->comment('Dados do pedido');
             $table->timestamps();
             $table->softDeletes();
         });
