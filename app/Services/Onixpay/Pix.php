@@ -10,10 +10,9 @@ class Pix extends OnnixPayService
 {
     public function create($data)
     {
-        $response = $this->http->post('pix/create', [
-            'json' => $data
-        ]);
-        return json_decode($response->getBody()->getContents());
+        $response = $this->http->post('pix/create',$data);
+   
+        return $response ;
     }
 
     public function get($id)

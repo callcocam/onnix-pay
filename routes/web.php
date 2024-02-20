@@ -1,6 +1,10 @@
 <?php
 
+use App\Livewire\Checkout\CancelComponent;
+use App\Livewire\Checkout\SuccessComponent;
+use App\Models\Order;
 use App\Services\Onixpay\AuthService;
+use App\Services\Onixpay\Pix;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
@@ -72,14 +76,26 @@ Route::get('/billing-portal', function (Request $request) {
 });
 
 
-Route::get('/pix', function () {
-    $res = AuthService::make()->login();
+Route::get('/pix', function () { 
+    $res = Pix::make()->create([
+        "amount" => 1,
+        "email" => "evelynliviarodrigues@alkbrasil.com.br",
+        "quantity" => 1,
+        "discount" => 0,
+        "invoice_no" => "2",
+        "due_date" => "2023-11-09",
+        "tax" => 0,
+        "item_name" => "Teste de invoice",
+        "notes" => "Teste de observacoes de invoice",
+        "document" => "12345678909",
+        "client" => "Evelyn Lívia Rodrigues"
+    ]);
     return response()->json($res);
 });
 
 
-Route::view('checkout/success', 'checkout.success')->name('checkout-success');
-Route::view('checkout/cancel', 'checkout.cancel')->name('checkout-cancel');
+Route::get('checkout/{order}/success',  SuccessComponent::class)->name('checkout-success');
+Route::get('checkout/{order}/cancel',  CancelComponent::class)->name('checkout-cancel');
 
 Route::get('checkout', function (Request $request) {
     return $request->user()->checkout(['price_tshirt' => 1], [

@@ -12,10 +12,8 @@ class Bill extends OnnixPayService
 {
     public function create($data)
     {
-        $response = $this->http->post('boleto/create', [
-            'json' => $data
-        ]);
-        return json_decode($response->getBody()->getContents());
+        $response = $this->http->post('boleto/create',  $data);
+        return $response;
     }
 
     public function get($id)

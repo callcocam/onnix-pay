@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->enum('status', ['draft', 'published'])->default('published');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

@@ -20,8 +20,10 @@ use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
 use Filament\Forms\FormsComponent;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Blade;
 use Leandrocfe\FilamentPtbrFormFields\Cep;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 
 class CheckoutComponent extends FormsComponent
@@ -207,6 +209,15 @@ class CheckoutComponent extends FormsComponent
                                                 ->visible(fn ($get): bool => $get('payment_method') === 'transfer'),
                                         ]),
                                 ])
+                                    ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                                <x-filament::button
+                                    type="button"
+                                    wire:click="saveSendPayment"
+                                    size="sm"
+                                >
+                                   Finalizar Compra
+                                </x-filament::button>
+                            BLADE)))
                             ])->columnSpan([
                                 'md' => 2,
                             ]),
@@ -218,6 +229,12 @@ class CheckoutComponent extends FormsComponent
                     ])
             ])
             ->statePath('data');
+    }
+
+    public function saveSendPayment()
+    {
+        $this->validate();
+        Notification::make('Compra realizada com sucesso!');
     }
 
     public function render()

@@ -15,6 +15,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\File;
+use Leandrocfe\FilamentPtbrFormFields\Document;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
 
 trait AccountWith
 {
@@ -27,6 +29,11 @@ trait AccountWith
                 ->required(),
             TextInput::make('name')
                 ->required(),
+            Document::make('document') 
+                ->dynamic()
+                ->required(),
+            PhoneNumber::make('phone')
+                ->required() ,
         ];
     }
 
@@ -118,17 +125,7 @@ trait AccountWith
                 ->required()
                 ->extraAlpineAttributes(['x-mask' => '999']),
         ];
-    }
-
-    public function getAccountPayPalSchema()
-    {
-        return [
-            TextInput::make('paypal_email')
-                ->email()
-                ->required()
-                ->columnSpanFull(),
-        ];
-    }
+    } 
 
 
     public function getAccountBilletSchema()
@@ -136,6 +133,7 @@ trait AccountWith
         return [
             TextInput::make('billet_email')
                 ->email()
+                ->default(auth()->user()->email)
                 ->required()
                 ->columnSpanFull(),
         ];
@@ -146,8 +144,9 @@ trait AccountWith
         return [
             TextInput::make('pix_email')
                 ->email()
+                ->default(auth()->user()->email)
                 ->required()
-                ->columnSpanFull(),
+                ->columnSpanFull(), 
         ];
     }
 

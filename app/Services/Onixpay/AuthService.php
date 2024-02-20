@@ -8,19 +8,24 @@
 
 namespace App\Services\Onixpay;
 
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Http;
 
-class AuthService extends OnnixPayService
+trait AuthService
 {
 
 
     public function login($data = [])
-    { 
-        
-        $response = Http::acceptJson()->baseUrl(config('onnixpay.base_uri', 'https://onnixpay.com/api/'))
-        ->withBasicAuth($this->getUsername(), $this->getPassword())
-            ->post('auth', $data);  
+    {
+        $response =  Http::acceptJson()
+            ->contentType('application/json')
+            ->baseUrl(config('onnixpay.api_url', 'https://onnixpay.com/api/'))
+            ->withBasicAuth($this->getUsername(), $this->getPassword())
+            ->post('auth', $data);
+
+        if ($response->ok()) {
+            $this->setBearer($response->json('token'));
+        }
+
         return $response->json();
     }
 }

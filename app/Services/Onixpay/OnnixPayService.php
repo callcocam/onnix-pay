@@ -1,15 +1,19 @@
 <?php
+
 /**
-* Created by Claudio Campos.
-* User: callcocam@gmail.com, contato@sigasmart.com.br
-* https://www.sigasmart.com.br
-*/
+ * Created by Claudio Campos.
+ * User: callcocam@gmail.com, contato@sigasmart.com.br
+ * https://www.sigasmart.com.br
+ */
+
 namespace App\Services\Onixpay;
 
 use Illuminate\Support\Facades\Http;
 
 abstract class OnnixPayService
 {
+    use AuthService;
+
     protected  $http;
 
     protected $username;
@@ -18,6 +22,7 @@ abstract class OnnixPayService
 
     protected $bearer;
 
+
     public function __construct()
     {
 
@@ -25,10 +30,16 @@ abstract class OnnixPayService
 
         $this->password = config('onnixpay.api_private_key');
 
-        $this->bearer = base64_encode(config('onnixpay.api_public_key').':'.config('onnixpay.api_private_key'));
- 
+        $this->bearer = base64_encode(config('onnixpay.api_public_key') . ':' . config('onnixpay.api_private_key'));
 
-        $this->http =  Http::acceptJson()->baseUrl(config('onnixpay.api_url', 'https://onnixpay.com/api/v1/'));
+        $this->login();
+
+        $this->http =  Http::acceptJson()
+        ->contentType('application/json')  
+        ->withToken($this->getBearer())   
+        ->baseUrl(config('onnixpay.api_url', 'https://onnixpay.com/api/'));
+
+  
     }
 
     public static function make()
@@ -66,6 +77,17 @@ abstract class OnnixPayService
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function getBearer()
+    {
+        return $this->bearer;
+    }
+
+    public function setBearer($bearer)
+    {
+        $this->bearer = $bearer;
         return $this;
     }
 }

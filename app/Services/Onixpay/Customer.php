@@ -12,16 +12,23 @@ class Customer extends OnnixPayService
 {
     public function create($data)
     {
-        $response = $this->http->post('customer', [
-            'json' => $data
-        ]);
-        return json_decode($response->getBody()->getContents());
+        $response = $this->http->post('customer',   $data );
+        return  $response;
+    }
+
+    public function exists($id)
+    {
+        $response = $this->get($id);
+        if($response->ok()){
+            return true;
+        }
+        return false; 
     }
 
     public function get($id)
     {
         $response = $this->http->get("customer/$id");
-        return json_decode($response->getBody()->getContents());
+        return $response;
     }
 
     public function all()

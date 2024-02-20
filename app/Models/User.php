@@ -19,17 +19,13 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasUlids, BelongsToTenants, SoftDeletes;
 
     use Billable;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -54,5 +50,20 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function cupons()
+    {
+        return $this->hasMany(Cupon::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function orderDratf()
+    {
+        return $this->orders()->where('status', 'draft');
     }
 }
