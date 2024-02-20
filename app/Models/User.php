@@ -47,6 +47,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = ['billet_email', 'pix_email', 'card_email'];
+
+    public function getbilletEmailAttribute($value)
+    {
+        return $value ?? $this->email;
+    }
+
+    public function getPixEmailAttribute($value)
+    {
+        return $value ?? $this->email;
+    }
+
+    public function getCardEmailAttribute($value)
+    {
+        return $value ?? $this->email;
+    }
+
     public function sales()
     {
         return $this->hasMany(Sale::class);

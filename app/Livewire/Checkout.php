@@ -6,6 +6,7 @@ use App\Livewire\Checkouts\AccountWith;
 use App\Services\Onixpay\Address;
 use App\Services\Onixpay\AuthService;
 use App\Services\Onixpay\Bill;
+use App\Services\Onixpay\Creditcard;
 use App\Services\Onixpay\Customer;
 use App\Services\Onixpay\Pix;
 use Filament\Forms\Components\Fieldset;
@@ -98,42 +99,8 @@ class Checkout extends FormsComponent
         $user = auth()->user();
 
 
-        if (!$user->document) {
-            $user->update([
-                'document' => $data['document']
-            ]);
-        }
-
-        if (!$user->phone) {
-            $user->update([
-                'phone' => $data['phone']
-            ]);
-        }
-
         if (!$user->customer) {
-
-            if (!Customer::make()->exists($user->customer)) {
-                $custemer =  Customer::make()->create([
-                    "name" => $user->name,
-                    "email" => $user->email,
-                    "document" => $user->document,
-                    "document_type" => strlen($user->document) >= 14 ? "CNPJ" : "CPF",
-                    "phone" => $user->phone,
-                    "mobilephone" => $user->phone,
-                    "country_id" => 30,
-                    "zipcode" => $user->address->zip,
-                    "state" => $user->address->state,
-                    "city" => $user->address->city,
-                    "district" => $user->address->district,
-                    "street" => $user->address->street,
-                    "number" => $user->address->number,
-                ]);
-                if ($custemer->ok()) {
-                    $user->update([
-                        'customer' => $custemer->json('id')
-                    ]);
-                }
-            }
+            $this->createCustomer($user, $data);
         }
 
         $paymentMethod = $data['payment_method'];
@@ -143,17 +110,7 @@ class Checkout extends FormsComponent
 
         $order = $user->orderDratf()->first();
         if (!$order) {
-            $order = $user->orders()->create([
-                'invoice' => uniqid(),
-                "total" => $this->total(),
-                "discount" => $this->discount(),
-                "shipping" => 0,
-                "subtotal" => $this->subtotal(),
-                "status" => "draft",
-                "payment_method" => $paymentMethod,
-                "quantity" => 1,
-                "description" => "Pedido de compra",
-            ]);
+            $order = $this->createOrder($user, $paymentMethod);
         }
 
         $res = false;
@@ -179,9 +136,86 @@ class Checkout extends FormsComponent
         return view('livewire.checkout');
     }
 
+    protected function createCustomer($user, $data)
+    {
+
+        if (!$user->document) {
+            $user->update([
+                'document' => $data['document']
+            ]);
+        }
+
+        if (!$user->phone) {
+            $user->update([
+                'phone' => $data['phone']
+            ]);
+        }
+
+        if (!Customer::make()->exists($user->customer)) {
+            $customer =  Customer::make()->create($user);
+            if ($customer->ok()) {
+                $user->update([
+                    'customer' => $customer->json('id')
+                ]);
+            }
+        }
+        return $customer;
+    }
+
+    protected function createOrder($user, $paymentMethod)
+    {
+        $order =  $user->orders()->create([
+            'invoice' => uniqid(),
+            "total" => $this->total(),
+            "discount" => $this->discount(),
+            "shipping" => 0,
+            "subtotal" => $this->subtotal(),
+            "status" => "draft",
+            "payment_method" => $paymentMethod,
+            "quantity" => 1,
+            "description" => "Pedido de compra",
+        ]);
+
+        return $order;
+    }
+
     public function payWithCreditCard($data, $order)
     {
-        // ...
+
+        $rifas = [];
+        $this->sales->each(function ($sale) use ($order, &$rifas) {
+            if ($sale->order_id === null) {
+                $sale->update([
+                    'order_id' => $order->id,
+                ]);
+            }
+            if ($sale->rifa) {
+                $rifas[] = $sale->rifa->name;
+            }
+        });
+
+        $res = Creditcard::make()->create($order, [
+
+            "notes" => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString(),
+        ]);
+
+        if ($res->ok()) {
+            $order->update([
+                'data' => $res->json(),
+                'status' => 'pending',
+                'description' => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString()
+            ]);
+
+            Notification::make()
+                ->title('Sucesso!')
+                ->body($data['name'] . ', seu pedido foi enviado com sucesso!')
+                ->success()
+                ->send();
+            return true;
+        } else {
+            $this->hasErrors($res->json('error'));
+        }
+        return false;
     }
 
     public function payWithBillet($data, $order)
@@ -199,16 +233,8 @@ class Checkout extends FormsComponent
             }
         });
 
-        $res =  Bill::make()->create([
-            "amount" =>  $order->total,
-            "quantity" => $order->quantity,
-            "discount" => $order->discount,
-            "invoice_no" => $order->invoice,
-            "due_date" => $order->created_at->addDays(3)->format('Y-m-d'),  
-            "item_name" => get_tenant()->name . " - " . $order->id,
+        $res =  Bill::make()->create($order, [
             "notes" => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString(),
-            "customer" => auth()->user()->customer,
-            "instructions" => "Não receber após o vencimento",
         ]);
 
         if ($res->ok()) {
@@ -225,20 +251,10 @@ class Checkout extends FormsComponent
                 ->send();
             return true;
         } else {
-            $errors = $res->json('error');
-            dd($res);
-            if ($errors) {
-                foreach ($errors as $key => $error) {
-                    foreach ($error as $message) {
-                        $this->addError('data.email', $message);
-                        Notification::make()
-                            ->title('Erro!')
-                            ->body($message)
-                            ->danger()
-                            ->send();
-                    }
-                }
-            }
+            // $errors = $res->json('error');
+            // dd($res);
+
+            $this->hasErrors($res->json('error'));
         }
         return false;
     }
@@ -259,25 +275,29 @@ class Checkout extends FormsComponent
         });
 
 
-        $res = Pix::make()->create([
-            "amount" =>  $order->total,
+        $res = Pix::make()->create($order, [
             "email" => data_get($data, 'pix_email', auth()->user()->email),
-            "quantity" => $order->quantity,
-            "discount" => $order->discount,
-            "invoice_no" => $order->invoice,
-            "due_date" => $order->created_at->addDays(3)->format('Y-m-d'),
-            "tax" => $order->shipping,
-            "item_name" => get_tenant()->name . " - " . $order->id,
             "notes" => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString(),
             "document" => data_get($data, 'document', auth()->user()->document),
-            "client" => auth()->user()->name
         ]);
 
-        $order->update([
-            'status' => 'pending',
-            'data' => $res->json(),
-            'description' => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString()
-        ]);
+        if ($res->ok()) {
+            $order->update([
+                'data' => $res->json(),
+                'status' => 'pending',
+                'description' => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString()
+            ]);
+
+            Notification::make()
+                ->title('Sucesso!')
+                ->body($data['name'] . ', seu pedido foi enviado com sucesso!')
+                ->success()
+                ->send();
+            return true;
+        } else {
+            $this->hasErrors($res->json('error'));
+        }
+        return false;
     }
 
     public function cartItems()
@@ -313,5 +333,29 @@ class Checkout extends FormsComponent
     public function subtotal()
     {
         return $this->total() - $this->discount();
+    }
+
+    protected function hasErrors($errors)
+    {
+        if ($errors) {
+            if (is_string($errors)) {
+                Notification::make()
+                    ->title('Erro!')
+                    ->body($errors)
+                    ->danger()
+                    ->send();
+            } else {
+                foreach ($errors as $key => $error) {
+                    foreach ($error as $message) {
+                        $this->addError('data.email', $message);
+                        Notification::make()
+                            ->title('Erro!')
+                            ->body($message)
+                            ->danger()
+                            ->send();
+                    }
+                }
+            }
+        }
     }
 }

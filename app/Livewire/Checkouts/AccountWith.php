@@ -24,16 +24,36 @@ trait AccountWith
     public function getAccountSchema()
     {
         return [
+            TextInput::make('name')
+                ->columnSpan([
+                    'sm' => 6,
+                    'md' => 4,
+
+                ])
+                ->required(),
             TextInput::make('email')
                 ->email()
+                ->columnSpan([
+                    'sm' => 6,
+                    'md' => 4,
+
+                ])
                 ->required(),
-            TextInput::make('name')
-                ->required(),
-            Document::make('document') 
+            Document::make('document')
                 ->dynamic()
+                ->columnSpan([
+                    'sm' => 6,
+                    'md' => 2,
+
+                ])
                 ->required(),
             PhoneNumber::make('phone')
-                ->required() ,
+                ->columnSpan([
+                    'sm' => 6,
+                    'md' => 2,
+
+                ])
+                ->required(),
         ];
     }
 
@@ -125,7 +145,7 @@ trait AccountWith
                 ->required()
                 ->extraAlpineAttributes(['x-mask' => '999']),
         ];
-    } 
+    }
 
 
     public function getAccountBilletSchema()
@@ -146,7 +166,7 @@ trait AccountWith
                 ->email()
                 ->default(auth()->user()->email)
                 ->required()
-                ->columnSpanFull(), 
+                ->columnSpanFull(),
         ];
     }
 

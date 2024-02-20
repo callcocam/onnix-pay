@@ -1,3 +1,5 @@
-<div>
-    {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
+<div class="flex w-full p-8">
+   <form wire:submit.prevent='submit' class="w-full">
+      {{ $this->form }}
+   </form>
 </div>
