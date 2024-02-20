@@ -152,8 +152,7 @@ trait AccountWith
     {
         return [
             TextInput::make('billet_email')
-                ->email()
-                ->default(auth()->user()->email)
+                ->email() 
                 ->required()
                 ->columnSpanFull(),
         ];
@@ -163,8 +162,7 @@ trait AccountWith
     {
         return [
             TextInput::make('pix_email')
-                ->email()
-                ->default(auth()->user()->email)
+                ->email() 
                 ->required()
                 ->columnSpanFull(),
         ];

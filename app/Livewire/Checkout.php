@@ -42,6 +42,7 @@ class Checkout extends FormsComponent
             return;
         }
 
+        dd($this->form->getState());
         $user = auth()->user();
         $user->load('address');
         $this->form->fill($user->toArray());
