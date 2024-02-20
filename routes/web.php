@@ -73,6 +73,17 @@ Route::get('/billing-portal', function (Request $request) {
 
 
 Route::get('/pix', function () {
-    $res = AuthService::make()->login( );
+    $res = AuthService::make()->login();
     return response()->json($res);
 });
+
+
+Route::view('checkout/success', 'checkout.success')->name('checkout-success');
+Route::view('checkout/cancel', 'checkout.cancel')->name('checkout-cancel');
+
+Route::get('checkout', function (Request $request) {
+    return $request->user()->checkout(['price_tshirt' => 1], [
+        'success_url' => route('checkout-success') . '?session_id={CHECKOUT_SESSION_ID}',
+        'cancel_url' => route('checkout-cancel'),
+    ]);
+})->name('checkout-create');

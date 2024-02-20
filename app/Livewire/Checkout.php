@@ -94,13 +94,10 @@ class Checkout extends FormsComponent
             ->statePath('data');
     }
 
-    public function submit(): void
+    public function submit(): mixed
     {
-        $data = $this->form->getState();
-
-        $res =   AuthService::make()->login();
-        dd($res);
-
+        $data = $this->form->getState(); 
+       
         $this->dispatch('close-modal', ['id' => 'checkout']);
 
 
@@ -109,6 +106,9 @@ class Checkout extends FormsComponent
             ->body($data['name'] . ', seu pedido foi enviado com sucesso!')
             ->success()
             ->send();
+ 
+
+        return redirect()->route('checkout-create');
     }
     public function render()
     {
