@@ -24,7 +24,7 @@ class Dashboard extends Component
     #[Computed]
     public function winners()
     {
-        return \App\Models\Rifas\Sales\Sale::query()
+        return \App\Models\Winner::query()
             ->where('status', 'published') 
             ->orderBy('updated_at', 'desc')
             ->limit(10)

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('number')->nullable()->comment('Numero vencedor');
             $table->string('status')->default('draft');
             $table->datetime('drawn_at')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

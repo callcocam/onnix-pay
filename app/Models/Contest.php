@@ -15,6 +15,10 @@ class Contest extends AbstractModel
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'description' => 'array',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

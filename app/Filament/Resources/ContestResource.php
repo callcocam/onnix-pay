@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContestResource\Pages;
 use App\Filament\Resources\ContestResource\RelationManagers;
+use App\Filament\Resources\ContestResource\Widgets\ContestOverview;
 use App\Models\Contest;
 use Callcocam\Acl\Traits\HasDatesFormForTableColums;
 use Callcocam\Acl\Traits\HasStatusColumn;
@@ -27,23 +28,7 @@ class ContestResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Concursos';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nome ou Número do Concuso')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('number')
-                    ->label('Número do Concuso')
-                    ->maxLength(191),
-                Forms\Components\DateTimePicker::make('drawn_at')
-                    ->label('Data do Sorteio')
-                    ->required(),
-                static::getStatusFormRadioField()
-            ])->columns(3);
-    }
-
+   
     public static function table(Table $table): Table
     {
         return $table
@@ -87,6 +72,13 @@ class ContestResource extends Resource
             'index' => Pages\ListContests::route('/'),
             'create' => Pages\CreateContest::route('/create'),
             'edit' => Pages\EditContest::route('/{record}/edit'),
+        ];
+    }
+
+    public static function  getWidgets(): array
+    {
+        return [
+             ContestOverview::class
         ];
     }
 }

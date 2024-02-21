@@ -16,4 +16,11 @@ class ListContests extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ContestResource\Widgets\ContestOverview::class,
+        ];
+    }
 }

@@ -7,7 +7,8 @@
  */
 
 namespace App\Services\Loterias;
- 
+
+use Illuminate\Support\Facades\Cache;
 
 class MegaSena extends LoteriasService
 {
@@ -18,11 +19,22 @@ class MegaSena extends LoteriasService
         return new static();
     }
 
-    public function get()
+    public function get($concurso = null)
+    {
+        return Cache::rememberForever(date('Y-m-d') . 'megasena', function () use ($concurso) {
+            if ($concurso) {
+                $response = $this->http->get("megasena/{$concurso}");
+            } else {
+                $response = $this->http->get('megasena');
+            }
+
+            return $response->json();
+        });
+    }
+
+    public function getLastContest()
     {
         $response = $this->http->get('megasena');
-
-
-        return $response->json();
+        return $response->json('numero');
     }
 }

@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use App\Models\Rifas\Rifa;
+use App\Models\Rifas\Sales\Sale;
 use Illuminate\Database\Eloquent\Factories\HasFactory; 
 
 class Winner extends AbstractModel
@@ -23,5 +24,20 @@ class Winner extends AbstractModel
     public function rifa()
     {
         return $this->belongsTo(Rifa::class);
+    }
+
+    public function contest()
+    {
+        return $this->belongsTo(Contest::class);
+    }
+
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function slugTo()
+    {
+        return false;
     }
 }

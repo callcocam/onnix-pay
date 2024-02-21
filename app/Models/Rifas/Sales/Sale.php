@@ -11,6 +11,7 @@ namespace App\Models\Rifas\Sales;
 use App\Models\AbstractModel;
 use App\Models\Cupon;
 use App\Models\Rifas\Rifa;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sale extends AbstractModel
@@ -35,5 +36,10 @@ class Sale extends AbstractModel
     public function cupons()
     {
         return $this->hasMany(Cupon::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
