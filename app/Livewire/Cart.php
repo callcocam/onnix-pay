@@ -27,7 +27,7 @@ class Cart extends Component
         if (!auth()->check()) {
             return;
         }
-        $this->sales = auth()->user()->sales()->whereIn('status', ['pending', 'draft'])->get();
+        $this->sales = auth()->user()->sales()->whereIn('status', ['draft'])->get();
 
         return  $this->sales;
     }

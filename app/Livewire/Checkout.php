@@ -64,26 +64,26 @@ class Checkout extends FormsComponent
                     Step::make('payment')
                         ->label('Pagamento')
                         ->schema([
-                            Radio::make('payment_method')
-                                ->label('Meio de Pagamento')
-                                ->options([
-                                    'credit_card' => 'Cartão de Crédito',
-                                    'billet' => 'Boleto',
-                                    'pix' => 'Pix',
-                                ])
-                                ->reactive()
-                                ->inline(true)
-                                ->required(),
+                            // Radio::make('payment_method')
+                            //     ->label('Meio de Pagamento')
+                            //     ->options([
+                            //         'credit_card' => 'Cartão de Crédito',
+                            //         'billet' => 'Boleto',
+                            //         'pix' => 'Pix',
+                            //     ])
+                            //     ->reactive()
+                            //     ->inline(true)
+                            //     ->required(),
 
-                            Fieldset::make('credit_card')->schema($this->getAccountCreditCardSchema())
-                                ->label('Cartão de Crédito')
-                                ->visible(fn ($get): bool => $get('payment_method') === 'credit_card'),
-                            Fieldset::make('billet')->schema($this->getAccountBilletSchema())
-                                ->label('Boleto')
-                                ->visible(fn ($get): bool => $get('payment_method') === 'billet'),
+                            // Fieldset::make('credit_card')->schema($this->getAccountCreditCardSchema())
+                            //     ->label('Cartão de Crédito')
+                            //     ->visible(fn ($get): bool => $get('payment_method') === 'credit_card'),
+                            // Fieldset::make('billet')->schema($this->getAccountBilletSchema())
+                            //     ->label('Boleto')
+                            //     ->visible(fn ($get): bool => $get('payment_method') === 'billet'),
                             Fieldset::make('pix')->schema($this->getAccountPixSchema())
                                 ->label('Pix')
-                                ->visible(fn ($get): bool => $get('payment_method') === 'pix'),
+                                // ->visible(fn ($get): bool => $get('payment_method') === 'pix'),
                         ]),
                 ])
                     ->submitAction(new HtmlString(view('components.checkout-submit'))),
@@ -103,7 +103,7 @@ class Checkout extends FormsComponent
             $this->createCustomer($user, $data);
         }
 
-        $paymentMethod = $data['payment_method'];
+        $paymentMethod = data_get($data, 'payment_method', 'pix');
 
         $this->cartItems();
 
@@ -114,17 +114,19 @@ class Checkout extends FormsComponent
         }
 
         $res = false;
-        switch ($paymentMethod) {
-            case 'credit_card':
-                $res =  $this->payWithCreditCard($data, $order);
-                break;
-            case 'billet':
-                $res =  $this->payWithBillet($data,  $order);
-                break;
-            case 'pix':
-                $res = $this->payWithPix($data,  $order);
-                break;
-        }
+        // switch ($paymentMethod) {
+        //     case 'credit_card':
+        //         $res =  $this->payWithCreditCard($data, $order);
+        //         break;
+        //     case 'billet':
+        //         $res =  $this->payWithBillet($data,  $order);
+        //         break;
+        //     case 'pix':
+        //         $res = $this->payWithPix($data,  $order);
+        //         break;
+        // }
+
+        $res = $this->payWithPix($data,  $order);
 
         if ($res)
             return redirect()->route('checkout-success', ['order' => $order->id]);
@@ -279,7 +281,7 @@ class Checkout extends FormsComponent
             "email" => data_get($data, 'pix_email', auth()->user()->email),
             "notes" => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString(),
             "document" => data_get($data, 'document', auth()->user()->document),
-        ]);
+        ]); 
 
         if ($res->ok()) {
             $order->update([
@@ -287,6 +289,12 @@ class Checkout extends FormsComponent
                 'status' => 'pending',
                 'description' => str($order->description)->append(" - Rifas: " . implode(", ", $rifas))->toString()
             ]);
+
+            $this->sales->each(function ($sale) {
+                $sale->update([
+                    'status' => 'pending'
+                ]);
+            });
 
             Notification::make()
                 ->title('Sucesso!')

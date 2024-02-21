@@ -18,6 +18,22 @@ class SuccessComponent extends Component
     public function mount($order)
     {
         $this->order = Order::find($order);
+
+        if (!$this->order) {
+            return redirect()->route('home');
+        }
+
+       
+ 
+
+        $sales = $this->order->sales;
+
+        $sales->each(function ($sale) {
+            $sale->update([
+                'status' => 'pending'
+            ]);
+        });
+
     }
 
     #[Computed]

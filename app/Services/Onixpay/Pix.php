@@ -25,10 +25,9 @@ class Pix extends OnnixPayService
             "notes" => "",
             "document" => data_get($data, 'document', auth()->user()->document),
             "client" => auth()->user()->name
-        ], $data);
+        ], $data); 
 
-        $response = $this->http->post('pix/create', $postData);
-
+        $response = $this->http->post('pix/create', $postData); 
         return $response;
     }
 
