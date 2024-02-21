@@ -25,7 +25,7 @@ class Cart extends Component
     public function cartItems()
     {
         if (!auth()->check()) {
-            return;
+            return collect([]);
         }
         $this->sales = auth()->user()->sales()->whereIn('status', ['draft'])->get();
 
