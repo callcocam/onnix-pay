@@ -34,7 +34,7 @@ class CreateRifa extends CreateRecord
     }
 
     public function form(Form $form): Form
-    { 
+    {
 
         return $form
             ->schema([
@@ -111,15 +111,21 @@ class CreateRifa extends CreateRecord
                     ->columnSpan([
                         'md' => 4
                     ]),
-                Forms\Components\DatePicker::make('draw_date')
-                    ->label('Data do sorteio')
+                // Forms\Components\DatePicker::make('draw_date')
+                //     ->label('Data do sorteio')
+                //     ->columnSpan([
+                //         'md' => 4
+                //     ]),
+                // Forms\Components\TimePicker::make('draw_time')
+                //     ->label('Hora do sorteio')
+                //     ->columnSpan([
+                //         'md' => 4
+                //     ]),
+                Forms\Components\Select::make('contest_id')
+                    ->label('Concurso')
+                    ->relationship('contest', 'name')
                     ->columnSpan([
-                        'md' => 4
-                    ]),
-                Forms\Components\TimePicker::make('draw_time')
-                    ->label('Hora do sorteio')
-                    ->columnSpan([
-                        'md' => 4
+                        'md' => 8
                     ]),
                 Forms\Components\Textarea::make('draw_local')
                     ->label('Local do sorteio')

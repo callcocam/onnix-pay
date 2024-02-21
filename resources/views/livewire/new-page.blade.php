@@ -72,7 +72,8 @@
                     <div class="flex w-full flex-col items-center justify-center">
                         <p class="text-lg text-yellow-400">Tente sua chance de ganhar</p>
                         <h2 class="py-4 text-center text-4xl font-bold text-slate-700 md:text-6xl">RIFA ATUAL</h2>
-                        <p class="text-center font-sans text-slate-500">Os participantes compram ingressos e são sorteados lotes para determinar os vencedores.</p>
+                        <p class="text-center font-sans text-slate-500">Os participantes compram seus números, para determinar os vencedores, o sorteio e baseado na <b>MEGA SENA</b>. </br>
+               Que ocorre toda a semana<</p>
                         <div class="mt-10 flex w-full items-center justify-center space-x-5">
                             <button type="button" class="rounded-full bg-gradient-to-t from-purple-500 to-yellow-300 px-2 py-3 text-white md:w-52">
                                 <span>CARRO DOS DONHOS</span>

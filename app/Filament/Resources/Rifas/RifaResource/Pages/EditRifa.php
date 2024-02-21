@@ -100,16 +100,22 @@ class EditRifa extends EditRecord
                     ->columnSpan([
                         'md' => 4
                     ]),
-                Forms\Components\DatePicker::make('draw_date')
-                    ->label('Data do sorteio')
-                    ->columnSpan([
-                        'md' => 4
-                    ]),
-                Forms\Components\TimePicker::make('draw_time')
-                    ->label('Hora do sorteio')
-                    ->columnSpan([
-                        'md' => 4
-                    ]),
+                // Forms\Components\DatePicker::make('draw_date')
+                //     ->label('Data do sorteio')
+                //     ->columnSpan([
+                //         'md' => 4
+                //     ]),
+                // Forms\Components\TimePicker::make('draw_time')
+                //     ->label('Hora do sorteio')
+                //     ->columnSpan([
+                //         'md' => 4
+                //     ]),
+                Forms\Components\Select::make('contest_id')
+                ->label('Concurso')
+                ->relationship('contest', 'name')
+                ->columnSpan([
+                    'md' => 8
+                ]),
                 Forms\Components\Textarea::make('draw_local')
                     ->label('Local do sorteio')
                     ->columnSpanFull(),

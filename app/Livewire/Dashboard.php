@@ -20,4 +20,14 @@ class Dashboard extends Component
             ->orderBy('ordering', 'asc')
             ->first();
     }
+
+    #[Computed]
+    public function winners()
+    {
+        return \App\Models\Rifas\Sales\Sale::query()
+            ->where('status', 'published') 
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+    }
 }

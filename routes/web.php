@@ -3,6 +3,7 @@
 use App\Livewire\Checkout\CancelComponent;
 use App\Livewire\Checkout\SuccessComponent;
 use App\Models\Order;
+use App\Services\Loterias\MegaSena;
 use App\Services\Onixpay\AuthService;
 use App\Services\Onixpay\Pix;
 use GuzzleHttp\Client;
@@ -103,3 +104,9 @@ Route::get('checkout', function (Request $request) {
         'cancel_url' => route('checkout-cancel'),
     ]);
 })->name('checkout-create');
+
+
+Route::get('megasena', function () {
+   
+    return MegaSena::make()->get();
+});

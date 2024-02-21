@@ -30,7 +30,7 @@ class RifaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-   
+
 
     public static function table(Table $table): Table
     {
@@ -55,13 +55,16 @@ class RifaResource extends Resource
                     ->label('Data final da competição')
                     ->date()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('draw_date')
-                    ->label('Data do sorteio')
-                    ->date()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('draw_time')
-                    ->label('Hora do sorteio')
-                    ->date()
+                // Tables\Columns\TextColumn::make('draw_date')
+                //     ->label('Data do sorteio')
+                //     ->date()
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('draw_time')
+                //     ->label('Hora do sorteio')
+                //     ->date()
+                //     ->searchable(),
+                Tables\Columns\SelectColumn::make('contest.name')
+                    ->label('Concurso') 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
