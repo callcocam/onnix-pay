@@ -2,6 +2,7 @@
 
 use App\Livewire\Checkout\CancelComponent;
 use App\Livewire\Checkout\SuccessComponent;
+use App\Livewire\SorteioComponent;
 use App\Models\Order;
 use App\Services\Loterias\MegaSena;
 use App\Services\Onixpay\AuthService;
@@ -68,7 +69,7 @@ Route::middleware('auth')->group(function () {
         ->name('orders.show');
 
     Route::get('rifas/{sale}/comprar', \App\Livewire\Checkout::class)->name('sales.buy');
- 
+
     Route::get('email/verify/{id}/{hash}', \App\Http\Controllers\Auth\EmailVerificationController::class)
         ->middleware('signed')
         ->name('verification.verify');
@@ -112,10 +113,7 @@ Route::get('checkout', function (Request $request) {
 })->name('checkout-create');
 
 
-Route::get('sorteio', function () {
-
-    return  ;
-})->name('sorteio');
+Route::get('sorteio/{rifa}',  SorteioComponent::class)->name('sorteio');
 
 Route::get('megasena', function (Request $request) {
 

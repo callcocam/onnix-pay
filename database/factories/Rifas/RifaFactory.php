@@ -43,7 +43,7 @@ class RifaFactory extends Factory
             'start_date' => now()->subDays(rand(11, 150)),
             'end_date' => now()->addDays($endDays), 
             'draw_local' => $this->faker->name,
-            'draw_local_link' => route('sorteio'),
+            'draw_local_link' => null,
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(['draft', 'published'])

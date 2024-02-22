@@ -70,7 +70,11 @@
                                         </svg>
 
                                         <span class="text-gray-200">Link do sorteio:</span>
-                                        <span> {{ $rifa->draw_local_link }} </span>
+                                        @if($rifa->draw_local_link)
+                                        <span> <a href="{{ $rifa->draw_local_link }}">Click aqui</a> </span>
+                                        @else
+                                        <span> <a href="{{ route('sorteio', $rifa) }}">Click aqui</a> </span>
+                                        @endif
                                     </dd>
                                     
                                 </dl>
