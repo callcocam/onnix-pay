@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
         $user =   \App\Models\User::factory()->create([
             'name' => 'Super Admin',
-            'email' => 'super-admin@afortunadodasorte.com',
+            'email' => 'super-admin@afortunadosdasorte.com',
         ]);
 
         $role = $user->roles()->create([
@@ -49,8 +49,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user =   \App\Models\User::factory()->create([
-            'name' => 'Cliente',
-            'email' => 'cliente@afortunadodasorte.com',
+            'name' => 'John Doe',
+            'email' => 'johndoe@afortunadosdasorte.com',
+        ]);
+
+        $role->users()->attach($user->id);
+
+        $user =   \App\Models\User::factory()->create([
+            'name' => 'Jane Doe',
+            'email' => 'janedoe@afortunadosdasorte.com',
+        ]);
+
+        $role->users()->attach($user->id);
+
+        $user =   \App\Models\User::factory()->create([
+            'name' => 'John Doe Junior',
+            'email' => 'johndoejunior@afortunadosdasorte.com'
         ]);
 
         $role->users()->attach($user->id);

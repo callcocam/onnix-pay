@@ -3,6 +3,7 @@
 namespace App\Livewire\Rifas;
 
 use App\Models\Rifas\Rifa;
+use Carbon\Carbon;
 use Filament\Forms\FormsComponent;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -44,6 +45,12 @@ class RifaComponent extends FormsComponent
     }
 
     #[Computed]
+    public function concorentes()
+    {
+        return  $this->rifa->sales->count();
+    }
+
+    #[Computed]
     public function reservados()
     {
         return   count($this->pending);
@@ -52,6 +59,22 @@ class RifaComponent extends FormsComponent
     public function pagos()
     {
         return   count($this->pay);
+    }
+
+    #[Computed]
+    public function diffDays()
+    {
+        $now = now();
+        $date = Carbon::create($this->rifa->end_date);
+        $year = $date->year;
+        $month = $date->month;
+        $day = $date->day; 
+        $date = Carbon::create($year, $month, $day, null, null, null, null);
+        $countdown = \App\Core\Helpers\Countdown\Facades\CountdownFacade::from($now)
+            ->to($date)->get();
+
+
+        return $countdown->days;
     }
     public function render()
     {

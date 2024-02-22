@@ -17,7 +17,7 @@ class Rifa extends AbstractModel
 {
     use HasFactory;
 
-    protected $appends = ['priceBrl'];
+    protected $appends = ['priceBrl','totalBrl'];
 
     protected $casts = [
         'gallery' => 'array'
@@ -33,6 +33,11 @@ class Rifa extends AbstractModel
         return $this->hasOne(Sale::class);
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
     public function contest()
     {
         return $this->belongsTo(Contest::class);
@@ -42,6 +47,12 @@ class Rifa extends AbstractModel
     {
         return number_format($this->price, 2, ',', '.');
     }
+
+    public function getTotalBrlAttribute()
+    {
+        return number_format($this->total, 2, ',', '.');
+    }
+    
     public function getRouteKeyName()
     {
         return 'slug';

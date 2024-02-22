@@ -21,15 +21,17 @@ class MegaSena extends LoteriasService
 
     public function get($concurso = null)
     {
-        return Cache::rememberForever(date('Y-m-d') . 'megasena', function () use ($concurso) {
-            if ($concurso) {
+        if ($concurso) {
+            return Cache::rememberForever(date('YmdH') . 'megasena' . $concurso, function () use ($concurso) {
                 $response = $this->http->get("megasena/{$concurso}");
-            } else {
+                return $response->json();
+            });
+        } else {
+            return Cache::rememberForever(date('YmdH') . 'megasena', function () {
                 $response = $this->http->get('megasena');
-            }
-
-            return $response->json();
-        });
+                return $response->json();
+            });
+        }
     }
 
     public function getLastContest()

@@ -6,7 +6,7 @@
                 @if($rifa = $sale->rifa)
                 <li class="flex py-3">
                     <div class="flex-shrink-0 w-20 h-20 overflow-hidden border border-gray-200 rounded-md">
-                        <img src="{{ $rifa->image_url }}" alt="{{ $rifa->name }}" class="object-cover object-center w-full h-full">
+                        <a href="{{ route('rifas.show', ['record'=>$rifa]) }}"> <img src="{{ $rifa->image_url }}" alt="{{ $rifa->name }}" class="object-contain p-2 object-center w-full h-full "></a>
                     </div>
 
                     <div class="flex flex-col flex-1 ml-4">
@@ -22,8 +22,17 @@
                             @endif
                         </div>
                         <div class="flex items-end justify-between flex-1 text-sm">
-                            <p class="text-gray-500 dark:text-gray-300">Quantidade {{ $sale->quantity}}</p>
- 
+                            <p class="text-gray-500 dark:text-gray-300">Números selecionados: {{ $sale->quantity}}
+
+                            <div class="flex space-x-2">
+                                @foreach ($sale->numbers as $number)
+                                <span class="text-xs font-semibold text-white h-6 w-6 rounded-full bg-orange-600 flex items-center justify-center">
+                                    <span>{{ $number->number }}</span>
+                                </span>
+                                @endforeach
+                            </div>
+                            </p>
+
                         </div>
                     </div>
                 </li>
@@ -47,9 +56,9 @@
             <!-- <button type="button" @click="()=>{ $dispatch('open-modal', {id: 'checkout', rifa:});}" class="bg-btn flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm  hover:bg-primary">
                 Finalizar compra
             </button> -->
-            <a  href="{{ route('sales.buy', $sale) }}" class="bg-btn flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm  hover:bg-primary">
+            <a href="{{ route('sales.buy', $sale) }}" class=" bg-primary/90 flex items-center justify-center w-full px-6 py-2 text-base font-medium text-white border border-transparent rounded-full shadow-sm  hover:bg-primary">
                 Finalizar compra
-</a>
+            </a>
         </div>
         <div class="flex justify-center mt-6 text-sm text-center text-gray-500 dark:text-gray-300">
             <p>

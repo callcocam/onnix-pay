@@ -26,7 +26,7 @@ class RifaFactory extends Factory
             'name' => $name = $this->faker->name,
             'slug' => \Illuminate\Support\Str::slug($name),
             'description' => $this->faker->text, 
-            'type' => $this->faker->randomElement(['free', 'paid']), // 'free', 'paid'
+            'type' =>  'paid',
             'image' => sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             'preview' => $this->faker->text,
             'code' => $this->IniciasNomes($name),
@@ -39,6 +39,7 @@ class RifaFactory extends Factory
             ]),
             'price' => $this->faker->randomFloat(2, 1, 10),
             'quantity' => 6,
+            'total' => $this->faker->randomFloat(2, 1000, 10000),
             'start_date' => now()->subDays(rand(11, 150)),
             'end_date' => now()->addDays($endDays), 
             'draw_local' => $this->faker->name,

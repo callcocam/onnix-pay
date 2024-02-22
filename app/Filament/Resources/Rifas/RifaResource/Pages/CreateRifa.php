@@ -101,6 +101,13 @@ class CreateRifa extends CreateRecord
                     ])
                     ->default(1)
                     ->minValue(1),
+                //total
+                Money::make('total')
+                    ->label('Valor total')
+                    ->columnSpan([
+                        'md' => 3
+                    ])
+                    ->default(0),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('Data inicial da competição')
                     ->columnSpan([
@@ -109,7 +116,7 @@ class CreateRifa extends CreateRecord
                 Forms\Components\DatePicker::make('end_date')
                     ->label('Data final da competição')
                     ->columnSpan([
-                        'md' => 4
+                        'md' => 3
                     ]),
                 // Forms\Components\DatePicker::make('draw_date')
                 //     ->label('Data do sorteio')
@@ -125,7 +132,7 @@ class CreateRifa extends CreateRecord
                     ->label('Concurso')
                     ->relationship('contest', 'name')
                     ->columnSpan([
-                        'md' => 8
+                        'md' => 6
                     ]),
                 Forms\Components\Textarea::make('draw_local')
                     ->label('Local do sorteio')

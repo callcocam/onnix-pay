@@ -63,7 +63,7 @@ class RifaResource extends Resource
                 //     ->label('Hora do sorteio')
                 //     ->date()
                 //     ->searchable(),
-                Tables\Columns\SelectColumn::make('contest.name')
+                Tables\Columns\TextColumn::make('contest.name')
                     ->label('Concurso') 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -68,9 +68,7 @@ Route::middleware('auth')->group(function () {
         ->name('orders.show');
 
     Route::get('rifas/{sale}/comprar', \App\Livewire\Checkout::class)->name('sales.buy');
-});
-
-Route::middleware('auth')->group(function () {
+ 
     Route::get('email/verify/{id}/{hash}', \App\Http\Controllers\Auth\EmailVerificationController::class)
         ->middleware('signed')
         ->name('verification.verify');
@@ -85,22 +83,22 @@ Route::get('/billing-portal', function (Request $request) {
 });
 
 
-Route::get('/pix', function () {
-    $res = Pix::make()->create([
-        "amount" => 1,
-        "email" => "evelynliviarodrigues@alkbrasil.com.br",
-        "quantity" => 1,
-        "discount" => 0,
-        "invoice_no" => "2",
-        "due_date" => "2023-11-09",
-        "tax" => 0,
-        "item_name" => "Teste de invoice",
-        "notes" => "Teste de observacoes de invoice",
-        "document" => "12345678909",
-        "client" => "Evelyn Lívia Rodrigues"
-    ]);
-    return response()->json($res);
-});
+// Route::get('/pix', function () {
+//     $res = Pix::make()->create([
+//         "amount" => 1,
+//         "email" => "evelynliviarodrigues@alkbrasil.com.br",
+//         "quantity" => 1,
+//         "discount" => 0,
+//         "invoice_no" => "2",
+//         "due_date" => "2023-11-09",
+//         "tax" => 0,
+//         "item_name" => "Teste de invoice",
+//         "notes" => "Teste de observacoes de invoice",
+//         "document" => "12345678909",
+//         "client" => "Evelyn Lívia Rodrigues"
+//     ]);
+//     return response()->json($res);
+// });
 
 
 Route::get('checkout/{sale}/success',  SuccessComponent::class)->name('checkout-success');
@@ -119,7 +117,7 @@ Route::get('sorteio', function () {
     return  ;
 })->name('sorteio');
 
-Route::get('megasena', function () {
+Route::get('megasena', function (Request $request) {
 
-    return MegaSena::make()->get();
+    return MegaSena::make()->get($request->query('concurso'));
 });

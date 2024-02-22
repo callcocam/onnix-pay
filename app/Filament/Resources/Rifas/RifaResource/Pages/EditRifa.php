@@ -90,6 +90,13 @@ class EditRifa extends EditRecord
                     ])
                     ->default(1)
                     ->minValue(1),
+                //total
+                Money::make('total')
+                    ->label('Valor total')
+                    ->columnSpan([
+                        'md' => 3
+                    ])
+                    ->default(0),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('Data inicial da competição')
                     ->columnSpan([
@@ -98,7 +105,7 @@ class EditRifa extends EditRecord
                 Forms\Components\DatePicker::make('end_date')
                     ->label('Data final da competição')
                     ->columnSpan([
-                        'md' => 4
+                        'md' => 3
                     ]),
                 // Forms\Components\DatePicker::make('draw_date')
                 //     ->label('Data do sorteio')
@@ -111,11 +118,11 @@ class EditRifa extends EditRecord
                 //         'md' => 4
                 //     ]),
                 Forms\Components\Select::make('contest_id')
-                ->label('Concurso')
-                ->relationship('contest', 'name')
-                ->columnSpan([
-                    'md' => 8
-                ]),
+                    ->label('Concurso')
+                    ->relationship('contest', 'name')
+                    ->columnSpan([
+                        'md' => 6
+                    ]),
                 Forms\Components\Textarea::make('draw_local')
                     ->label('Local do sorteio')
                     ->columnSpanFull(),

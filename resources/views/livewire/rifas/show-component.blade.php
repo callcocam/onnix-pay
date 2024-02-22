@@ -36,15 +36,19 @@
                                     <dd class="mt-4 text-base font-semibold leading-7 text-gray-900 flex flex-col ">
                                         <div class="flex justify-between text-gray-100">
                                             <span>0</span>
-                                            <span>{{ $rifa->quantity }}</span>
+                                            <span>{{  \App\Core\Helpers\Helpers::money($rifa->total) }} </span>
                                         </div>
-                                        <div class="w-full relative h-2 rounded-full bg-slate-300">
+                                        <div class="w-full relative h-2 rounded-full bg-slate-300"  wire:poll.1000ms>
+                                            @if($this->numberProgress >= 100)
                                             <div class="absolute left-0 h-2  bg-green-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
+                                            @else
+                                            <div class="absolute left-0 h-2  bg-yellow-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
+                                            @endif
                                         </div>
                                     </dd>
                                     @if($rifa->type == 'paid')
                                     <dt class="sr-only">Salary</dt>
-                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">R$ {{ $rifa->priceBrl }}</dd>
+                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">  {{ \App\Core\Helpers\Helpers::money($rifa->price) }}</dd>
                                     @else
                                     <dt class="sr-only">Salary</dt>
                                     <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">Grátis</dd>
