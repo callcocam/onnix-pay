@@ -30,8 +30,10 @@ trait AccountWith
                     'md' => 4,
 
                 ])
+                ->readOnly()
                 ->required(),
             TextInput::make('email')
+                ->readOnly()
                 ->email()
                 ->columnSpan([
                     'sm' => 6,
@@ -152,7 +154,7 @@ trait AccountWith
     {
         return [
             TextInput::make('billet_email')
-                ->email() 
+                ->email()
                 ->required()
                 ->columnSpanFull(),
         ];
@@ -162,7 +164,7 @@ trait AccountWith
     {
         return [
             TextInput::make('pix_email')
-                ->email() 
+                ->email()
                 ->required()
                 ->columnSpanFull(),
         ];

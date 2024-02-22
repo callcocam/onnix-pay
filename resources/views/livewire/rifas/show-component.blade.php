@@ -39,9 +39,7 @@
                                             <span>{{ $rifa->quantity }}</span>
                                         </div>
                                         <div class="w-full relative h-2 rounded-full bg-slate-300">
-                                            <div class="absolute left-0 h-2  bg-yellow-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}">
-
-                                            </div>
+                                            <div class="absolute left-0 h-2  bg-green-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
                                         </div>
                                     </dd>
                                     @if($rifa->type == 'paid')
@@ -70,10 +68,9 @@
                                         <span class="text-gray-200">Link do sorteio:</span>
                                         <span> {{ $rifa->draw_local_link }} </span>
                                     </dd>
+                                    
                                 </dl>
                             </li>
-
-
                         </ul>
                         <div class="mt-8 flex border-t border-gray-100 pt-8 text-gray-50">
                        

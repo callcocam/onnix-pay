@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Rifas\Category;
 use App\Models\Rifas\Rifa;
+use Callcocam\Tenant\Models\Tenant;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,12 +16,45 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Tenant::query()->forceDelete();
+
+        Tenant::query()->create([
+            'name' => 'Rifa',
+            'email' => 'contato@afortunadodasorte.com',
+            'domain' => request()->getHost(),
+            'status' => 'published',
+        ]);
+
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $user =   \App\Models\User::factory()->create([
+            'name' => 'Super Admin',
+            'email' => 'super-admin@afortunadodasorte.com',
+        ]);
+
+        $role = $user->roles()->create([
+            'name' => 'super-admin',
+            'slug' => 'super-admin',
+            'description' => 'Super Admin',
+            'special' => 'all-access',
+        ]);
+
+        $role->users()->attach($user->id);
+
+        $role = $user->roles()->create([
+            'name' => 'admin',
+            'slug' => 'admin',
+            'description' => 'Admin',
+            'special' => null,
+        ]);
+
+        $user =   \App\Models\User::factory()->create([
+            'name' => 'Cliente',
+            'email' => 'cliente@afortunadodasorte.com',
+        ]);
+
+        $role->users()->attach($user->id);
+
 
         Rifa::query()->forceDelete();
         Category::query()->forceDelete();

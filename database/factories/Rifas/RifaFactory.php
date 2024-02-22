@@ -37,17 +37,15 @@ class RifaFactory extends Factory
                 sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
                 sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             ]),
-            'price' => $this->faker->randomFloat(2, 1, 200),
-            'quantity' => $this->faker->randomNumber(3),
+            'price' => $this->faker->randomFloat(2, 1, 10),
+            'quantity' => 6,
             'start_date' => now()->subDays(rand(11, 150)),
-            'end_date' => now()->addDays($endDays),
-            'draw_date' => now()->addDays($endDays + 1),
-            'draw_time' => $this->faker->time(),
+            'end_date' => now()->addDays($endDays), 
             'draw_local' => $this->faker->name,
-            'draw_local_link' => $this->faker->url,
+            'draw_local_link' => route('sorteio'),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
-            'status' => $this->faker->randomElement(['published', 'draft', 'published', 'published'])
+            'status' => $this->faker->randomElement(['draft', 'published'])
         ];
     }
 

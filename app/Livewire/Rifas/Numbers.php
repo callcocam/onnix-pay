@@ -29,7 +29,7 @@ class Numbers extends Component
         $this->rifa = $rifa;
 
 
-        $this->sale = $this->rifa->sale; 
+        $this->sale = $this->rifa->sale()->where('user_id', auth()->id())->first();
 
         if ($this->sale) {
             $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
@@ -38,14 +38,24 @@ class Numbers extends Component
         }
     }
 
+
+
     public function addNumber($number)
     {
         if (!$this->sale) {
             $this->sale = auth()->user()->sales()->create([
                 'rifa_id' => $this->rifa->id,
                 'description' => 'Rifa de ' . $this->rifa->name,
+                'invoice' =>  $this->rifa->code,
+                'quantity' => 1,
+                'total' => $this->rifa->price,
+                'subtotal' => $this->rifa->price,
+                'discount' => 0,
+                'shipping' => 0,
+                'status' => 'draft'
             ]);
         }
+
 
         if (!$this->sale->numbers()
             ->where('user_id', auth()->id())
@@ -58,11 +68,27 @@ class Numbers extends Component
                 'rifa_id' => $this->rifa->id,
                 'description' => 'Rifa de ' . $this->rifa->name,
             ]);
+
+            $this->sale->quantity = count($this->numbers) + 1;
+            $this->sale->save();
             $this->dispatch('cart-number-updated');
             $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
             $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
             $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
         }
+    }
+
+    public function removeNumber($number)
+    {
+        $this->sale->numbers()
+            ->where('user_id', auth()->id())
+            ->where('status', 'pending')
+            ->where('number', $number)->forceDelete(); 
+        $this->sale->quantity = count($this->numbers) - 1;
+        $this->sale->save();
+        $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
+        $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
+        $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
     }
 
     #[Computed]
@@ -86,6 +112,12 @@ class Numbers extends Component
     public function pagos()
     {
         return   count($this->pay);
+    }
+
+    #[Computed]
+    public function total()
+    {
+        return   $this->sales->number->count();
     }
 
     public function render()

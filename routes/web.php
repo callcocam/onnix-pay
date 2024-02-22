@@ -60,6 +60,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('password/confirm', \App\Livewire\Auth\Passwords\Confirm::class)
         ->name('password.confirm');
+
+    Route::get('pedidos', \App\Livewire\OrdersComponent::class)
+        ->name('orders.list');
+
+    Route::get('pedidos/{sale}', \App\Livewire\OrderComponent::class)
+        ->name('orders.show');
+
+    Route::get('rifas/{sale}/comprar', \App\Livewire\Checkout::class)->name('sales.buy');
 });
 
 Route::middleware('auth')->group(function () {
@@ -77,7 +85,7 @@ Route::get('/billing-portal', function (Request $request) {
 });
 
 
-Route::get('/pix', function () { 
+Route::get('/pix', function () {
     $res = Pix::make()->create([
         "amount" => 1,
         "email" => "evelynliviarodrigues@alkbrasil.com.br",
@@ -95,8 +103,8 @@ Route::get('/pix', function () {
 });
 
 
-Route::get('checkout/{order}/success',  SuccessComponent::class)->name('checkout-success');
-Route::get('checkout/{order}/cancel',  CancelComponent::class)->name('checkout-cancel');
+Route::get('checkout/{sale}/success',  SuccessComponent::class)->name('checkout-success');
+Route::get('checkout/{sale}/cancel',  CancelComponent::class)->name('checkout-cancel');
 
 Route::get('checkout', function (Request $request) {
     return $request->user()->checkout(['price_tshirt' => 1], [
@@ -106,7 +114,12 @@ Route::get('checkout', function (Request $request) {
 })->name('checkout-create');
 
 
+Route::get('sorteio', function () {
+
+    return  ;
+})->name('sorteio');
+
 Route::get('megasena', function () {
-   
+
     return MegaSena::make()->get();
 });

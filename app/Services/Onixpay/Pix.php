@@ -21,13 +21,12 @@ class Pix extends OnnixPayService
             "invoice_no" => $order->invoice,
             "due_date" => $order->created_at->addDays(3)->format('Y-m-d'),
             "tax" => $order->shipping,
-            "item_name" => get_tenant()->name . " - " . $order->id,
-            "notes" => "",
+            "notes" => $order->description,
             "document" => data_get($data, 'document', auth()->user()->document),
             "client" => auth()->user()->name
         ], $data); 
 
-        $response = $this->http->post('pix/create', $postData); 
+        $response = $this->http->post('pix/create', $postData);  
         return $response;
     }
 

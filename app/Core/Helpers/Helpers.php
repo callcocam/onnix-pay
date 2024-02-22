@@ -10,6 +10,7 @@ namespace App\Core\Helpers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use NumberFormatter;
 
 class Helpers
 {
@@ -63,5 +64,16 @@ class Helpers
             return $carbon->create($d, $m, $y, $h, $i, $s);
         }
         return $carbon->create(null, null, null, null, null, null);
+    }
+
+    public static function money($money, string $currency = 'BRL', int $divideBy = 0)
+    {
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+
+        if ($divideBy) {
+            $money /= $divideBy;
+        }
+
+        return $formatter->formatCurrency($money, $currency);
     }
 }

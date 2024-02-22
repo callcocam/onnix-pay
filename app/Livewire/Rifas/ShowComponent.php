@@ -38,10 +38,12 @@ class ShowComponent extends Component
     public function numberProgress()
     {
         $totalNumbers = $this->rifa->quantity;
+        $percentageSold = 0;
+        if ($sale = $this->rifa->sale) { 
+            $soldNumbers = $sale->numbers->count();
 
-        $soldNumbers = $this->rifa->sale()->where('status', 'pay')->count();
-        
-        $percentageSold = ($soldNumbers / $totalNumbers) * 100;
+            $percentageSold = ($soldNumbers / $totalNumbers) * 100;
+        }
 
         return sprintf('%0.2f', $percentageSold);
     }

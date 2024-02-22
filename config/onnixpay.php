@@ -6,4 +6,5 @@ return [
     'api_private_key' => env('ONIXPAY_API_PRIVATE_KEY'),
     'basic' => env('ONIXPAY_API_BASIC'),
     'token' => env('ONIXPAY_API_TOKEN'),
+    'quantity' => env('ONIXPAY_API_QUANTITY',60),
 ];

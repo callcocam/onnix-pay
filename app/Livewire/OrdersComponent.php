@@ -1,27 +1,30 @@
 <?php
 
-namespace App\Livewire\Profile;
+/**
+ * Created by Claudio Campos.
+ * User: callcocam@gmail.com, contato@sigasmart.com.br
+ * https://www.sigasmart.com.br
+ */
 
+namespace App\Livewire;
+
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use NumberFormatter;
 
 class OrdersComponent extends Component
 {
-
-    public $orders;
-
-    public function mount()
-    {
-        if (!auth()->check()) {
-            return;
-        }
-        $this->orders = auth()->user()->sales;
-    }
-
     public function render()
     {
-        return view('livewire.profile.orders-component');
+        return view('livewire.orders-component');
     }
+
+    #[Computed()]
+    public function sales()
+    {
+        return auth()->user()->sales;
+    }
+
 
     public function money($money, string $currency = 'BRL', int $divideBy = 0)
     {

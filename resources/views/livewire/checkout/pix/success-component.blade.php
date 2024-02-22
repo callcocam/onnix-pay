@@ -7,7 +7,7 @@
         </svg>
         <div class="text-center">
             <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Pedido finalizado, com sucesso!</h3>
-            <p class="text-gray-600 my-2">{{ $order->description }}</p>
+            <p class="text-gray-600 my-2">{{ $sale->description }}</p>
             <p class="flex items-center justify-center">
                 @if($dataOrder = $this->dataOrder)
                 <img src="{{ data_get($dataOrder, 'invoice.qrcode') }} " alt="{{ data_get($dataOrder, 'reference') }}">
