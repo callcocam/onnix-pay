@@ -28,8 +28,7 @@
             </div>
          </div>
       </div>
-
-      <livewire:top-winner-component />
+ 
 
       <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
          <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
@@ -60,8 +59,7 @@
             </button>
          </div>
          <div class="mx-auto flex w-full flex-col md:max-w-7xl md:flex-row md:space-x-4">
-            <div class="w-full md:w-2/6">
-               @include('includes.sorteio-instrucao')
+            <div class="w-full md:w-2/6"> 
             </div>
             <div class="w-full flex-col md:w-4/6">
                @if($this->winners->count() > 0)
