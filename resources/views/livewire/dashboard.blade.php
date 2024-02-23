@@ -60,7 +60,8 @@
             </button>
          </div>
          <div class="mx-auto flex w-full flex-col md:max-w-7xl md:flex-row md:space-x-4">
-            <div class="w-full md:w-2/6"> 
+            <div class="w-full md:w-2/6">
+               @include('includes.sorteio-instrucao')
             </div>
             <div class="w-full flex-col md:w-4/6">
                @if($this->winners->count() > 0)
