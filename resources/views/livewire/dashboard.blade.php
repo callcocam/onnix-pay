@@ -28,7 +28,8 @@
             </div>
          </div>
       </div>
- 
+
+      <livewire:top-winner-component />
 
       <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
          <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
