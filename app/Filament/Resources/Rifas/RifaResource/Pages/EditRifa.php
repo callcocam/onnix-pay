@@ -7,6 +7,7 @@ use Callcocam\Tenant\Traits\HasUploadFormField;
 use Filament\Actions;
 use Filament\Forms\Form;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
 use Filament\Resources\Pages\EditRecord;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 
@@ -52,19 +53,22 @@ class EditRifa extends EditRecord
                     ->label('Prévia')
                     ->columnSpanFull(),
                 static::getUploadFormFieldset('image'),
-                Forms\Components\FileUpload::make('gallery')
-                    ->label('Galeria')
-                    ->multiple()
-                    ->columnSpanFull()
-                    ->image(),
+                Fieldset::make('Geleria de imagens')
+                    ->columns(12)
+                    ->schema([
+                        Forms\Components\FileUpload::make('gallery')
+                            ->label('Galeria')
+                            ->multiple()
+                            ->columnSpanFull()
+                            ->image(),
+                    ]),
                 Forms\Components\Radio::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'published' => 'Published',
                     ])
                     ->required()
-                    ->columnSpanFull()
-                    ->inline()
+                    ->columnSpanFull() 
                     ->default('draft'),
                 Forms\Components\Select::make('type')
                     ->label('Tipo')

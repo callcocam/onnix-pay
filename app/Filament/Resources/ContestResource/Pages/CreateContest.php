@@ -29,12 +29,14 @@ class CreateContest extends CreateRecord
         $numero = data_get($data, 'numeroConcursoProximo', 0);
 
         $description = [];
+        $status = 'published';
         if (!Contest::where('number', data_get($data, 'numero'))->exists()) {
             $numero = data_get($data, 'numero');
             $date = Helpers::date_carbom_format(data_get($data, 'dataApuracao'));
             $description = data_get($data, 'listaDezenas');
+            $status = 'concluded';
         }
- 
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -57,7 +59,10 @@ class CreateContest extends CreateRecord
                     ->default($description)
 
                     ->columnSpanFull(),
-                static::getStatusFormRadioField()
+                Forms\Components\Radio::make('status')
+                    ->options(static::getStatuses()) 
+                    ->default($status)
+                    ->required(),
             ])->columns(3);
     }
 }

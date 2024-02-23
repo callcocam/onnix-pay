@@ -8,7 +8,7 @@
             <div class="mx-auto text-white flex">
                 Esta competição termina em:
             </div>
-            <livewire:count-down :time="$rifa->draw_time" :date="$rifa->draw_date" />
+            <livewire:count-down :date="$rifa->end_date" />
         </div>
 
     </x-slot>
@@ -36,9 +36,9 @@
                                     <dd class="mt-4 text-base font-semibold leading-7 text-gray-900 flex flex-col ">
                                         <div class="flex justify-between text-gray-100">
                                             <span>0</span>
-                                            <span>{{  \App\Core\Helpers\Helpers::money($rifa->total) }} </span>
+                                            <span>{{ \App\Core\Helpers\Helpers::money($rifa->total) }} </span>
                                         </div>
-                                        <div class="w-full relative h-2 rounded-full bg-slate-300"  wire:poll.1000ms>
+                                        <div class="w-full relative h-2 rounded-full bg-slate-300">
                                             @if($this->numberProgress >= 100)
                                             <div class="absolute left-0 h-2  bg-green-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
                                             @else
@@ -48,7 +48,7 @@
                                     </dd>
                                     @if($rifa->type == 'paid')
                                     <dt class="sr-only">Salary</dt>
-                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">  {{ \App\Core\Helpers\Helpers::money($rifa->price) }}</dd>
+                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right"> {{ \App\Core\Helpers\Helpers::money($rifa->price) }}</dd>
                                     @else
                                     <dt class="sr-only">Salary</dt>
                                     <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">Grátis</dd>
@@ -76,17 +76,102 @@
                                         <span> <a href="{{ route('sorteio', $rifa) }}">Click aqui</a> </span>
                                         @endif
                                     </dd>
-                                    
+
                                 </dl>
                             </li>
                         </ul>
-                        <div class="mt-8 flex border-t border-gray-100 pt-8 text-gray-50">
-                       
+                        <div class="mt-8 flex flex-col border-t border-gray-100 pt-8 text-gray-50">
+                            @if($sales = $this->sales)
+                            <div class="flex flex-col items-start">
+                                <div class="flex  space-x-2 items-center">
+                                    <p class="text-lg font-bold text-green-500">Total de rifas:</p>
+                                    <p class="text-sm">{{ str_pad($sales->count(), 2, '0', STR_PAD_LEFT) }} </p>
+                                </div>
+                                <div class="flex   space-x-2 items-center">
+                                    <p class="text-lg font-bold text-green-500">Total de números:</p>
+                                    <p class="text-sm">{{ str_pad( $sales->sum('quantity'), 3, '0', STR_PAD_LEFT) }} </p>
+                                </div>
+                                <div class="flex  space-x-2 items-center">
+                                    <p class="text-lg font-bold text-green-500">Valor total:</p>
+                                    <p class="text-sm">{{ \App\Core\Helpers\Helpers::money($sales->sum('total')) }} </p>
+                                </div>
+                                <div class="flex  flex-col  space-x-2 justify-center">
+                                    <p class="text-lg font-bold text-green-500">Nemeros:</p>
+                                    @foreach($sales as $sale)
+                                    <ul class="flex gap-2">
+                                        @foreach($sale->numbers as $number)
+                                        <li class="border-t border-gray-200 py-2">
+                                            <span class="mx-auto text-sm flex h-8 w-8 items-center justify-center rounded-full font-semibold bg-navy-600 dark:text-gray-900 dark:bg-gray-100 hover:bg-navy-400 text-white">{{ $number->number }} </span>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
+                            @if($sorteio)
+                            <div class="flex flex-col space-x-2 items-center justify-center">
+                                <p class="text-xl font-bold text-green-500">O sorteio aconteceu no dia </p>
+                                <p class="text-2xl">{{ \App\Core\Helpers\Helpers::date_carbom_format($sorteio->drawn_at)->format('d M Y') }} </p>
+                            </div>
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="text-xl font-bold text-green-500">Número do Concurso:</p>
+                                <a href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" class="text-2xl font-bold">{{ $sorteio->number }}</a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        </div>      
+        </div>
     </div>
+    @if($winners)
+    <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
+        <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
+            <h2 class="text-yellow-500">Conheça o(s) vencedore(s) do concurso {{ $sorteio->number }}</h2>
+            <h1 class="text-4xl font-bold text-slate-500 md:text-6xl">VENCEDORE(S)</h1>
+            <p>Verifique a data o prazo de entrega <a class="text-primary" target="_blank" href="{{ route('about') }}">Aqui</a></p>
+        </div>
+        <div class="flex w-full mb-10 h-36 flex-col items-center overflow-hidden border-b md:max-w-7xl md:flex-row md:justify-between">
+            <button class="flex w-full flex-col items-center border-b-4 border-orange-500 py-6">
+                <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/1.png" alt="DREAM CAR" />
+                <span>CARRO DO SONHOS</span>
+            </button>
+            <button class="flex w-full flex-col items-center py-4">
+                <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/2.png" alt="Bike" />
+                <span>MOTO</span>
+            </button>
+            <button class="flex w-full flex-col items-center py-4">
+                <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/3.png" alt="WATCH" />
+                <span>RELOGIO</span>
+            </button>
+            <button class="flex w-full flex-col items-center py-4">
+                <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/4.png" alt="LEPTOP" />
+                <span>NOTBOOK</span>
+            </button>
+            <button class="flex w-full flex-col items-center py-4">
+                <img src="https://pixner.net/rifa1/demo/assets/images/icon/winner-tab/5.png" alt="MONEY" />
+                <span>DINHEIRO</span>
+            </button>
+        </div>
+        <div class="mx-auto flex w-full flex-col md:max-w-7xl md:flex-row md:space-x-4">
+            <div class="w-full md:w-2/6">
+                @include('includes.sorteio-instrucao')
+            </div>
+            <div class="w-full flex-col md:w-4/6">
+                @if($winners->count() > 0)
+                @foreach($winners as $winner)
+                @livewire('winner-component', ['winner' => $winner], key($winner->id))
+                @endforeach
+                @else
+                <div class="flex w-full flex-col items-center justify-center">
+                    <p class="text-2xl text-gray-500">Nenhum vencedor encontrado</p>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    @else
     @livewire('rifas.numbers', ['rifa' => $rifa])
+    @endif
 </div>

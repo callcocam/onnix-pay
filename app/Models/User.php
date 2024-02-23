@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Rifas\Sales\Sale;
+use Callcocam\Acl\Concerns\HasProfilePhoto;
 use Callcocam\Acl\Traits\HasUlids;
 use Callcocam\Tenant\BelongsToTenants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasUlids, BelongsToTenants, SoftDeletes;
 
     use Billable;
+    use HasProfilePhoto;
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +49,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['billet_email', 'pix_email', 'card_email'];
+    protected $appends = ['billet_email', 'pix_email', 'card_email', 'profile_photo_url'];
+    
+    public function profilePhoto()
+    {
+        return  $this->getAttribute('cover') ;
+    }
 
     public function getbilletEmailAttribute($value)
     {
@@ -82,5 +89,20 @@ class User extends Authenticatable
     public function orderDratf()
     {
         return $this->orders()->where('status', 'draft');
+    }
+
+    public function orderPending()
+    {
+        return $this->orders()->where('status', 'pending');
+    }
+
+    public function orderProcessing()
+    {
+        return $this->orders()->where('status', 'processing');
+    }
+
+    public function orderPaid()
+    {
+        return $this->orders()->whereIn('status', ['paid', 'completed']);
     }
 }

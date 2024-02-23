@@ -12,11 +12,14 @@ use App\Models\AbstractModel;
 use App\Models\Cupon;
 use App\Models\Rifas\Rifa;
 use App\Models\User;
+use App\Models\Winner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sale extends AbstractModel
 {
     use HasFactory;
+
+    protected $apends = ['dataIvoice'];
 
     public function rifa()
     {
@@ -41,5 +44,16 @@ class Sale extends AbstractModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function winner()
+    {
+        return $this->hasOne(Winner::class);
+    }
+
+    public function getDataInvoiceAttribute()
+    {
+        $invoice = json_decode($this->data, true);
+        return  data_get($invoice, 'invoice');
     }
 }

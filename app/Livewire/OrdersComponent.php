@@ -22,7 +22,7 @@ class OrdersComponent extends Component
     #[Computed()]
     public function sales()
     {
-        return auth()->user()->sales;
+        return auth()->user()->orderPending;
     }
 
 

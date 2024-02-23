@@ -19,8 +19,8 @@
             <div class="mx-auto max-w-7xl px-6 lg:px-8 w-full">
                 <div class="mx-auto flex max-w-2xl flex-col justify-between gap-16 lg:mx-0 lg:max-w-none lg:flex-row ">
                     <div class="flex flex-col w-full text-slate-300 justify-center items-center">
-                        <div class="winner-details-wrapper bg_img" data-background="assets/images/elements/winner-details.jpg" style="background-image: url(&quot;assets/images/elements/winner-details.jpg&quot;);">
-                            <div class="left">
+                        <div class="winner-details-wrapper bg_img" >
+                            <div class="flex w-full items-center justify-center">
                                 <img src="{{ Storage::url($rifa->image) }}" alt="{{ $rifa->name }}">
                             </div>
                             <div class="flex flex-col items-center justify-center">
@@ -30,9 +30,22 @@
                                 <h4 class="title mt-4">Números sorteados:</h4>
                                 <ul class="flex gap-2 ">
                                     @foreach($sorteio->description as $number)
-                                    <li class="bg-orange-600  hover:bg-orange-200 shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number }}</li>
+                                        @if(in_array($number, $this->numbers))
+                                            <li class="bg-green-600  hover:bg-green-500 shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number }}</li>
+                                            @else
+                                            <li class="bg-orange-600  hover:bg-orange-500  shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number }}</li>
+                                        @endif
                                     @endforeach
                                 </ul>
+                                    @if($winner)
+                                        <div class="mt-5">
+                                            Parabems  <span class="text-yellow-500 font-bold"> {{ $winner->user->name }}</span> você é o vencedor do sorteio <span class="text-yellow-500 font-bold">{{ $sorteio->name }}</span> 
+                                        </div>
+                                    @else   
+                                        <div class="mt-5">
+                                            <p class="text-red-500">Nenhum vencedor encontrado</p>
+                                        </div>
+                                    @endif    
                                 <div class="mt-5">
                                     <a href="{{ route('rifas.list') }}" class="btn btn-primary">Ver todas as rifas</a>
                                 </div>

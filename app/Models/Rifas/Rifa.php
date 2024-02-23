@@ -12,12 +12,13 @@ use App\Models\AbstractModel;
 use App\Models\Contest;
 use App\Models\Rifas\Sales\Sale;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Rifa extends AbstractModel
 {
     use HasFactory;
 
-    protected $appends = ['priceBrl','totalBrl'];
+    protected $appends = ['priceBrl','totalBrl', 'image_url'];
 
     protected $casts = [
         'gallery' => 'array'
@@ -38,6 +39,11 @@ class Rifa extends AbstractModel
         return $this->hasMany(Sale::class);
     }
 
+    public function currentSale()
+    {
+        return $this->sale()->where('status', 'draft')->where('user_id', auth()->id());
+    }
+
     public function contest()
     {
         return $this->belongsTo(Contest::class);
@@ -53,6 +59,11 @@ class Rifa extends AbstractModel
         return number_format($this->total, 2, ',', '.');
     }
     
+    public function getImageUrlAttribute()
+    {
+        return Storage::url($this->image);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

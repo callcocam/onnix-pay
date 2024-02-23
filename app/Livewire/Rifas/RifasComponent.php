@@ -32,6 +32,7 @@ class RifasComponent extends Component
         return Rifa::query()
             ->where('status', 'published')
             ->whereDate('start_date', '<=', now())
+            ->whereDate('end_date', '>=', now())
             ->when($this->c, function ($query) {
                 $query->whereHas('category', function ($query) {
                     $query->where('slug', $this->c);

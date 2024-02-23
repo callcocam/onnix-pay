@@ -20,17 +20,7 @@ class Winner extends AbstractModel
     {
         return $this->belongsTo(User::class);
     }
-
-    public function rifa()
-    {
-        return $this->belongsTo(Rifa::class);
-    }
-
-    public function contest()
-    {
-        return $this->belongsTo(Contest::class);
-    }
-
+ 
     public function sale()
     {
         return $this->belongsTo(Sale::class);

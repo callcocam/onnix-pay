@@ -30,4 +30,6 @@ class Dashboard extends Component
             ->limit(10)
             ->get();
     }
+
+    
 }

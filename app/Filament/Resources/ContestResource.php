@@ -12,6 +12,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -66,6 +67,26 @@ class ContestResource extends Resource
         ];
     }
 
+    
+    public static function getStatusTableIconColumn(): IconColumn
+    {
+        return  IconColumn::make('status')
+            ->label(static::getStatusColumnLabel())
+            ->color(fn (string $state): string => match ($state) {
+                'draft' => 'danger',
+                'reviewing' => 'warning',
+                'published' => 'success',
+                'concluded' => 'gray',
+                default => 'gray',
+            })
+            ->icon(fn (string $state): string => match ($state) {
+                'draft' => 'heroicon-o-no-symbol',
+                'reviewing' => 'heroicon-o-clock',
+                'published' => 'heroicon-o-check-circle',
+                'concluded' => 'heroicon-o-check',
+            });
+    }
+    
     public static function getPages(): array
     {
         return [

@@ -32,7 +32,9 @@ class Pix extends OnnixPayService
 
     public function get($id)
     {
-        $response = $this->http->get("pix/invoice/$id");
-        return json_decode($response->getBody()->getContents());
+        $response = $this->http->get("pix/invoice/$id"); 
+
+        return $response;
     }
+ 
 }

@@ -31,10 +31,10 @@ class CountDown extends Component
 
     public $second;
 
-    public function mount($date, $time)
+    public function mount($date )
     {
         $this->date = $date;
-        $this->time = $time; 
+        $this->time = "00:00:00"; 
     }
 
     #[Computed]

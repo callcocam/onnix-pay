@@ -25,15 +25,32 @@
                             </div>
                             <div class="flex flex-col items-center justify-center">
                                 <p class="contest-number">Código: {{ $rifa->code }}</p>
-                                @if($sorteio)
-                                <p class=""><span class="text-green-500 font-bold">O sorteio acontecerá no dia :</span> <span class="font-bold">{{ \App\Core\Helpers\Helpers::date_carbom_format($sorteio->drawn_at)->format('d M Y') }}</span></p>
+
+                                <p class=""><span class="text-green-500 font-bold">O sorteio acontecerá a partir do dia :</span> <span class="font-bold">{{ Helper::translatedFormat($rifa->end_date, 'd M Y') }}</span></p>
                                 <div class="line"></div>
-                                <h4 class="title mt-4">Números sorteados:</h4>
-                                <ul class="flex gap-2 ">
-                                    @foreach($sorteio->description as $number)
-                                    <li class="bg-orange-600  hover:bg-orange-200 shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number }}</li>
+                                @if($sales)
+                                <h4 class="title mt-4">Seus número(s):</h4>
+                                @foreach($sales as $sale)
+                                @if($numbers = $sale->numbers)
+                                <ul class="flex gap-2 mt-4">
+                                    @foreach($numbers as $number)
+                                    @if($number->status == 'pay')
+                                    <li class="bg-green-600  hover:bg-green-500 shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number->number }}</li>
+                                    @else
+                                    <li class="bg-orange-600  hover:bg-orange-500  shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number->number }}</li>
+                                    @endif
                                     @endforeach
                                 </ul>
+                                @if(in_array($sale->status, ['pending', 'draft']))
+                                <div class="mt-5">
+                                    <a href="{{ route('sales.buy', $sale) }}" class=" bg-primary/90 flex items-center justify-center w-full px-6 py-2 text-base font-medium text-white border border-transparent rounded-full shadow-sm  hover:bg-primary">
+                                        Finalizar compra
+                                    </a>
+                                </div>
+                                @endif
+                                @endif
+
+                                @endforeach
                                 @endif
                                 <div class="mt-5">
                                     <a href="{{ route('rifas.list') }}" class="btn btn-primary">Ver todas as rifas</a>

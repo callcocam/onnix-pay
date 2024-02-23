@@ -3,8 +3,10 @@
 namespace App\Livewire\Rifas;
 
 use App\Models\Rifas\Rifa;
+use App\Models\Winner;
 use Carbon\Carbon;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowComponent extends Component
@@ -14,25 +16,26 @@ class ShowComponent extends Component
 
     public $sale;
 
+    public $sorteio;
+
+    public $winners;
+
     public function mount(Rifa $record)
     {
         $this->rifa = $record;
-        $this->sale = $record->sale()->where('user_id', auth()->id())->first();
+        $this->sale = $record->currentSale;
         $user = auth()->user();
         $user->load('address');
-    }
 
-    public function addCart()
-    {
-        if (!$this->rifa->sale()->where('user_id', auth()->id())->where('status', 'draft')->count()) {
-            $this->rifa->sale()->create([
-                'user_id' => auth()->id(),
-                'status' => 'draft',
-                'rifa_id' => $this->rifa->id,
-                'description' => 'Rifa de ' . $this->rifa->name,
-            ]); 
+        if ($this->rifa->contest) {
+            $this->sorteio = $this->rifa->contest;
+
+            $this->winners = Winner::query()
+                ->whereIn('sale_id', $this->rifa->sales->pluck('id')->toArray())
+                ->get();
         }
     }
+ 
     #[Computed]
     public function numberProgress()
     {
@@ -49,6 +52,17 @@ class ShowComponent extends Component
     }
 
 
+    #[Computed]
+    public function sales()
+    {
+        return $this->rifa->sales()->where('user_id', auth()->id())->get();
+    }
+ 
+
+    #[On('cart-number-updated')]
+    public function updatedCartNumber()
+    {
+    }
 
     public function render()
     {

@@ -20,7 +20,10 @@ class Invoice extends OnnixPayService
     public function ref($ref)
     {
         $response = $this->http->get("invoice/ref/$ref");
-        return json_decode($response->getBody()->getContents());
+        if ($response->ok()) {
+            return $response->json();
+        }
+        return false;
     }
 
     public function all($limit = 100, $page = 1)

@@ -32,54 +32,22 @@ class WinnerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('contest_id')
-                    ->label('Concurso')
-                    ->options(Contest::query()->pluck('name', 'id')->toArray())->required()
-                    ->columnSpan([
-                        'sm' => 12,
-                        'md' => 4,
-                    ]),
-                Forms\Components\Select::make('rifa_id')
-                    ->label('Rifa')
-                    ->reactive()
-                    ->options(Rifa::query()->pluck('name', 'id')->toArray())->required()
-                    ->columnSpan([
-                        'sm' => 12,
-                        'md' => 4,
-                    ]),
                 Forms\Components\Select::make('sale_id')
                     ->label('Venda')
                     ->reactive()
-                    ->options(function (Get $get) {
-                        return Sale::query()->where('rifa_id', $get('rifa_id'))->pluck('description', 'id')->toArray();
+                    ->options(function (Winner $record ) {
+                        return Sale::query()->where('id', $record->sale_id)->pluck('description', 'id')->toArray();
                     })->required()
                     ->columnSpan([
                         'sm' => 12,
-                        'md' => 4,
-                    ]),
-                Forms\Components\Select::make('number_id')
-                    ->label('Numero')
-                    ->options(function (Get $get) {
-                        return Number::query()->where('sale_id', $get('sale_id'))->pluck('number', 'id')->toArray();
-                    })->required()
-                    ->columnSpan([
-                        'sm' => 12,
-                        'md' => 4,
-                    ]),
-                Forms\Components\TextInput::make('number')
-                    ->label('Número vencedor')
-                    ->required()
-                    ->maxLength(191)
-                    ->columnSpan([
-                        'sm' => 12,
-                        'md' => 2,
+                        'md' => 8,
                     ]),
                 Forms\Components\DateTimePicker::make('delivery_at')
                     ->label('Data de entrega')
                     ->required()
                     ->columnSpan([
                         'sm' => 12,
-                        'md' => 2,
+                        'md' => 4,
                     ]),
                 static::getStatusFormRadioField(),
             ])->columns(12);
@@ -91,16 +59,7 @@ class WinnerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('sale.user.name')
                     ->label('Ganhador')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contest.name')
-                    ->label('Concurso')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('rifa.name')
-                    ->label('Rifa')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('number')
-                    ->label('Número')
-                    ->searchable(),
+                    ->searchable(), 
                 Tables\Columns\TextColumn::make('delivery_at')
                     ->label('Data de entrega')
                     ->dateTime()

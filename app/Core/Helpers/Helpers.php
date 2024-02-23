@@ -15,6 +15,14 @@ use NumberFormatter;
 class Helpers
 {
 
+    public static function translatedFormat($date, $format = "d/m/Y H:i:s")
+    {
+        if ($date) {
+            return static::date_carbom_format($date)->translatedFormat($format);
+        }
+        return null;
+    }
+
     public static function date_carbom_format($date, $format = "d/m/Y H:i:s")
     {
 
@@ -42,7 +50,7 @@ class Helpers
 
         $carbon = Carbon::now();
         // $carbon = \Illuminate\Support\Facades\Date::now();
-        $carbon->setLocale('pt_BR');
+        $carbon->setLocale('pt-br');
         if (strlen($date[0]) == 4) {
             //            echo  $carbon->create($y,$m,$d,$h,$i,$s)->toDateTimeLocalString().PHP_EOL;
             //            echo  $carbon->create($y,$m,$d,$h,$i,$s)->toDayDateTimeString().PHP_EOL;
