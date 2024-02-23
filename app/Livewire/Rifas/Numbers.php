@@ -111,6 +111,9 @@ class Numbers extends Component
 
     public function hasRifa()
     {
+        if($this->rifa->sales()->whereNotIn('status', ['draft'])->count() == 0){
+            return false;
+        }
         $result = true;
         $drafts = $this->sale->numbers()->where('status', 'draft')->pluck('number')->toArray();
         if (count($drafts) >= $this->rifa->quantity) {
