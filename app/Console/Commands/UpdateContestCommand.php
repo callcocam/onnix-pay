@@ -38,12 +38,12 @@ class UpdateContestCommand extends Command
 
 
         $description = [];
-        $status = 'published'; 
+        $status = 'draft'; 
         if (!Contest::where('number', data_get($data, 'numero'))->exists()) {
             $numero = data_get($data, 'numero');
             $date = Helpers::date_carbom_format(data_get($data, 'dataApuracao'));
             $description = data_get($data, 'listaDezenas');
-            $status = 'concluded';
+            $status = 'published';
 
             $tenant = Tenant::query()->where('domain', request()->getHost())->first();
             $user  =  User::query()
