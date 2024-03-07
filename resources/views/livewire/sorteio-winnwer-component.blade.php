@@ -92,10 +92,8 @@
                     </div>
                 </div>
                 <div class="w-full flex-col md:w-4/6">
-                    @if($this->winners->count() > 0)
-                    @foreach($this->winners as $winner)
-                    @livewire('winner-component', ['winner' => $winner], key($winner->id))
-                    @endforeach
+                    @if($winner) 
+                    @livewire('winner-component', ['winner' => $winner], key($winner->id)) 
                     @else
                     <div class="flex w-full flex-col items-center justify-center">
                         <p class="text-2xl text-gray-500">Nenhum vencedor encontrado</p>

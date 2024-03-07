@@ -18,9 +18,23 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     @stack('scripts')
+    <!-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('b7a97d0c7de833886aab', {
+            cluster: 'us2'
+        });
+
+        var channel = pusher.subscribe('sorteio-channel');
+        channel.bind('sorteio-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script> -->
 </head>
 
-<body class="relative" x-data="{}"> 
+<body class="relative" x-data="{}">
     <div class=" overflow-hidden relative ">
         <div class="from-banner-secundary to-banner-primary flex w-full flex-col bg-gradient-to-t to-90% @isset($maxHeight) {{ $maxHeight }} @endif">
             <header class="flex h-20 w-full items-center justify-center border-b border-purple-800">
@@ -66,9 +80,9 @@
         <x-content>
             {{ $slot }}
         </x-content>
-        
-    @livewire('footer')
-    </div> 
+
+        @livewire('footer')
+    </div>
     @livewire('notifications')
     @filamentScripts
     <script>

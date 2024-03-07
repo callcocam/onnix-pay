@@ -7,12 +7,10 @@
  */
 
 namespace App\Livewire;
-
-use App\Models\Rifas\Sales\Sale;
+ 
 use App\Models\User;
 use App\Models\Winner;
-use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB; 
 use Livewire\Component;
 
 class TopWinnerComponent extends Component

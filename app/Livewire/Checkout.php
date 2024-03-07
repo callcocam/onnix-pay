@@ -88,7 +88,7 @@ class Checkout extends FormsComponent
 
 
         if (!$user->customer) {
-            $this->createCustomer($user, $data);
+            // $this->createCustomer($user, $data);
         }
 
         $res = false;

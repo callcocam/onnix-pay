@@ -28,7 +28,7 @@
 
                                 <p class=""><span class="text-green-500 font-bold">O sorteio acontecerá a partir do dia :</span> <span class="font-bold">{{ Helper::translatedFormat($rifa->end_date, 'd M Y') }}</span></p>
                                 <div class="line"></div>
-                                @if($sales)
+                                @if($sales->count() > 0)
                                 <h4 class="title mt-4">Seus número(s):</h4>
                                 @foreach($sales as $sale)
                                 @if($numbers = $sale->numbers)
@@ -41,15 +41,20 @@
                                     @endif
                                     @endforeach
                                 </ul>
-                                @if(in_array($sale->status, ['pending', 'draft']))
+                                @if(in_array($sale->status, [ 'draft']))
                                 <div class="mt-5">
                                     <a href="{{ route('sales.buy', $sale) }}" class=" bg-primary/90 flex items-center justify-center w-full px-6 py-2 text-base font-medium text-white border border-transparent rounded-full shadow-sm  hover:bg-primary">
                                         Finalizar compra
                                     </a>
                                 </div>
+                                @elseif(in_array($sale->status, [ 'pending']))
+                                <div class="mt-5">
+                                    <a href="{{ route('checkout-success', $sale) }}" class=" bg-primary/90 flex items-center justify-center w-full px-6 py-2 text-base font-medium text-white border border-transparent rounded-full shadow-sm  hover:bg-primary">
+                                        Efetuar pagamento
+                                    </a>
+                                </div>
                                 @endif
                                 @endif
-
                                 @endforeach
                                 @endif
                                 <div class="mt-5">
@@ -62,9 +67,35 @@
                 </div>
             </div>
         </div>
+        @if($sales = $rifa->sales)
         <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
             <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
-                <h2 class="text-yellow-500">Conheça os últimos vencedores do seu concurso favorito</h2>
+                <h2 class="text-yellow-500">Números selecionados para {{ $rifa->name }}</h2>
+                <h1 class="text-xl font-bold text-slate-500 md:text-2xl">ÚLTIMOS NÚMEROS ADIQUIRIDO(S)</h1>
+                <p>Verifique o número do seu bilhete para ver se você é um ganhador do AFORTUNADOS DA SORTE.</p>
+            </div>
+            <div class="flex w-full mb-10 h-36 flex-col items-center overflow-hidden border-b md:max-w-7xl md:flex-row md:justify-between">
+                @foreach($sales as $sale)
+                @if($numbers = $sale->numbers)
+                @foreach($numbers as $number)
+                @if($number->status == 'pay')
+                <x-number-button type="button" title="Pronto para o sorteio" class="bg-green-600">
+                    <span>{{ $number->number }}</span>
+                </x-number-button>
+                @else
+                <x-number-button type="button" title="Pronto para o sorteio" class="bg-blue-600">
+                    <span>{{ $number->number }}</span>
+                </x-number-button>
+                @endif
+                @endforeach
+                @endif
+                @endforeach
+            </div>
+        </div>
+        @endif
+        <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
+            <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
+                <h2 class="text-yellow-500">Conheça o vencedor do concurso favorito</h2>
                 <h1 class="text-4xl font-bold text-slate-500 md:text-6xl">ÚLTIMOS VENCEDORES</h1>
                 <p>Verifique o número do seu bilhete para ver se você é um ganhador do AFORTUNADOS DA SORTE.</p>
             </div>
@@ -98,10 +129,8 @@
                     </div>
                 </div>
                 <div class="w-full flex-col md:w-4/6">
-                    @if($this->winners->count() > 0)
-                    @foreach($this->winners as $winner)
-                    @livewire('winner-component', ['winner' => $winner], key($winner->id))
-                    @endforeach
+                    @if($winner)
+                        @livewire('winner-component', ['winner' => $winner], key($winner->id))
                     @else
                     <div class="flex w-full flex-col items-center justify-center">
                         <p class="text-2xl text-gray-500">Nenhum vencedor encontrado</p>

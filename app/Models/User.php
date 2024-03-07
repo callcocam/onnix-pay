@@ -11,9 +11,11 @@ use Callcocam\Tenant\BelongsToTenants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Callcocam\Acl\Models\Auth\User as Authenticatable;
+use Callcocam\Acl\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -104,5 +106,16 @@ class User extends Authenticatable
     public function orderPaid()
     {
         return $this->orders()->whereIn('status', ['paid', 'completed']);
+    }
+
+    
+    public function scopeRoles(Builder $query, $role="super-admin"): void
+    {
+        $role = Role::where('slug', 'super-admin')->first();
+        $roles = [];
+        if($role){
+            $roles = $role->users->pluck('id')->toArray();
+        }
+        $query->whereId('id', $roles);
     }
 }

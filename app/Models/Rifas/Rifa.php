@@ -39,6 +39,11 @@ class Rifa extends AbstractModel
         return $this->hasMany(Sale::class);
     }
 
+    public function salesPay()
+    {
+        return $this->hasMany(Sale::class)->where('status', 'pay');
+    }
+
     public function currentSale()
     {
         return $this->sale()->where('status', 'draft')->where('user_id', auth()->id());

@@ -29,12 +29,12 @@ class CreateContest extends CreateRecord
         $numero = data_get($data, 'numeroConcursoProximo', 0);
 
         $description = [];
-        $status = 'published';
+        $status = 'draft';
         if (!Contest::where('number', data_get($data, 'numero'))->exists()) {
             $numero = data_get($data, 'numero');
             $date = Helpers::date_carbom_format(data_get($data, 'dataApuracao'));
             $description = data_get($data, 'listaDezenas');
-            $status = 'concluded';
+            $status = 'published';
         }
 
         return $form

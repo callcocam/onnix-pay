@@ -16,7 +16,7 @@ class RifasComponent extends Component
 
     public $limit = 12;
 
-    public function mount($limit = 12)
+    public function mount($limit = 50)
     {
         $this->limit = $limit;
     }
@@ -32,7 +32,7 @@ class RifasComponent extends Component
         return Rifa::query()
             ->where('status', 'published')
             ->whereDate('start_date', '<=', now())
-            ->whereDate('end_date', '>=', now())
+            // ->whereDate('end_date', '>=', now()->addDays(10))
             ->when($this->c, function ($query) {
                 $query->whereHas('category', function ($query) {
                     $query->where('slug', $this->c);

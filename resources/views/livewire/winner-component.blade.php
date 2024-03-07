@@ -7,28 +7,31 @@
         <div class="flex w-full justify-around border-b text-center">
             <div class="left my-5">
                 @if($rifa )
-                <h5 class="text-2xl text-white">{{ $rifa->name }}</h5>
+                <h5 class="text-2xl text-white">
+                    <a href="{{ route('rifas.show', ['record'=>$rifa]) }}">{{ $rifa->name }}</a>
+                </h5>
+                <p class="text-sm text-slate-100">{{ \Str::limit($rifa->preview, 100) }}</p>
                 @endif
             </div>
             <div class="right my-5">
                 <span class="text-sm font-bold text-green-500">O sorteio aconteceu no dia</span>
                 @if($contest = $rifa->contest)
-                <p class="text-xl text-white md:text-2xl">{{ \Carbon\Carbon::parse($contest->drawn_at)->format('d/m/Y') }} </p>
+                <p class="text-xl text-white md:text-2xl">{{ date_carbom_format($contest->drawn_at)->format('d/m/Y') }} </p>
                 @endif
             </div>
         </div>
         <div class="flex w-full flex-col items-center md:flex-row md:justify-around">
             <div class="flex flex-col">
-                <p class="text-lg text-white md:ml-4">Número Sorteados:</p>
-                <ul class="mt-2 flex space-x-2 md:w-full">
-                    @if($sale) 
-                        @foreach($sale->numbers as $number)
-                            @if($sorteio = $rifa->contest)
-                                <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-green-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">
-                                    {{ str_pad($number->number, 2, '0', STR_PAD_LEFT) }}
-                                </li>
-                            @endif
-                        @endforeach
+                <p class="text-lg text-white md:ml-4">Número Sorteado:</p>
+                <ul class="mt-2 flex space-x-2 md:w-full  justify-center">
+                    @if($sale)
+                    @foreach($sale->numbers as $number)
+                    @if($number->status == 'winner')
+                    <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-green-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">
+                        {{ str_pad($number->number, 2, '0', STR_PAD_LEFT) }}
+                    </li>
+                    @endif
+                    @endforeach
                     @endif
 
                 </ul>
