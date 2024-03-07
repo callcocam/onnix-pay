@@ -8,6 +8,7 @@
 
 namespace App\Livewire\Rifas;
 
+use App\Models\Rifas\Sales\Number;
 use Filament\Notifications\Notification;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -33,22 +34,26 @@ class Numbers extends Component
     public function mount($rifa)
     {
         $this->rifa = $rifa;
-
-
         $this->sale = $this->rifa->currentSale;
-        // $this->sale->numbers()->forceDelete();
-        if ($this->sale) {
-            $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
-            $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
-            $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
-            $this->draft = $this->sale->numbers()->where('status', 'draft')->pluck('number')->toArray();  
-        }
+        // $this->sale->numbers()->forceDelete(); 
+        $this->updatedNumbers();
     }
 
+    public function updatedNumbers()
+    {
+        $numbers = Number::query()
+            ->whereIn('sale_id', $this->rifa->sales->pluck('id')->toArray())
+            ->get();
+
+        $this->numbers = $numbers->filter(fn ($item) =>  $item->user_id == auth()->id())->pluck('number')->toArray();
+        $this->pending = $numbers->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
+        $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['pay']))->pluck('number')->toArray();
+        $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray(); 
+    }
 
     #[On('erro-nunber')]
     public function erroNunber($number)
-    { 
+    {
 
         Notification::make()
             ->title('Erro')
@@ -59,7 +64,7 @@ class Numbers extends Component
 
     #[On('clear-error')]
     public function clearError()
-    { 
+    {
     }
 
     public function addNumber($number)
@@ -82,7 +87,7 @@ class Numbers extends Component
 
         if (!$this->sale->numbers()
             ->where('user_id', auth()->id())
-            ->where('status', 'pending')
+            ->whereIn('status', ['draft', 'pending'])
             ->where('number', $number)->count()) {
             $this->sale->numbers()->create([
                 'user_id' => auth()->id(),
@@ -93,59 +98,27 @@ class Numbers extends Component
             ]);
 
 
-            $this->sale->quantity = count($this->numbers) + 1;
+            $this->sale->quantity = count($this->draft) + 1;
+            $this->sale->total = $this->rifa->price * $this->sale->quantity;
+            $this->sale->subtotal = $this->rifa->price * $this->sale->quantity;
             $this->sale->save();
-            $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
-            $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
-            $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
-            $this->draft = $this->sale->numbers()->where('status', 'draft')->pluck('number')->toArray();
+            $this->updatedNumbers();
             $this->dispatch('cart-number-updated');
-
-            
-            if($this->hasRifa()){
-                $this->dispatch('erro-nunber', 'Você já comprou uma rifa com esses números, selecione outros números');
-                return $this->removeNumber($number);
-            }
         }
     }
 
-    public function hasRifa()
-    {
-        if($this->rifa->sales()->whereNotIn('status', ['draft'])->count() == 0){
-            return false;
-        }
-        $result = true;
-        $drafts = $this->sale->numbers()->where('status', 'draft')->pluck('number')->toArray();
-        if (count($drafts) >= $this->rifa->quantity) {
-            foreach ($this->rifa->sales as $sale) {
-                $winningNumber = $sale->numbers->pluck('number')->toArray(); 
-                foreach ($drafts as $draft) {
-                    if (!in_array($draft, $winningNumber)) {
-                        $result = false;
-                    }
-                }
-            }
-            if ($result) { 
-                return $result;
-            }
-            $this->dispatch('clear-error');
-            return $result;
-        }
-        return false;
-    }
 
     public function removeNumber($number)
     {
         $this->sale->numbers()
             ->where('user_id', auth()->id())
             ->where('status', 'draft')
-            ->where('number', $number)->forceDelete(); 
+            ->where('number', $number)->forceDelete();
         $this->sale->quantity = count($this->numbers) - 1;
+        $this->sale->total = $this->rifa->price * $this->sale->quantity;
+        $this->sale->subtotal = $this->rifa->price * $this->sale->quantity;
         $this->sale->save();
-        $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
-        $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
-        $this->pay = $this->sale->numbers()->where('status', 'pay')->pluck('number')->toArray();
-        $this->draft = $this->sale->numbers()->where('status', 'draft')->pluck('number')->toArray();        
+        $this->updatedNumbers();
         $this->dispatch('cart-number-updated');
     }
 
@@ -164,12 +137,13 @@ class Numbers extends Component
     #[Computed]
     public function reservados()
     {
-        return   count($this->pending);
+        return  count($this->draft);
     }
+
     #[Computed]
     public function pagos()
     {
-        return   count($this->pay);
+        return count($this->pay);
     }
 
     #[Computed]

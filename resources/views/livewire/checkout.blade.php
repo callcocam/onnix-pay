@@ -9,7 +9,7 @@
                         <ul role="list" class="-my-6 divide-y divide-gray-200">
                             <li class="flex space-x-6 py-6">
                                 <a href="{{ route('rifas.show', ['record'=>$rifa]) }}">
-                                    <img src="{{ $rifa->image_url }}" alt="{{ $rifa->name }}" class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
+                                    <img src="{{ $rifa->image_url }}" alt="{{ $rifa->name }}" class="h-24 w-24 flex-none rounded-md bg-gray-100 object-contain">
                                 </a>
                                 <div class="flex-auto">
                                     <div class="space-y-1 sm:flex sm:items-start sm:justify-between sm:space-x-6">
@@ -17,13 +17,16 @@
                                             <h3 class="text-gray-900">
                                                 <a href="{{ route('rifas.show', ['record'=>$rifa]) }}">{{ $rifa->name }}</a>
                                             </h3>
-                                            <p class="text-gray-900">{{ \App\Core\Helpers\Helpers::money($rifa->price) }}</p>
-                                            <p class="hidden text-gray-500 sm:block">Gray</p>
-                                            <p class="hidden text-gray-500 sm:block">S</p>
+                                            <p class="text-gray-900">{{ money($rifa->price) }}</p>
+                                            @if($category = $rifa->category)
+                                            <p class="hidden text-gray-500 sm:block">{{ $category->name }}</p>
+                                            @endif
                                         </div>
                                         <div class="flex flex-none space-x-4">
                                             <div class="flex border-l border-gray-300 pl-4">
-                                                <button type="button" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
+                                                <button wire:click="removeSale" type="button" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                                    Excluir Rifa
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

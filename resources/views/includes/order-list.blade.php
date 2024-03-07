@@ -23,9 +23,9 @@
                     <tbody class="bg-white">
                         @foreach ($sales as $sale)
                         <tr class="even:bg-gray-50">
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{{ $sale->rifa->name }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->subtotal) }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->total) }}</td>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><a href="{{ route('rifas.show', ['record'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">{{ $sale->rifa->name }}</a></td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ money($sale->subtotal) }}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ money($sale->total) }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $sale->status }}</td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                 @if($sale->status == 'pending')
@@ -33,40 +33,12 @@
                                 @elseif(in_array($sale->status, ['paid', 'completed']))
                                 <a href="{{ route('sorteio', ['rifa'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Visualizar </a>
                                 @else
-                                @if($sale->quantity == $sale->rifa->quantity)
-                                <a href="{{ route('orders.show', $sale) }}" class="text-indigo-600 hover:text-indigo-900">Visualizar </a>
-                                @else
-                                Você selecionou {{ str_pad($sale->quantity, 2, '0', STR_PAD_LEFT)  }} número(s), é precisa selecionar {{ str_pad($sale->rifa->quantity, 2, '0', STR_PAD_LEFT) }} número(s) para finalizar a compra.
-                                <a href="{{ route('rifas.show', ['record'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Continuar compra</a>
-                                @endif
+                                Você selecionou {{ str_pad($sale->numbers->count(), 2, '0', STR_PAD_LEFT)  }} número(s) de {{ str_pad($sale->rifa->quantity, 2, '0', STR_PAD_LEFT) }} número(s).
+                                <a href="{{ route('orders.show', $sale) }}" class="text-indigo-600 hover:text-indigo-900">Finalizar a compra</a>
                                 @endif
                             </td>
                         </tr>
                         @endforeach
-                        @isset($orderPending)
-                        @foreach ($orderPending as $sale)
-                        <tr class="even:bg-gray-50">
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{{ $sale->rifa->name }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->subtotal) }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->total) }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $sale->status }}</td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                @if($sale->status == 'pending')
-                                <a href="{{ route('checkout-success', $sale) }}" class="text-indigo-600 hover:text-indigo-900">Efetur pagamento </a>
-                                @elseif(in_array($sale->status, ['paid', 'completed']))
-                                <a href="{{ route('sorteio', ['rifa'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Visualizar </a>
-                                @else
-                                @if($sale->quantity == $sale->rifa->quantity)
-                                <a href="{{ route('orders.show', $sale) }}" class="text-indigo-600 hover:text-indigo-900">Visualizar </a>
-                                @else
-                                Você selecionou {{ str_pad($sale->quantity, 2, '0', STR_PAD_LEFT)  }} número(s), é precisa selecionar {{ str_pad($sale->rifa->quantity, 2, '0', STR_PAD_LEFT) }} número(s) para finalizar a compra.
-                                <a href="{{ route('rifas.show', ['record'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Continuar compra</a>
-                                @endif
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endisset
                     </tbody>
                 </table>
             </div>

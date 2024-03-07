@@ -21,14 +21,14 @@ return new class extends Migration
             $table->string('image')->nullable()->comment('Imagem da rifa');
             $table->string('status')->default('draft')->comment('Status da rifa');
             $table->string('type')->default('free')->comment('Tipo da rifa');
-            $table->string('price')->nullable()->comment('Preço da rifa');
-            $table->string('quantity')->nullable()->comment('Quantidade de números da rifa');
+            $table->decimal('price', 10, 2)->nullable()->comment('Preço da número da rifa');
+            $table->integer('quantity')->nullable()->comment('Quantidade de números da rifa');
             $table->string('start_date')->nullable()->comment('Data de início da rifa');
             $table->string('end_date')->nullable()->comment('Data de término da rifa');
             $table->string('draw_date')->nullable()->comment('Data do sorteio da rifa');
             $table->string('draw_time')->nullable()->comment('Hora do sorteio da rifa');
             $table->string('draw_local')->nullable()->comment('Local do sorteio da rifa');
-            $table->string('draw_local_link')->nullable()->comment('Link do local do sorteio da rifa'); 
+            $table->string('draw_local_link')->nullable()->comment('Link do local do sorteio da rifa');
             $table->integer('ordering')->default(0)->comment('Ordem da rifa');
             $table->text('description')->nullable()->comment('Descrição da rifa');
             $table->timestamps();

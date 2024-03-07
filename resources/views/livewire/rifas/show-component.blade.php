@@ -32,23 +32,25 @@
                                     <dd class="mt-2 w-full flex-none text-base leading-7 text-gray-100 mb-2">{{ $rifa->preview }}</dd>
                                     <dt class="sr-only">Code</dt>
                                     <dd class="mt-2 w-full flex items-center text-gray-100"><span>Código:</span> <span class=" text-2xl text-red-700 font-bold ml-2"> {{ $rifa->code }}</span></dd>
+                                    @if($numberProgress = $this->numberProgress )
                                     <dt class="sr-only">Numbers</dt>
                                     <dd class="mt-4 text-base font-semibold leading-7 text-gray-900 flex flex-col ">
                                         <div class="flex justify-between text-gray-100">
-                                            <span>0</span>
-                                            <span>{{ \App\Core\Helpers\Helpers::money($rifa->total) }} </span>
+                                            <span>{{ data_get($numberProgress, 'value', 0) }}</span>
+                                            <span>{{ $rifa->quantity  }} </span>
                                         </div>
                                         <div class="w-full relative h-2 rounded-full bg-slate-300">
-                                            @if($this->numberProgress >= 100)
-                                            <div class="absolute left-0 h-2  bg-green-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
+                                            @if(data_get($numberProgress, 'total') >=100)
+                                            <div class="absolute left-0 h-2  bg-green-400 rounded-full" :style="{width: '{{ data_get($numberProgress, 'total') }}%'}"> </div>
                                             @else
-                                            <div class="absolute left-0 h-2  bg-yellow-400 rounded-full" :style="{width: '{{ $this->numberProgress }}%'}"> </div>
+                                            <div class="absolute left-0 h-2  bg-yellow-400 rounded-full" :style="{width: '{{ data_get($numberProgress, 'total') }}%'}"> </div>
                                             @endif
                                         </div>
                                     </dd>
+                                    @endif
                                     @if($rifa->type == 'paid')
                                     <dt class="sr-only">Salary</dt>
-                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right"> {{ \App\Core\Helpers\Helpers::money($rifa->price) }}</dd>
+                                    <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right"> {{ money($rifa->price) }}</dd>
                                     @else
                                     <dt class="sr-only">Salary</dt>
                                     <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right">Grátis</dd>
@@ -81,23 +83,26 @@
                             </li>
                         </ul>
                         <div class="mt-8 flex flex-col border-t border-gray-100 pt-8 text-gray-50">
-                            @if($sales = $this->sales)
+                            @if($sale )
                             <div class="flex flex-col items-start">
                                 <div class="flex  space-x-2 items-center">
                                     <p class="text-lg font-bold text-green-500">Total de rifas:</p>
-                                    <p class="text-sm">{{ str_pad($sales->count(), 2, '0', STR_PAD_LEFT) }} </p>
+                                    <p class="text-sm"> 01 </p>
                                 </div>
                                 <div class="flex   space-x-2 items-center">
                                     <p class="text-lg font-bold text-green-500">Total de números:</p>
-                                    <p class="text-sm">{{ str_pad( $sales->sum('quantity'), 3, '0', STR_PAD_LEFT) }} </p>
+                                    <p class="text-sm">{{ str_pad( $sale->numbers->count(), 3, '0', STR_PAD_LEFT) }} </p>
+                                </div>
+                                <div class="flex  space-x-2 items-center">
+                                    <p class="text-lg font-bold text-green-500">Sub total:</p>
+                                    <p class="text-sm">{{ money($sale->subtotal) }} </p>
                                 </div>
                                 <div class="flex  space-x-2 items-center">
                                     <p class="text-lg font-bold text-green-500">Valor total:</p>
-                                    <p class="text-sm">{{ \App\Core\Helpers\Helpers::money($sales->sum('total')) }} </p>
+                                    <p class="text-sm">{{ money($sale->total) }} </p>
                                 </div>
                                 <div class="flex  flex-col  space-x-2 justify-center">
                                     <p class="text-lg font-bold text-green-500">Nemeros:</p>
-                                    @foreach($sales as $sale)
                                     <ul class="flex gap-2">
                                         @foreach($sale->numbers as $number)
                                         <li class="border-t border-gray-200 py-2">
@@ -105,14 +110,13 @@
                                         </li>
                                         @endforeach
                                     </ul>
-                                    @endforeach
                                 </div>
                             </div>
                             @endif
                             @if($sorteio)
                             <div class="flex flex-col space-x-2 items-center justify-center">
                                 <p class="text-xl font-bold text-green-500">O sorteio aconteceu no dia </p>
-                                <p class="text-2xl">{{ \App\Core\Helpers\Helpers::date_carbom_format($sorteio->drawn_at)->format('d M Y') }} </p>
+                                <p class="text-2xl">{{ translatedFormatShort($sorteio->drawn_at)  }} </p>
                             </div>
                             <div class="flex flex-col items-center justify-center">
                                 <p class="text-xl font-bold text-green-500">Número do Concurso:</p>

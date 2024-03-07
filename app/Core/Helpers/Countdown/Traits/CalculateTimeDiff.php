@@ -6,7 +6,7 @@
  * https://www.sigasmart.com.br
  */
 
-namespace App\Core\Helpers\Countdown\Exceptions;
+namespace App\Core\Helpers\Countdown\Traits;
 
 use App\Core\Helpers\Countdown;
 use Carbon\Carbon;

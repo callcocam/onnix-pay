@@ -14,6 +14,23 @@ use NumberFormatter;
 
 class Helpers
 {
+    //translatedFormatLong
+    public static function translatedFormatLong($date, $format = "l, d \\d\\e F \\d\\e Y H:i:s")
+    {
+        if ($date) {
+            return static::date_carbom_format($date)->translatedFormat($format);
+        }
+        return null;
+    }
+
+    //translatedFormatShort
+    public static function translatedFormatShort($date, $format = "D M d H:i:s T Y")
+    {
+        if ($date) {
+            return static::date_carbom_format($date)->translatedFormat($format);
+        }
+        return null;
+    }
 
     public static function translatedFormat($date, $format = "d/m/Y H:i:s")
     {

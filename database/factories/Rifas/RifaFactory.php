@@ -20,12 +20,19 @@ class RifaFactory extends Factory
     public function definition(): array
     {
         $endDays = rand(11, 150);
+
+        $total = $this->faker->randomFloat(2, 1000, 10000);
+
+        $price = $this->faker->randomFloat(2, 1, 5);
+
+        $quantity = round($total / $price);
+
         return [
             'user_id' => \App\Models\User::all()->random()->id,
-            'tenant_id' =>  Tenant::all()->random()->id, 
+            'tenant_id' =>  Tenant::all()->random()->id,
             'name' => $name = $this->faker->name,
             'slug' => \Illuminate\Support\Str::slug($name),
-            'description' => $this->faker->text, 
+            'description' => $this->faker->text,
             'type' =>  'paid',
             'image' => sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             'preview' => $this->faker->text,
@@ -37,11 +44,11 @@ class RifaFactory extends Factory
                 sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
                 sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             ]),
-            'price' => $this->faker->randomFloat(2, 1, 10),
-            'quantity' => 6,
-            'total' => $this->faker->randomFloat(2, 1000, 10000),
+            'price' => $price,
+            'quantity' => $quantity,
+            'total' => $total,
             'start_date' => now()->subDays(rand(11, 150)),
-            'end_date' => now()->addDays($endDays), 
+            'end_date' => now()->addDays($endDays),
             'draw_local' => $this->faker->name,
             'draw_local_link' => null,
             'created_at' => $this->faker->dateTime(),

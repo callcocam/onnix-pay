@@ -3,6 +3,7 @@
 namespace App\Livewire\Rifas;
 
 use App\Models\Rifas\Rifa;
+use App\Models\Rifas\Sales\Number;
 use App\Models\Winner;
 use Carbon\Carbon;
 use Livewire\Attributes\Computed;
@@ -35,20 +36,24 @@ class ShowComponent extends Component
                 ->get();
         }
     }
- 
+
     #[Computed]
     public function numberProgress()
     {
-        $totalNumbers = $this->rifa->total;
+        $totalNumbers = $this->rifa->quantity;
         $percentageSold = 0;
-        if ($sale = $this->rifa->sale) {
-            if ($sale->numbers->count() >= $this->rifa->quantity) {
-                $soldNumbers = $this->rifa->sales->count() * $this->rifa->price;
-                $percentageSold = ($soldNumbers / $totalNumbers) * 100;
-            }
+        $soldNumbers = 0;
+        if ($sales = $this->rifa->sales) {
+            $soldNumbers =  Number::query()
+                ->whereIn('sale_id', $sales->pluck('id')->toArray())
+                ->count();
+            $percentageSold = ($soldNumbers / $totalNumbers) * 100;
         }
 
-        return sprintf('%0.2f', $percentageSold);
+        return [
+            'total' => sprintf('%0.2f', $percentageSold),
+            'value' => str_pad($soldNumbers, strlen($totalNumbers), '0', STR_PAD_LEFT),
+        ];
     }
 
 
@@ -57,7 +62,7 @@ class ShowComponent extends Component
     {
         return $this->rifa->sales()->where('user_id', auth()->id())->get();
     }
- 
+
 
     #[On('cart-number-updated')]
     public function updatedCartNumber()

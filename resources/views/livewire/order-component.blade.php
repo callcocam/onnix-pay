@@ -15,7 +15,7 @@
                                 <h3>
                                     <a href="{{ route('rifas.show', ['record'=>$rifa]) }}">{{ $rifa->name }}</a>
                                 </h3>
-                                <p class="ml-4">R$ {{ \App\Core\Helpers\Helpers::money($sale->total)  }}</p>
+                                <p class="ml-4">R$ {{  money($sale->total)  }}</p>
                             </div>
                             @if($category = $rifa->category)
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ $category->name  }}</p>
@@ -48,14 +48,11 @@
     <div class="px-4 py-6 border-t border-gray-200 sm:px-6">
         <div class="flex justify-between text-base font-medium text-gray-900 dark:text-white">
             <p>Subtotal</p>
-            <p>{{ \App\Core\Helpers\Helpers::money($sale->total) }}</p>
+            <p>{{  money($sale->total) }}</p>
         </div>
         <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-300"> Frete e impostos calculados na finalização da compra.
         </p>
-        <div class="mt-6">
-            <!-- <button type="button" @click="()=>{ $dispatch('open-modal', {id: 'checkout', rifa:});}" class="bg-btn flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm  hover:bg-primary">
-                Finalizar compra
-            </button> -->
+        <div class="mt-6"> 
             <a href="{{ route('sales.buy', $sale) }}" class=" bg-primary/90 flex items-center justify-center w-full px-6 py-2 text-base font-medium text-white border border-transparent rounded-full shadow-sm  hover:bg-primary">
                 Finalizar compra
             </a>

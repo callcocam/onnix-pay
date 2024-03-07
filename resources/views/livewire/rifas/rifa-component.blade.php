@@ -13,20 +13,29 @@
                 @if($category = $rifa->category)
                 <span> {{ $category->name }} </span>
                 @endif
-            </div> 
+            </div>
         </div>
-        <div class="mb-4 mt-4 grid w-full grid-cols-2 text-white">
+        <div class="mb-2 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
-            <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
+                <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
                 <span> Volor Total </span>
             </div>
             <div class="mr-2 flex flex-col items-end">
                 <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->priceBrl}} </span>
-                <span> Preço por {{ $rifa->quantity }} número(s) </span>
+                <span> Preço por número </span>
             </div>
         </div>
+        <div class="mb-2 mt-2 grid w-full grid-cols-2 text-white">
+            <div class="ml-2 flex flex-col items-start">
+                <span class="font-serif text-2xl font-bold text-green-500"> {{ $rifa->quantity }} </span> 
+            </div> 
+            <div class="mr-2 flex flex-col items-end">
+                <span class="font-serif text-2xl font-bold text-green-500">Número(s) </span> 
+            </div>
+        </div>
+
         <a href="{{ route('rifas.show', ['record'=>$rifa]) }}" class="flex h-14 w-full items-center justify-around border-t border-indigo-400">
-        <div class="flex space-x-3 text-white">
+            <div class="flex space-x-3 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>

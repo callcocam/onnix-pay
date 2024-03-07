@@ -51,11 +51,11 @@ class Checkout extends FormsComponent
                 Wizard::make([
                     Step::make('account')
                         ->label('Minha Conta')
-                        ->afterValidation(function ($state) { 
-                             auth()->user()->update([
+                        ->afterValidation(function ($state) {
+                            auth()->user()->update([
                                 'document' => $state['document'],
                                 'phone' => $state['phone'],
-                             ]);
+                            ]);
                         })
                         ->schema($this->getAccountSchema()),
                     Step::make('address')
@@ -90,7 +90,7 @@ class Checkout extends FormsComponent
         if (!$user->customer) {
             $this->createCustomer($user, $data);
         }
- 
+
         $res = false;
 
         $res = $this->payWithPix($data);
@@ -107,7 +107,7 @@ class Checkout extends FormsComponent
 
     protected function createCustomer($user, $data)
     {
- 
+
 
         if (!Customer::make()->exists($user->customer)) {
             $customer =  Customer::make()->create($user);
@@ -126,7 +126,7 @@ class Checkout extends FormsComponent
 
         $res = Pix::make()->create($this->sale, [
             "email" => data_get($data, 'pix_email', auth()->user()->email),
-            "item_name" => $this->rifa->name, 
+            "item_name" => $this->rifa->name,
             "document" => data_get($data, 'document', auth()->user()->document),
         ]);
 
@@ -152,7 +152,7 @@ class Checkout extends FormsComponent
         }
         return false;
     }
- 
+
 
     public function total(): float
     {
@@ -162,11 +162,11 @@ class Checkout extends FormsComponent
 
     public function discount()
     {
-       if($this->sale->cupon){
-           return $this->sale->cupon->value;
-       }
+        if ($this->sale->cupon) {
+            return $this->sale->cupon->value;
+        }
 
-       return 0;
+        return 0;
     }
 
     public function subtotal()
@@ -196,5 +196,16 @@ class Checkout extends FormsComponent
                 }
             }
         }
+    }
+
+    public function removeSale()
+    {
+        $this->sale->numbers->each(function ($number) {
+            $number->delete();
+        });
+
+        $this->sale->delete();
+
+        return redirect()->route('rifas.show', ['record' => $this->rifa]);
     }
 }
