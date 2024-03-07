@@ -35,19 +35,29 @@ class WinnerResource extends Resource
                 Forms\Components\Select::make('sale_id')
                     ->label('Venda')
                     ->reactive()
-                    ->options(function (Winner $record ) {
+                    ->options(function (Winner $record) {
                         return Sale::query()->where('id', $record->sale_id)->pluck('description', 'id')->toArray();
                     })->required()
                     ->columnSpan([
                         'sm' => 12,
-                        'md' => 8,
+                        'md' => 4,
+                    ]),
+                Forms\Components\Select::make('rifa_id')
+                    ->label('Venda')
+                    ->reactive()
+                    ->options(function () {
+                        return Rifa::query()->pluck('name', 'id')->toArray();
+                    })->required()
+                    ->columnSpan([
+                        'sm' => 12,
+                        'md' => 5,
                     ]),
                 Forms\Components\DateTimePicker::make('delivery_at')
                     ->label('Data de entrega')
                     ->required()
                     ->columnSpan([
                         'sm' => 12,
-                        'md' => 4,
+                        'md' => 3,
                     ]),
                 static::getStatusFormRadioField(),
             ])->columns(12);
@@ -59,7 +69,7 @@ class WinnerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('sale.user.name')
                     ->label('Ganhador')
-                    ->searchable(), 
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('delivery_at')
                     ->label('Data de entrega')
                     ->dateTime()
