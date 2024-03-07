@@ -4,12 +4,15 @@
     </x-slot>
     <x-slot name="header">
         <x-crumb label="Rifas" route="{{ route('rifas.list') }}" active="{{ $rifa->name }}" />
+        @if(date_carbom_format($rifa->end_date)->isFuture())
         <div class="bg-pink-400 w-full flex md:max-w-5xl mx-auto flex-col justify-center  rounded-t-xl p-3 ">
             <div class="mx-auto text-white flex">
                 Esta competição termina em:
             </div>
+
             <livewire:count-down :date="$rifa->end_date" />
         </div>
+        @endif
 
     </x-slot>
     <div class="relative w-full flex items-center justify-center mt-50 md:-mt-60">
@@ -185,6 +188,8 @@
         </div>
     </div>
     @else
-    @livewire('rifas.numbers', ['rifa' => $rifa])
+        @if(date_carbom_format($rifa->end_date)->isFuture())
+            @livewire('rifas.numbers', ['rifa' => $rifa])
+        @endif
     @endif
 </div>

@@ -7,16 +7,19 @@ use App\Models\Rifas\Rifa;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;;
 
 class RifasComponent extends Component
 {
+
+    use WithPagination;
 
     #[Url]
     public $c;
 
     public $limit = 12;
 
-    public function mount($limit = 50)
+    public function mount($limit = 12)
     {
         $this->limit = $limit;
     }
@@ -39,7 +42,11 @@ class RifasComponent extends Component
                 });
             })
             ->orderBy('ordering', 'asc')
-        ->paginate($this->limit);
-    } 
-     
+            ->paginate($this->limit);
+    }
+
+    public function paginationView()
+    {
+        return 'includes.custom-pagination-links-view';
+    }
 }

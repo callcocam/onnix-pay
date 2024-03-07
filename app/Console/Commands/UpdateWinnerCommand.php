@@ -60,6 +60,7 @@ class UpdateWinnerCommand extends Command
                                         'tenant_id' => $tenant->id,
                                         'user_id' => $sale->user_id,
                                         'sale_id' => $sale->id,
+                                        'rifa_id' => $rifa->id,
                                         'delivery_at' => now()->addDays(7)->format('Y-m-d H:i:s'),
                                         'status' => 'published',
                                         'description' => "Parabéns você é o ganhador da rifa {$rifa->name}"

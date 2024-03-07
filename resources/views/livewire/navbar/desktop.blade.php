@@ -12,7 +12,7 @@
         <a href="{{ route('contact') }}" active="{{request()->routeIs('contact')}}"> Contato </a>
     </li>
 
-    <li class="w-full  md:w-64 text-center flex items-center justify-center">
+    <li class="hidden w-full  md:w-64 text-center md:flex items-center justify-center">
         <a href="{{ route('orders.list') }}" class="from-banner-secundary to-banner-primary flex items-center  rounded-full bg-gradient-to-r px-8 py-2 shadow-md shadow-white w-full">
             <div class="flex items-center justify-center space-x-3 w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 -rotate-45">

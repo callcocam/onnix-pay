@@ -11,6 +11,7 @@ namespace App\Models\Rifas;
 use App\Models\AbstractModel;
 use App\Models\Contest;
 use App\Models\Rifas\Sales\Sale;
+use App\Models\Winner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 
@@ -52,6 +53,11 @@ class Rifa extends AbstractModel
     public function contest()
     {
         return $this->belongsTo(Contest::class);
+    }
+
+    public function winner()
+    {
+        return $this->hasOne(Winner::class);
     }
 
     public function getPriceBrlAttribute()
