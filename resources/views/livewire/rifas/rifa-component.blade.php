@@ -26,11 +26,11 @@
         @if($winner = $rifa->winner)
         <div class="mb-2 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
-                <span class="font-serif text-2xl font-bold text-green-500"> {{ $winner->user->name }} </span>
+                <span class="font-inter text-xl font-bold text-green-500"> {{ $winner->user->name }} </span>
                 <span> Ganhador </span>
             </div>
             <div class="mr-2 flex flex-col items-end">
-                <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
+                <span class="font-inter text-xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
                 <span> Valor do Prêmio </span>
             </div>
         </div>
@@ -52,20 +52,20 @@
         @else
         <div class="mb-2 mt-4 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
-                <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
+                <span class="font-inter text-xl font-bold text-green-500">R$ {{ $rifa->totalBrl}} </span>
                 <span> Volor Total </span>
             </div>
             <div class="mr-2 flex flex-col items-end">
-                <span class="font-serif text-2xl font-bold text-green-500">R$ {{ $rifa->priceBrl}} </span>
+                <span class="font-inter text-xl font-bold text-green-500">R$ {{ $rifa->priceBrl}} </span>
                 <span> Preço por número </span>
             </div>
         </div>
         <div class="mb-2 mt-2 grid w-full grid-cols-2 text-white">
             <div class="ml-2 flex flex-col items-start">
-                <span class="font-serif text-2xl font-bold text-green-500"> {{ $rifa->quantity }} </span>
+                <span class="font-inter text-xl font-bold text-green-500"> {{ $rifa->quantity }} </span>
             </div>
             <div class="mr-2 flex flex-col items-end">
-                <span class="font-serif text-2xl font-bold text-green-500">Número(s) </span>
+                <span class="font-inter text-xl font-bold text-green-500">Número(s) </span>
             </div>
         </div>
         <a href="{{ route('rifas.show', ['record'=>$rifa]) }}" class="flex h-14 w-full items-center justify-around border-t border-indigo-400">
