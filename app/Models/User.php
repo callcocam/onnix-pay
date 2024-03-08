@@ -105,7 +105,7 @@ class User extends Authenticatable
 
     public function orderPaid()
     {
-        return $this->orders()->whereIn('status', ['paid', 'completed']);
+        return $this->orders()->whereIn('status', ['pay', 'completed']);
     }
 
     

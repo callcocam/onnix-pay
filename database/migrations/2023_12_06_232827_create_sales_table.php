@@ -27,7 +27,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2)->default(0)->comment('Valor total do pedido');
             $table->string('payment_method')->default('pix')->comment('Método de pagamento');
             $table->longText('data')->nullable()->comment('Dados do pedido'); 
-            $table->string('status')->default('draft')->comment('Status da rifa, paid, canceled, refunded');
+            $table->string('status')->default('draft')->comment('Status da rifa, pay, canceled, refunded');
             $table->timestamps();
             $table->softDeletes();
         });

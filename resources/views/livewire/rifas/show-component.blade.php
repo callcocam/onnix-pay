@@ -51,7 +51,7 @@
                                         </div>
                                     </dd>
                                     @endif
-                                    @if($rifa->type == 'paid')
+                                    @if($rifa->type == 'pay')
                                     <dt class="sr-only">Salary</dt>
                                     <dd class="mt-4 text-3xl font-semibold leading-7 text-gray-100 w-full text-right"> {{ money($rifa->price) }}</dd>
                                     @else

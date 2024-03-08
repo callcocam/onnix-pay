@@ -74,7 +74,7 @@ class EditRifa extends EditRecord
                     ->label('Tipo')
                     ->options([
                         'free' => 'Gratis',
-                        'paid' => 'Pago',
+                        'pay' => 'Pago',
                     ])
                     ->required()
                     ->columnSpan([

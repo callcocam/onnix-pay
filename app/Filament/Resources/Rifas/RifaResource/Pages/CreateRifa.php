@@ -81,7 +81,7 @@ class CreateRifa extends CreateRecord
                     ->label('Tipo')
                     ->options([
                         'free' => 'Gratis',
-                        'paid' => 'Pago',
+                        'pay' => 'Pago',
                     ])
                     ->required()
                     ->columnSpan([

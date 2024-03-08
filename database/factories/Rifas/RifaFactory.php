@@ -29,11 +29,11 @@ class RifaFactory extends Factory
 
         return [
             'user_id' => \App\Models\User::all()->random()->id,
-            'tenant_id' =>  Tenant::all()->random()->id,
+            // 'tenant_id' =>  Tenant::all()->random()->id,
             'name' => $name = $this->faker->name,
             'slug' => \Illuminate\Support\Str::slug($name),
             'description' => $this->faker->text,
-            'type' =>  'paid',
+            'type' =>  'pay',
             'image' => sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             'preview' => $this->faker->text,
             'code' => $this->IniciasNomes($name),
