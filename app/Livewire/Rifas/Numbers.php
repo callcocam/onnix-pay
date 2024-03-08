@@ -48,7 +48,7 @@ class Numbers extends Component
         $this->numbers = $numbers->filter(fn ($item) =>  $item->user_id == auth()->id())->pluck('number')->toArray();
         $this->pending = $numbers->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
         $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['pay']))->pluck('number')->toArray();
-        $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray(); 
+        $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray();
     }
 
     #[On('erro-nunber')]
@@ -97,13 +97,16 @@ class Numbers extends Component
                 'description' => 'Rifa de ' . $this->rifa->name,
             ]);
 
+            $quantity = count($this->draft) + 1;
+            $val = $this->rifa->price * $quantity;
 
-            $this->sale->quantity = count($this->draft) + 1;
-            $this->sale->total = $this->rifa->price * $this->sale->quantity;
-            $this->sale->subtotal = $this->rifa->price * $this->sale->quantity;
-            $this->sale->save();
+            $this->sale->update([
+                'quantity' =>  $quantity,
+                'total' => $val,
+                'subtotal' => $val
+            ]);
             $this->updatedNumbers();
-            $this->dispatch('cart-number-updated');
+            $this->dispatch('cart-number-updated',  $this->sale->id );
         }
     }
 
@@ -114,12 +117,15 @@ class Numbers extends Component
             ->where('user_id', auth()->id())
             ->where('status', 'draft')
             ->where('number', $number)->forceDelete();
-        $this->sale->quantity = count($this->numbers) - 1;
-        $this->sale->total = $this->rifa->price * $this->sale->quantity;
-        $this->sale->subtotal = $this->rifa->price * $this->sale->quantity;
-        $this->sale->save();
+        $quantity = count($this->numbers) - 1;
+        $val = $this->rifa->price * $quantity;
+        $this->sale->update([
+            'quantity' => $quantity,
+            'total' => $val,
+            'subtotal' => $val
+        ]);
         $this->updatedNumbers();
-        $this->dispatch('cart-number-updated');
+        $this->dispatch('cart-number-updated',  $this->sale->id);
     }
 
     #[Computed]

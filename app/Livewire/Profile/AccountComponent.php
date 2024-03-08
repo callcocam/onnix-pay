@@ -103,8 +103,14 @@ class AccountComponent extends FormsComponent
 
     protected function updateAddress($user)
     {
-        $user->address()->updateOrCreate(
-            ['id' => $user->address->id],
+        if (!$user->address) {
+            $user->address()->create(
+                $this->data['address']
+            );
+            return;
+        }
+
+        $user->address()->update(
             $this->data['address']
         );
     }
@@ -120,7 +126,7 @@ class AccountComponent extends FormsComponent
     protected function updateProfilePhoto($user)
     {
         if (!empty($this->data['cover'])) {
-            foreach ($this->data['cover'] as $cover) { 
+            foreach ($this->data['cover'] as $cover) {
                 $user->updateProfilePhoto($cover);
             }
         }

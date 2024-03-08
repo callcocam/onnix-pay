@@ -3,7 +3,7 @@
         <img src="{{ Storage::url($rifa->image) }}" alt="image" class="mx-auto flex md:h-24" />
     </div>
     <div class="relative flex w-full flex-col justify-center bg-gradient-to-t from-pink-400 to-indigo-500 px-2 py-4">
-        <div class="mx-auto md:absolute md:-translate-x-10"><img class="rounded-full h-20 w-20" src="{{ $sale->user->profile_photo_url }}" alt="image" /></div>
+        <!-- <div class="mx-auto md:absolute md:-translate-x-10"><img class="rounded-full h-20 w-20" src="{{ $sale->user->profile_photo_url }}" alt="image" /></div> -->
         <div class="flex w-full justify-around border-b text-center">
             <div class="left my-5">
                 @if($rifa )
@@ -25,23 +25,27 @@
                 <p class="text-lg text-white md:ml-4">Número Sorteado:</p>
                 <ul class="mt-2 flex space-x-2 md:w-full  justify-center">
                     @if($sale)
-                    @foreach($sale->numbers as $number)
-                    @if($number->status == 'winner')
-                    <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-green-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">
-                        {{ str_pad($number->number, 2, '0', STR_PAD_LEFT) }}
-                    </li>
+                        @foreach($sale->numbers as $number)
+                            @if($number->status == 'winner')
+                                <li class="tetx-sm flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-t from-green-600 to-yellow-400 text-lg font-bold text-white md:h-12 md:w-12">
+                                    {{ str_pad($number->number, 2, '0', STR_PAD_LEFT) }}
+                                </li>
+                            @endif
+                        @endforeach
                     @endif
-                    @endforeach
-                    @endif
-
                 </ul>
                 <!-- number-list end -->
             </div>
             <div class="flex flex-col items-center">
-                <p class="text-white">Número do Concurso:</p>
+                <p class="text-white">Concurso:</p>
                 @if($contest = $rifa->contest)
                 <a href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" class="text-xl font-bold text-white">{{ $contest->number }}</a>
                 @endif
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="text-white">Ganhador:</p>
+                <div class="mx-auto "><img class="rounded-full h-12 w-12" src="{{ $winner->user->profile_photo_url }}" alt="image" /></div>
+                <span class="font-bold text-white">{{ $winner->user->name }}</span>
             </div>
         </div>
     </div>

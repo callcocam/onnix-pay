@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:update-contest')->everyMinute();
         $schedule->command('app:update-winner')->everyMinute();
+        $schedule->command('app:update-order')->everyMinute();
     }
 
     /**

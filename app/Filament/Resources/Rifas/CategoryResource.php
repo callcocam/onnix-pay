@@ -13,6 +13,7 @@ use App\Filament\Resources\Rifas\CategoryResource\RelationManagers;
 use App\Models\Rifas\Category;
 use Callcocam\Acl\Traits\HasDatesFormForTableColums;
 use Callcocam\Acl\Traits\HasStatusColumn;
+use Callcocam\Tenant\Traits\HasUploadFormField;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoryResource extends Resource
 {
-    use HasStatusColumn, HasDatesFormForTableColums;
+    use HasStatusColumn, HasDatesFormForTableColums, HasUploadFormField;
 
     protected static ?string $model = Category::class;
 
@@ -57,12 +58,9 @@ class CategoryResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label('Descrição da categoria')
                     ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image')
-                    ->label('Imagem da categoria')
-                    ->image()
-                    ->columnSpanFull(),
+                static::getUploadFormFieldset('image'),
                 Forms\Components\Radio::make('status')
-                ->label('Status da categoria')
+                    ->label('Status da categoria')
                     ->options([
                         'draft' => 'Draft',
                         'published' => 'Published',
@@ -75,12 +73,17 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([ 
+            ->columns([
                 Tables\Columns\TextColumn::make('category.name')
-                ->sortable()
+                    ->sortable()
+                    ->searchable(),
+                    //image
+                    Tables\Columns\ImageColumn::make('image')
+                    ->label('Imagem') 
+                    ->circular()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(), 
+                    ->searchable(),
                 static::getStatusTableIconColumn(),
                 ...static::getFieldDatesFormForTable(),
             ])

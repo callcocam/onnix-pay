@@ -4,6 +4,7 @@ namespace App\Livewire\Rifas;
 
 use App\Models\Rifas\Rifa;
 use App\Models\Rifas\Sales\Number;
+use App\Models\Rifas\Sales\Sale;
 use App\Models\Winner;
 use Carbon\Carbon;
 use Livewire\Attributes\Computed;
@@ -65,8 +66,10 @@ class ShowComponent extends Component
 
 
     #[On('cart-number-updated')]
-    public function updatedCartNumber()
+    public function updatedCartNumber($record = null) 
     {
+         
+        $this->sale =Sale::find($record);
     }
 
     public function render()
