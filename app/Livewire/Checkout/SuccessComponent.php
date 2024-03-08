@@ -20,8 +20,7 @@ class SuccessComponent extends Component
 
         if (!$sale->exists) {
             return redirect()->route('home');
-        }
- 
+        } 
         $this->sale = $sale;
 
     }

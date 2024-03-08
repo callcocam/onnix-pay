@@ -1,5 +1,6 @@
 <!-- component -->
 <div class="flex flex-col">
+    @if(in_array($sale->status, ['pending' ]))
     <div class="bg-white p-6  md:mx-auto">
         <svg viewBox="0 0 24 24" class="text-green-600 w-16 h-16 mx-auto my-6">
             <path fill="currentColor" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
@@ -20,7 +21,8 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col w-full border">
+    @endif
+    <div class="flex flex-col w-full border my-10">
 
         <div class="flex flex-col md:flex-row md:justify-between  bg-white p-6">
             <div class="flex items-center flex-col  ">
@@ -50,8 +52,8 @@
                                 <tbody class="bg-white">
                                     <tr class="even:bg-gray-50">
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{{ $sale->rifa->name }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->subtotal) }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \App\Core\Helpers\Helpers::money($sale->total) }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{  money($sale->subtotal) }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{  money($sale->total) }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $sale->status }}</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                             <a href="{{ route('rifas.show', ['record'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Detalhes</a>
