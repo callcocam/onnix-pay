@@ -12,12 +12,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Callcocam\Acl\Models\Auth\User as Authenticatable;
 use Callcocam\Acl\Models\Role;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasTenants;
+use Filament\Panel;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasUlids, BelongsToTenants, SoftDeletes;
 
@@ -52,6 +56,17 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['billet_email', 'pix_email', 'card_email', 'profile_photo_url'];
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return  auth()->user()->can('admin.dashboard');
+    }
+
+    
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return  auth()->user()->can('admin.dashboard');
+    }
     
     public function profilePhoto()
     {

@@ -14,11 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Number extends AbstractModel
 {
     use HasFactory;
-
-    public function rifa()
-    {
-        return $this->belongsTo(Rifa::class);
-    }
+ 
 
     protected function slugTo()
     {
