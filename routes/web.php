@@ -126,14 +126,12 @@ Route::get('invoice', function (Request $request) {
  
     if ($sales->count() > 0) {
         foreach ($sales as $sale) {
-            $invoce = json_decode($sale->data, true);
-            dd($sale->toArray(), data_get($invoce, 'invoice'));
+            $invoce = json_decode($sale->data, true); 
             if ($invoice = data_get($invoce, 'invoice')) {
                 $data = Invoice::make()->ref(data_get($invoice, 'reference'));
                 if ($data) {
                     $results[] = $data;
                     $sale->status = strtolower(data_get($data, 'invoice.status', 'pending'));
-
                     $sale->save();
                     $sale->numbers->each(function ($number) use ($data) {
                         $number->status = strtolower(data_get($data, 'invoice.status', 'pending'));
