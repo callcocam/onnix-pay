@@ -160,6 +160,9 @@ return [
          * Package Service Providers...
          */
 
+        \Callcocam\Acl\AclServiceProvider::class,
+        \Callcocam\Tenant\TenantServiceProvider::class,
+        \Callcocam\Profile\ProfileServiceProvider::class,
         /*
          * Application Service Providers...
          */

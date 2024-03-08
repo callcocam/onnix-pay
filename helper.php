@@ -4,7 +4,63 @@
 * User: callcocam@gmail.com, contato@sigasmart.com.br
 * https://www.sigasmart.com.br
 */
+
+use Callcocam\Tenant\Facades\Tenant;
+use Callcocam\Tenant\Models\Tenant as ModelsTenant;
 use Carbon\Carbon;
+ 
+if (!function_exists('get_tenant_id')) {
+    function get_tenant_id($tenant = 'tenant_id')
+    {
+        if (config('tenant.user', false)) {
+            $tenantId = data_get(auth()->user(), $tenant);
+            return $tenantId;
+        }
+        $tenantId = \Callcocam\Tenant\Facades\Tenant::getTenantId($tenant);
+        return $tenantId;
+    }
+}
+
+if (!function_exists('get_tenant')) {
+    function get_tenant($tenant = 'tenant_id')
+    {
+        $tenantId = \Callcocam\Tenant\Facades\Tenant::getTenantId($tenant);
+
+        $model = config('tenant.models.tenant', \Callcocam\Tenant\Models\Tenant::class);
+        
+        return app($model)->query()->where('id', $tenantId)->first();
+    }
+}
+
+if (!function_exists('get_tenant')) {
+    /**
+     * Get the configuration path.
+     *
+     * @param  string $path
+     * @return mixed
+     */
+    function get_tenant()
+    {
+        return  ModelsTenant::find(get_tenant_id());
+    }
+}
+
+
+if (!function_exists('form_w')) {
+    /**
+     * Get the configuration path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function form_w($post)
+    {
+        $source = array('.', ',');
+        $replace = array('', '.');
+        $valor = str_replace($source, $replace, $post); //remove os pontos e substitui a virgula pelo ponto
+        return $valor; //retorna o valor formatado para gravar no banco
+    }
+}
 
 // translatedFormatShort
 if (!function_exists('translatedFormatShort')) {

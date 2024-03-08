@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Created by Claudio Campos.
+ * User: callcocam@gmail.com, contato@sigasmart.com.br
+ * https://www.sigasmart.com.br
+ */
+
+namespace App\Models\Callcocam;
+
+use App\Core\Models\Concerns\Sluggable\HasSlug;
+use App\Core\Models\Concerns\Sluggable\SlugOptions;
+use Callcocam\Acl\Models\AbstractModel as ModelsAbstractModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+
+class AbstractModel extends ModelsAbstractModel
+{
+    /**
+     * Se for usar o ulid, descomente a linha abaixo 
+     */
+    // use HasUlids;
+    //    
+ 
+}

@@ -7,9 +7,7 @@
     "require": {
         "php": "^8.1",
         "ably/ably-php": "^1.1",
-        "callcocam/acl": "dev-main",
-        "callcocam/profile": "dev-main",
-        "callcocam/tenant": "dev-main",
+        "callcocam/tall-sluggable": "dev-main",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/cashier": "^14.14",
@@ -17,6 +15,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "leandrocfe/filament-ptbr-form-fields": "^3.0",
+        "owenvoke/blade-fontawesome": "^2.6",
         "pusher/pusher-php-server": "^7.2"
     },
     "require-dev": {
@@ -32,6 +32,15 @@
         "files": ["helper.php"],
         "psr-4": {
             "App\\": "app/",
+            "Callcocam\\Tenant\\": "packages/fl-tenant/src/",
+            "Callcocam\\Tenant\\Database\\Factories\\": "packages/fl-tenant/database/factories/",
+            "Callcocam\\Tenant\\Database\\Seeders\\": "packages/fl-tenant/database/seeders/",
+            "Callcocam\\Acl\\": "packages/fl-acl/src/",
+            "Callcocam\\Acl\\Database\\Factories\\": "packages/fl-acl/database/factories/",
+            "Callcocam\\Acl\\Database\\Seeders\\": "packages/fl-acl/database/seeders/",
+            "Callcocam\\Profile\\": "packages/fl-profile/src/",
+            "Callcocam\\Profile\\Database\\Factories\\": "packages/fl-profile/database/factories/",
+            "Callcocam\\Profile\\Database\\Seeders\\": "packages/fl-profile/database/seeders/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
