@@ -123,11 +123,11 @@ Route::get('megasena', function (Request $request) {
 Route::get('invoice', function (Request $request) {
     $results = [];
     $sales = Sale::query()->whereIn('status', ['draft', 'pending', 'processing'])->get(); 
-    dd($sales->count() > 0);
+ 
     if ($sales->count() > 0) {
         foreach ($sales as $sale) {
+            dd($sale);
             if ($invoice = data_get($sale, 'dataIvoice')) {
-                dd($invoice);
                 $data = Invoice::make()->ref(data_get($invoice, 'reference'));
                 if ($data) {
                     $results[] = $data;
