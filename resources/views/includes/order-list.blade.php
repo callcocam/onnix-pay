@@ -30,7 +30,7 @@
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                 @if($sale->status == 'pending')
                                 <a href="{{ route('checkout-success', $sale) }}" class="text-indigo-600 hover:text-indigo-900">Efetur pagamento </a>
-                                @elseif(in_array($sale->status, ['pay', 'completed']))
+                                @elseif(in_array($sale->status, ['paid', 'completed']))
                                 <a href="{{ route('sorteio', ['rifa'=>$sale->rifa]) }}" class="text-indigo-600 hover:text-indigo-900">Visualizar </a>
                                 @else
                                 Você selecionou {{ str_pad($sale->numbers->count(), 2, '0', STR_PAD_LEFT)  }} número(s) de {{ str_pad($sale->rifa->quantity, 2, '0', STR_PAD_LEFT) }} número(s).

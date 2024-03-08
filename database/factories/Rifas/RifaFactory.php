@@ -33,7 +33,7 @@ class RifaFactory extends Factory
             'name' => $name = $this->faker->name,
             'slug' => \Illuminate\Support\Str::slug($name),
             'description' => $this->faker->text,
-            'type' =>  'pay',
+            'type' =>  'paid',
             'image' => sprintf('ilustracao/%s.png', $this->faker->randomElement(['1', '2', '3', '4', '5'])),
             'preview' => $this->faker->text,
             'code' => $this->IniciasNomes($name),

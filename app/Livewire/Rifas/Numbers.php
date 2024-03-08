@@ -47,7 +47,7 @@ class Numbers extends Component
 
         $this->numbers = $numbers->filter(fn ($item) =>  $item->user_id == auth()->id())->pluck('number')->toArray();
         $this->pending = $numbers->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
-        $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['pay']))->pluck('number')->toArray();
+        $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['paid']))->pluck('number')->toArray();
         $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray();
     }
 

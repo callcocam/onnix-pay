@@ -123,7 +123,7 @@ class SaleResource extends Resource
             'canceled' => 'Cancelado',
             'pending' => 'Pendente',
             'processing' => 'Processando', 
-            'pay' => 'Pago',
+            'paid' => 'Pago',
             'completed' => 'Completo',
         ];
     }
@@ -180,7 +180,7 @@ class SaleResource extends Resource
                 'canceled' => 'danger',
                 'pending' => 'warning',
                 'processing' => 'info',
-                'pay' => 'success',
+                'paid' => 'success',
                 'completed' => 'success',
                 default => 'gray',
             })
@@ -191,7 +191,7 @@ class SaleResource extends Resource
                 'canceled' => 'heroicon-o-x-circle',
                 'pending' => 'heroicon-o-exclamation-circle',
                 'processing' => 'heroicon-o-refresh',
-                'pay' => 'heroicon-o-currency-dollar',
+                'paid' => 'heroicon-o-currency-dollar',
                 'completed' => 'heroicon-o-check-circle',
             });
     }

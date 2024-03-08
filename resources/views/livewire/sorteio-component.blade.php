@@ -34,7 +34,7 @@
                                 @if($numbers = $sale->numbers)
                                 <ul class="flex gap-2 mt-4">
                                     @foreach($numbers as $number)
-                                    @if($number->status == 'pay')
+                                    @if($number->status == 'paid')
                                     <li class="bg-green-600  hover:bg-green-500 shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number->number }}</li>
                                     @else
                                     <li class="bg-orange-600  hover:bg-orange-500  shadow-lg rounded-md flex items-center justify-center h-8 w-8">{{ $number->number }}</li>
@@ -78,7 +78,7 @@
                 @foreach($sales as $sale)
                 @if($numbers = $sale->numbers)
                 @foreach($numbers as $number)
-                @if($number->status == 'pay')
+                @if($number->status == 'paid')
                 <x-number-button type="button" title="Pronto para o sorteio" class="bg-green-600">
                     <span>{{ $number->number }}</span>
                 </x-number-button>

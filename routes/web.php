@@ -4,8 +4,10 @@ use App\Livewire\Checkout\CancelComponent;
 use App\Livewire\Checkout\SuccessComponent;
 use App\Livewire\SorteioComponent;
 use App\Models\Order;
+use App\Models\Rifas\Sales\Sale;
 use App\Services\Loterias\MegaSena;
 use App\Services\Onixpay\AuthService;
+use App\Services\Onixpay\Invoice;
 use App\Services\Onixpay\Pix;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request as Psr7Request;
@@ -26,11 +28,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/inicio', \App\Livewire\Dashboard::class)->name('home');
 Route::get('/', \App\Livewire\Dashboard::class)->name('dashboard');
 Route::get('/todas-as-rifas', \App\Livewire\Rifas\ListComponent::class)->name('rifas.list');
-Route::middleware('auth')->get('/rifas/{record}', \App\Livewire\Rifas\ShowComponent::class)->name('rifas.show'); 
+Route::middleware('auth')->get('/rifas/{record}', \App\Livewire\Rifas\ShowComponent::class)->name('rifas.show');
 Route::get('/sobre-nos', \App\Livewire\AboutComponent::class)->name('about');
 Route::get('/contato', \App\Livewire\ContactComponent::class)->name('contact');
 Route::get('/termos-de-uso', \App\Livewire\TermsComponent::class)->name('terms');
-Route::get('/politica-de-privacidade', \App\Livewire\PrivacyComponent::class)->name('privacy'); 
+Route::get('/politica-de-privacidade', \App\Livewire\PrivacyComponent::class)->name('privacy');
 Route::middleware('auth')->get('/finalizar-compra', \App\Livewire\Checkouts\CheckoutComponent::class)->name('checkout');
 
 Route::middleware('auth')->get('/minha-conta', \App\Livewire\Profile\ShowComponent::class)->name('profile.show');
@@ -116,4 +118,28 @@ Route::get('sorteio/{rifa}',  SorteioComponent::class)->name('sorteio');
 Route::get('megasena', function (Request $request) {
 
     return MegaSena::make()->get($request->query('concurso'));
+});
+
+Route::get('invoice', function (Request $request) {
+    $results = [];
+    $sales = Sale::query()->whereIn('status', ['draft', 'pending', 'processing'])->get(); 
+    if ($sales->count() > 0) {
+        foreach ($sales as $sale) {
+            if ($invoice = data_get($sale, 'dataIvoice')) {
+                dd($invoice);
+                $data = Invoice::make()->ref(data_get($invoice, 'reference'));
+                if ($data) {
+                    $results[] = $data;
+                    $sale->status = strtolower(data_get($data, 'invoice.status', 'pending'));
+
+                    $sale->save();
+                    $sale->numbers->each(function ($number) use ($data) {
+                        $number->status = strtolower(data_get($data, 'invoice.status', 'pending'));
+                        $number->save();
+                    });
+                }
+            }
+        }
+    }
+    return response()->json($results);
 });
