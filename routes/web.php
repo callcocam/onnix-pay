@@ -122,7 +122,7 @@ Route::get('megasena', function (Request $request) {
 
 Route::get('invoice', function (Request $request) {
     $results = [];
-    $sales = Sale::query()->whereIn('status', ['draft', 'pending', 'processing'])->get(); 
+    $sales = Sale::query()->whereIn('status', [ 'pending', 'processing'])->get(); 
  
     if ($sales->count() > 0) {
         foreach ($sales as $sale) {
