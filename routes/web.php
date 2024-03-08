@@ -126,7 +126,7 @@ Route::get('invoice', function (Request $request) {
  
     if ($sales->count() > 0) {
         foreach ($sales as $sale) {
-            dd($sale);
+            dd($sale->toArray(), data_get($sale, 'dataIvoice'));
             if ($invoice = data_get($sale, 'dataIvoice')) {
                 $data = Invoice::make()->ref(data_get($invoice, 'reference'));
                 if ($data) {
