@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->plugin(new TenantPlugin())
+            ->plugin(new TenantPlugin(userAdminResources: true))
             ->plugin(new AclPlugin(userUserResources: true))
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

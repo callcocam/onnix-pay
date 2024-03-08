@@ -7,9 +7,9 @@
  */
 
 namespace Callcocam\Tenant\Pages;
-
-use App\Models\Tenant;
+ 
 use Callcocam\Profile\Traits\HasProfileForm;
+use Callcocam\Tenant\Models\Tenant as ModelsTenant;
 use Callcocam\Tenant\Traits\HasEditorColumn;
 use Callcocam\Tenant\Traits\HasTenantSchemaForm; 
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -40,7 +40,9 @@ class Settings extends Page implements HasForms
 
     public function mount()
     {
-        $this->form->fill(get_tenant()->toArray());
+        $tenant = ModelsTenant::query()->where('id', get_tenant_id())->first();
+        $tenant->load('address', 'contacts', 'documents', 'socials'); 
+        $this->form->fill($tenant->toArray());
     }
 
     public static function getNavigationGroup(): ?string
@@ -145,6 +147,7 @@ class Settings extends Page implements HasForms
             if ($id = data_get($address, 'id')) {
                 get_tenant()->address()->find($id)->update($address);
             } else {
+                $address['tenant_id'] = get_tenant_id();
                 get_tenant()->address()->create($address);
             }
         }
@@ -153,6 +156,7 @@ class Settings extends Page implements HasForms
                 if ($id = data_get($contact, 'id')) {
                     get_tenant()->contacts()->find($id)->update($contact);
                 } else {
+                    $contact['tenant_id'] = get_tenant_id();
                     get_tenant()->contacts()->create($contact);
                 }
             }
@@ -162,6 +166,7 @@ class Settings extends Page implements HasForms
                 if ($id = data_get($document, 'id')) {
                     get_tenant()->documents()->find($id)->update($document);
                 } else {
+                    $document['tenant_id'] = get_tenant_id();
                     get_tenant()->documents()->create($document);
                 }
             }
@@ -171,6 +176,7 @@ class Settings extends Page implements HasForms
                 if ($id = data_get($social, 'id')) {
                     get_tenant()->socials()->find($id)->update($social);
                 } else {
+                    $social['tenant_id'] = get_tenant_id();
                     get_tenant()->socials()->create($social);
                 }
             }
