@@ -54,7 +54,7 @@
             <div class="flex items-center justify-center">
                 <nav class="mx-5 mt-6 flex w-full md:max-w-7xl items-center">
                     <div class="hidden w-2/12 md:flex">
-                        <img src="{{ asset('logo.png') }}" alt="Logo" class="object-cover" />
+                        <img src="{{  Storage::url(data_get(get_tenant(), 'cover')) }}" alt="Logo" class="object-cover" />
                     </div>
                     <div class="flex w-full">
                         <livewire:navbar.desktop />

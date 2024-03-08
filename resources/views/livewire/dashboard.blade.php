@@ -18,7 +18,7 @@
                   <div class="mt-5 flex w-full items-center justify-center space-x-5">
                      <a href="{{ route('rifas.list') }}" class="rounded-full bg-gradient-to-t from-purple-500 to-yellow-300 px-2 py-3 text-white md:w-52 flex  items-center justify-center">
                         <span>VER TODAS AS RIFAS</span>
-                     </a> 
+                     </a>
                   </div>
                </div>
                @if($rifas = $this->rifas)
@@ -33,6 +33,7 @@
       </div>
 
 
+      @if($this->winners->count() > 0)
       <div class="mx-auto flex w-full flex-col items-center justify-center md:max-w-7xl">
          <div class="mb-4 flex w-full flex-col items-center space-y-2 text-center md:text-left">
             <h2 class="text-yellow-500">Conheça os últimos vencedores do seu concurso favorito</h2>
@@ -66,17 +67,12 @@
                @include('includes.sorteio-instrucao')
             </div>
             <div class="w-full flex-col md:w-4/6">
-               @if($this->winners->count() > 0)
                @foreach($this->winners as $winner)
                @livewire('winner-component', ['winner' => $winner], key($winner->id))
                @endforeach
-               @else
-               <div class="flex w-full flex-col items-center justify-center">
-                  <p class="text-2xl text-gray-500">Nenhum vencedor encontrado</p>
-               </div>
-               @endif
             </div>
          </div>
       </div>
+      @endif
    </div>
 </div>

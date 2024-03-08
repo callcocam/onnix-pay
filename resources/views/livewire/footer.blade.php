@@ -12,12 +12,12 @@
     </div>
     <div class="flex flex-col mt-2 items-center justify-center pt-120">
         <div class="row pb-5 align-items-center">
-            <div class="flex items-center justify-center my-4">
+            <!-- <div class="flex items-center justify-center my-4">
                 <ul class="app-btn">
                     <li><a href="#0"><img src="https://pixner.net/rifa1/demo/assets/images/icon/store-btn/1.png" alt="image"></a></li>
                     <li><a href="#0"><img src="https://pixner.net/rifa1/demo/assets/images/icon/store-btn/2.png" alt="image"></a></li>
                 </ul>
-            </div>
+            </div> -->
             <div class="flex my-4">
                 <ul class="flex  short-links md:justify-end justify-center">
                     <li>
