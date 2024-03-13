@@ -158,19 +158,18 @@ Route::get('order/payment',  function (Request $request) {
 Route::post('process_payment',  function (Request $request) {
     try {
 
-        MercadoPagoConfig::setAccessToken("TEST-4244891762860210-040514-6bb8de6ba6b76996369c450451620518__LC_LA__-141738866");
+        MercadoPagoConfig::setAccessToken("TEST-2193067924176798-031221-c55a88de49c5362df5f7f17721f9cfd2-141738866");
 
         $client = new PaymentClient();
         $request_options = new RequestOptions();
         $id = uniqid();
         $request_options->setCustomHeaders(["X-Idempotency-Key: {$id}"]);
-        $data = $request->input();
-
+        $data = $request->input(); 
         $payment = $client->create([
-            "transaction_amount" =>  data_get($data, 'transaction_amount'),
+            "transaction_amount" => (float) data_get($data, 'transaction_amount'),
             "token" => data_get($data, 'token'),
             "description" => data_get($data, 'description'),
-            "installments" =>  data_get($data, 'installments'),
+            "installments" =>  (int)data_get($data, 'installments'),
             "payment_method_id" => data_get($data, 'payment_method_id'),
             "issuer_id" => data_get($data, 'issuer_id'),
             "payer" => [
