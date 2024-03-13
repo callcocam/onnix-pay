@@ -179,8 +179,7 @@ Route::post('process_payment',  function (Request $request) {
                     "number" => data_get($data, 'payer.identification.number')
                 ]
             ]
-        ], $request_options);
-        dd($payment);
+        ], $request_options); 
         return $payment;
     } catch (MPApiException $e) {
         return $e ;
