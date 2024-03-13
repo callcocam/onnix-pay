@@ -182,6 +182,6 @@ Route::post('process_payment',  function (Request $request) {
         ], $request_options); 
         return $payment;
     } catch (MPApiException $e) {
-        return $e ;
+        return $e->getMessage();
     }
 })->name('order.process_payment');
