@@ -13,6 +13,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use MercadoPago\Client\Payment\PaymentClient;
+use MercadoPago\Client\Common\RequestOptions;
+use MercadoPago\Exceptions\MPApiException;
+use MercadoPago\MercadoPagoConfig;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,3 +147,43 @@ Route::get('invoice', function (Request $request) {
     }
     return response()->json($results);
 });
+
+
+
+Route::get('order/payment',  function (Request $request) {
+
+    return view('checkout.mp');
+})->name('order.payment');
+
+Route::post('process_payment',  function (Request $request) {
+    try {
+
+        MercadoPagoConfig::setAccessToken("TEST-4244891762860210-040514-6bb8de6ba6b76996369c450451620518__LC_LA__-141738866");
+
+        $client = new PaymentClient();
+        $request_options = new RequestOptions();
+        $id = uniqid();
+        $request_options->setCustomHeaders(["X-Idempotency-Key: {$id}"]);
+        $data = $request->input();
+
+        $payment = $client->create([
+            "transaction_amount" =>  data_get($data, 'transaction_amount'),
+            "token" => data_get($data, 'token'),
+            "description" => data_get($data, 'description'),
+            "installments" =>  data_get($data, 'installments'),
+            "payment_method_id" => data_get($data, 'payment_method_id'),
+            "issuer_id" => data_get($data, 'issuer_id'),
+            "payer" => [
+                "email" => data_get($data, 'payer.email'),
+                "identification" => [
+                    "type" => data_get($data, 'payer.identification.type'),
+                    "number" => data_get($data, 'payer.identification.number')
+                ]
+            ]
+        ], $request_options);
+        dd($payment);
+        return $payment;
+    } catch (MPApiException $e) {
+        return $e ;
+    }
+})->name('order.process_payment');
