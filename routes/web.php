@@ -158,7 +158,7 @@ Route::get('order/payment',  function (Request $request) {
 Route::post('process_payment',  function (Request $request) {
     try {
 
-        MercadoPagoConfig::setAccessToken("TEST-2193067924176798-031221-c55a88de49c5362df5f7f17721f9cfd2-141738866");
+        MercadoPagoConfig::setAccessToken("APP_USR-2011236327381466-031310-716609db49bcc31cb452b0349a19756b-1723859891");
 
         $client = new PaymentClient();
         $request_options = new RequestOptions();

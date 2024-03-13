@@ -53,7 +53,7 @@
     </form>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script>
-        const mp = new MercadoPago('TEST-131ccc2b-9838-4f98-86d3-96260ec3a645');
+        const mp = new MercadoPago('APP_USR-0e59fb4f-dc44-49c0-b46b-c854a1cc3494');
         const cardForm = mp.cardForm({
             amount: "100.5",
             iframe: true,
