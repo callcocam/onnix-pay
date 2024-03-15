@@ -124,6 +124,7 @@ class SaleResource extends Resource
             'pending' => 'Pendente',
             'processing' => 'Processando', 
             'paid' => 'Pago',
+            'approved' => 'Pago',
             'completed' => 'Completo',
         ];
     }
@@ -181,6 +182,7 @@ class SaleResource extends Resource
                 'pending' => 'warning',
                 'processing' => 'info',
                 'paid' => 'success',
+                'approved' => 'success',
                 'completed' => 'success',
                 default => 'gray',
             })
@@ -192,6 +194,7 @@ class SaleResource extends Resource
                 'pending' => 'heroicon-o-exclamation-circle',
                 'processing' => 'heroicon-o-refresh',
                 'paid' => 'heroicon-o-currency-dollar',
+                'approved' => 'heroicon-o-currency-dollar',
                 'completed' => 'heroicon-o-check-circle',
             });
     }

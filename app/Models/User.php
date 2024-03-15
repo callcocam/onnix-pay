@@ -120,7 +120,7 @@ class User extends Authenticatable  implements FilamentUser
 
     public function orderPaid()
     {
-        return $this->orders()->whereIn('status', ['paid', 'completed']);
+        return $this->orders()->whereIn('status', ['paid', 'completed', 'approved']);
     }
 
     

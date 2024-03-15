@@ -29,7 +29,7 @@ class RifaComponent extends FormsComponent
         if ($this->sale) {
             $this->numbers = $this->sale->numbers()->where('user_id', auth()->id())->pluck('number')->toArray();
             $this->pending = $this->sale->numbers()->where('status', 'pending')->pluck('number')->toArray();
-            $this->pay = $this->sale->numbers()->where('status', 'paid')->pluck('number')->toArray();
+            $this->pay = $this->sale->numbers()->whereIn('status', ['paid', 'approved'])->pluck('number')->toArray();
         }
     }
     #[Computed]
