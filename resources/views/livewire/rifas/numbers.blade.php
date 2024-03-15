@@ -13,10 +13,10 @@
             <div class="border rounded flex w-full text-center p-2 bg-green-600 text-white">Meus Numeros ({{ $this->pagos }})</div>
         </div>
     </div>
-    @if($this->numbers)
+    @if($numbers = $this->numbers)
     <div class="px-2 col-span-12 w-full  my-2">
         <div class="mt-2 flex w-full items-center justify-center space-x-3 text-sm">
-            @foreach($this->numbers as $number)
+            @foreach($numbers as $number)
             @include('livewire.rifas.number', ['i' => $number])
             @endforeach
             @if($this->reservados)
@@ -28,12 +28,17 @@
         </div>
     </div>
     @endif
-    <div class="px-2 overflow-y-auto max-h-[400px]">
-
+    <div class="px-2 overflow-y-auto max-h-[400px] ">
+        @if($this->perPage > 199)
+        <x-load-more loading="downLoadMore" />
+        @endif
         <div class="mt-2 grid grid-cols-12 text-sm">
-            @for($i = 1; $i <= $rifa->quantity; $i++)
+            @for($i = $perPage; $i <= ($perPage + 200); $i++)
                 @include('livewire.rifas.number', ['i'=> $i])
                 @endfor
         </div>
+        @if($perPage < $this->quantity)
+        <x-load-more loading="upLoadMore" />
+        @endif
     </div>
 </div>

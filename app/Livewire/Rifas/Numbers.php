@@ -31,6 +31,19 @@ class Numbers extends Component
 
     public $errorDuplicate = false;
 
+    #[Computed]
+    public $perPage = 1;
+
+    public function upLoadMore()
+    {
+        $this->perPage += 200;
+    }
+
+    public function downLoadMore()
+    {
+        $this->perPage -= 200;
+    }
+
     public function mount($rifa)
     {
         $this->rifa = $rifa;
@@ -49,6 +62,7 @@ class Numbers extends Component
         $this->pending = $numbers->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
         $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['paid', 'approved']))->pluck('number')->toArray();
         $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray();
+        
     }
 
     #[On('erro-nunber')]
@@ -67,6 +81,7 @@ class Numbers extends Component
     {
     }
 
+    #[On('add-number')]
     public function addNumber($number)
     {
 
@@ -130,8 +145,10 @@ class Numbers extends Component
 
     #[Computed]
     public function quantity()
-    {
-        return $this->rifa->quantity;
+    { 
+        $quantities = $this->rifa->quantity;
+         
+        return $quantities;
     }
 
     #[Computed]
