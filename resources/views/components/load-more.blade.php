@@ -1,5 +1,5 @@
 @props(['loading' => 'downLoadMore'])
-<div class="h-16 w-full " x-data="{
+<div class="h-5 w-full " x-data="{
         observe () {
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

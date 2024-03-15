@@ -30,7 +30,7 @@
     @endif
     <div class="px-2 overflow-y-auto max-h-[400px] ">
         @if($this->perPage > 199)
-        <x-load-more loading="downLoadMore" />
+        <div x-intersect.threshold.50="$wire.downLoadMore" ></div>
         @endif
         <div class="mt-2 grid grid-cols-12 text-sm">
             @for($i = $perPage; $i <= ($perPage + 200); $i++)
@@ -38,7 +38,7 @@
                 @endfor
         </div>
         @if($perPage < $this->quantity)
-        <x-load-more loading="upLoadMore" />
+        <div x-intersect.threshold.50="$wire.upLoadMore" class="h-10"></div>
         @endif
     </div>
 </div>
