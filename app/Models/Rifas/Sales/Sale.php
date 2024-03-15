@@ -54,6 +54,6 @@ class Sale extends AbstractModel
     public function getDataInvoiceAttribute()
     {
         $invoice = json_decode($this->data, true);
-        return  data_get($invoice, 'invoice');
+        return   $invoice;
     }
 }

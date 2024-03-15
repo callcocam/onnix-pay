@@ -6,6 +6,7 @@ use App\Livewire\SorteioComponent;
 use App\Models\Order;
 use App\Models\Rifas\Sales\Sale;
 use App\Services\Loterias\MegaSena;
+use App\Services\Mp\MercadoPagoConfig as MpMercadoPagoConfig;
 use App\Services\Onixpay\AuthService;
 use App\Services\Onixpay\Invoice;
 use App\Services\Onixpay\Pix;
@@ -126,11 +127,11 @@ Route::get('megasena', function (Request $request) {
 
 Route::get('invoice', function (Request $request) {
     $results = [];
-    $sales = Sale::query()->whereIn('status', [ 'pending', 'processing'])->get(); 
- 
+    $sales = Sale::query()->whereIn('status', ['pending', 'processing'])->get();
+
     if ($sales->count() > 0) {
         foreach ($sales as $sale) {
-            $invoce = json_decode($sale->data, true); 
+            $invoce = json_decode($sale->data, true);
             if ($invoice = data_get($invoce, 'invoice')) {
                 $data = Invoice::make()->ref(data_get($invoice, 'reference'));
                 if ($data) {
@@ -148,40 +149,27 @@ Route::get('invoice', function (Request $request) {
     return response()->json($results);
 });
 
+Route::get('mp/notification', function () {
 
-
-Route::get('order/payment',  function (Request $request) {
-
-    return view('checkout.mp');
-})->name('order.payment');
-
-Route::post('process_payment',  function (Request $request) {
-    try {
-
-        MercadoPagoConfig::setAccessToken("APP_USR-2011236327381466-031310-716609db49bcc31cb452b0349a19756b-1723859891");
-
-        $client = new PaymentClient();
-        $request_options = new RequestOptions();
-        $id = uniqid();
-        $request_options->setCustomHeaders(["X-Idempotency-Key: {$id}"]);
-        $data = $request->input(); 
-        $payment = $client->create([
-            "transaction_amount" => (float) data_get($data, 'transaction_amount'),
-            "token" => data_get($data, 'token'),
-            "description" => data_get($data, 'description'),
-            "installments" =>  (int)data_get($data, 'installments'),
-            "payment_method_id" => data_get($data, 'payment_method_id'),
-            "issuer_id" => data_get($data, 'issuer_id'),
-            "payer" => [
-                "email" => data_get($data, 'payer.email'),
-                "identification" => [
-                    "type" => data_get($data, 'payer.identification.type'),
-                    "number" => data_get($data, 'payer.identification.number')
-                ]
-            ]
-        ], $request_options); 
-        return $payment;
-    } catch (MPApiException $e) {
-        return $e->getMessage();
+    $sales = Sale::query()->whereIn('status', ['draft', 'pending', 'processing'])->get();
+    if ($sales->count() > 0) {
+        foreach ($sales as $sale) {
+            $dataIvoice = json_decode($sale->data, true); 
+            if ($id = data_get($dataIvoice, 'id')) { 
+                $http = MpMercadoPagoConfig::make()->setAccessToken(config('services.mercadopago.token'))
+                    ->getHttpClient()->get('/v1/payments/' . $id);
+                if ($http->ok()) {
+                    $status = $http->json('status'); 
+                    if($status != $sale->status){
+                        $sale->status = strtolower($status);
+                        $sale->save();
+                        $sale->numbers->each(function ($number) use ($status) {
+                            $number->status = strtolower($status);
+                            $number->save();
+                        });
+                    } 
+                }  
+            }
+        }
     }
-})->name('order.process_payment');
+});

@@ -133,10 +133,11 @@ class Checkout extends FormsComponent
                 "payer" => [
                     "email" => data_get($data, 'pix_email')
                 ]
-            ]);  
+            ]);   
         if ($res->ok()) {
             $this->sale->update([
                 'data' => [
+                    'id' => $res->json('id'),
                     'qr_code' => $res->json('point_of_interaction.transaction_data.qr_code'),
                     'ticket_url' => $res->json('point_of_interaction.transaction_data.ticket_url'),
                     'qr_code_base64' => $res->json('point_of_interaction.transaction_data.qr_code_base64'),
