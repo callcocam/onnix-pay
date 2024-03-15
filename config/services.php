@@ -30,5 +30,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'mercadopago' => [
+        'token' => env('ACCESS_MP_TOKEN'),
+        'client_id' => env('CLIENT_MP_ID'),
+        'client_secret' => env('CLIENT_MP_SECRET'),
+    ],
 
 ];

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\Checkouts\AccountWith;
 use App\Models\Rifas\Sales\Sale;
+use App\Services\Mp\MercadoPagoConfig;
 use App\Services\Onixpay\Customer;
 use App\Services\Onixpay\Pix;
 use Filament\Forms\Components\Fieldset;
@@ -93,7 +94,8 @@ class Checkout extends FormsComponent
 
         $res = false;
 
-        $res = $this->payWithPix($data);
+        // $res = $this->payWithPix($data);
+        $res = $this->payWithPixMp($data);
 
         if ($res)
             return redirect()->route('checkout-success', ['sale' => $this->sale]);
@@ -120,6 +122,44 @@ class Checkout extends FormsComponent
         return $customer;
     }
 
+    protected function payWithPixMp($data)
+    {
+
+        $res = MercadoPagoConfig::make()->setAccessToken(config('services.mercadopago.token'))
+            ->getHttpClient()->withHeader('X-Idempotency-Key', $this->sale->id)
+            ->post('/v1/payments', [
+                "transaction_amount" => (float) $this->total(),
+                "payment_method_id" => data_get($data, 'payment_method_id', 'pix'),
+                "payer" => [
+                    "email" => data_get($data, 'pix_email')
+                ]
+            ]);  
+        if ($res->ok()) {
+            $this->sale->update([
+                'data' => [
+                    'qr_code' => $res->json('point_of_interaction.transaction_data.qr_code'),
+                    'ticket_url' => $res->json('point_of_interaction.transaction_data.ticket_url'),
+                    'qr_code_base64' => $res->json('point_of_interaction.transaction_data.qr_code_base64'),
+                ],
+                'status' => 'pending',
+            ]);
+
+            $this->sale->numbers->each(function ($number) {
+                $number->update([
+                    'status' => 'pending',
+                ]);
+            });
+            Notification::make()
+                ->title('Sucesso!')
+                ->body(sprintf('Rifa %s comprada com sucesso! a fatura foi enviada para seu email', $this->rifa->name))
+                ->success()
+                ->send();
+            return true;
+        } else {
+            $this->hasErrors($res->json('error'));
+        }
+        return false;
+    }
 
     public function payWithPix($data)
     {

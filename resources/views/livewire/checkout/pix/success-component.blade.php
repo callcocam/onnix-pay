@@ -10,8 +10,8 @@
             <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Pedido finalizado, com sucesso!</h3>
             <p class="text-gray-600 my-2">{{ $sale->description }}</p>
             <p class="flex items-center justify-center">
-                @if($dataOrder = $this->dataOrder)
-                <img src="{{ data_get($dataOrder, 'invoice.qrcode') }} " alt="{{ data_get($dataOrder, 'reference') }}">
+                @if($dataOrder = $this->dataOrder) 
+                <img src="data:image/jpeg;base64,{{data_get($dataOrder, 'qr_code_base64')}}" alt="{{ data_get($dataOrder, 'reference') }}" class="h-48 w-48"> 
                 @endif
             </p>
             <div class="py-10 text-center">
