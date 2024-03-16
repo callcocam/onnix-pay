@@ -34,49 +34,35 @@
             quantityPerPage:@entangle('quantityPerPage'),
             draft:@entangle('draft'),
             pay:@entangle('pay'),
-            pending:@entangle('pending'),    
-            others:@entangle('others'),    
-            increment(){
-                if( this.quantityPerPage > 200){
-                   return this.perPage + 200
-                }
-                return this.quantityPerPage
-            },
+            pending:@entangle('pending'),        
             loadMore(){
-                this.perPage = this.perPage + 200
+                this.perPage = this.perPage + 49
             }, 
         }" x-init="()=>{ 
             console.log( draft)
             console.log( pay)
             console.log( pending)
             console.log( numbers)
-            console.log( others)
         }">
         <ul class="mt-2 grid grid-cols-12 text-sm gap-1">
-            <template x-for="i in increment()">
+            <template x-for="i in perPage + 50">
                 <li>
-
                     <template x-if="draft.find((element) => element == i) ">
-                        <x-number-button @click="$wire.removeNumber(i)" title="Remover o número" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-orange-600  hover:bg-orange-500">
+                        <x-number-button @click="$wire.removeNumber(i)" title="Remover o número" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-orange-600  hover:bg-orange-200">
                             <span x-text="i"></span>
                         </x-number-button>
                     </template>
                     <template x-if="pay.find((element) => element == i)">
-                        <x-number-button type="button" title="Pronto para o sorteio" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-green-600  hover:bg-green-500">
+                        <x-number-button type="button" title="Pronto para o sorteio" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-green-600  hover:bg-green-200">
                             <span x-text="i"></span>
                         </x-number-button>
                     </template>
                     <template x-if="pending.find((element) => element == i)">
-                        <x-number-button title="Aguardando pagamento" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold  text-white bg-blue-600 dark:text-gray-900 dark:bg-gray-100 hover:bg-blue-400">
+                        <x-number-button title="Aguardando pagamento" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-blue-600 dark:text-gray-900 dark:bg-gray-100 hover:bg-blue-400">
                             <span x-text="i"></span>
                         </x-number-button>
                     </template>
-                    <template x-if="others.find((element) => element == i)">
-                        <x-number-button disabled title="Numero reservado" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-yellow-600 dark:text-yellow-900 dark:bg-yellow-100 hover:bg-yellow-600">
-                            <span x-text="i"></span>
-                        </x-number-button>
-                    </template>
-                    <template x-if="!others.find((element) => element == i) && !draft.find((element) => element == i) && !pay.find((element) => element == i) && !pending.find((element) => element == i)">
+                    <template x-if="!draft.find((element) => element == i) && !pay.find((element) => element == i) && !pending.find((element) => element == i)">
                         <x-number-button @click="$wire.addNumber(i)" title="Adicionar esse número" class="mx-auto flex h-10 w-10 items-center justify-center rounded-full font-semibold   text-white bg-gray-700 dark:text-gray-900 dark:bg-gray-100 hover:bg-gray-400">
                             <span x-text="i"></span>
                         </x-number-button>

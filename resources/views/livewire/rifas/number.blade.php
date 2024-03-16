@@ -1,9 +1,9 @@
     @if(in_array($i, $draft))
-    <x-number-button wire:click="removeNumber('{{ $i }}')" title="Remover o número" class="bg-orange-600  hover:bg-orange-200">
+    <x-number-button wire:click="removeNumber('{{ $i }}')" title="Remover o número" class="bg-orange-600  hover:bg-orange-500">
         <span>{{ $i }}</span>
     </x-number-button>
     @elseif(in_array($i, $pay))
-    <x-number-button type="button" title="Pronto para o sorteio" class="bg-green-600  hover:bg-green-200">
+    <x-number-button type="button" title="Pronto para o sorteio" class="bg-green-600  hover:bg-green-500">
         <span>{{ $i }}</span>
     </x-number-button> 
     @elseif(in_array($i, $pending))

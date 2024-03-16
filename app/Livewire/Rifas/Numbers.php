@@ -29,10 +29,15 @@ class Numbers extends Component
 
     public $draft = [];
 
+    public $others = [];
+
     public $errorDuplicate = false;
 
     #[Computed]
     public $perPage = 1;
+
+    #[Computed]
+    public $quantityPerPage = 1;
 
     public function upLoadMore()
     {
@@ -50,6 +55,8 @@ class Numbers extends Component
         $this->sale = $this->rifa->currentSale;
         // $this->sale->numbers()->forceDelete(); 
         $this->updatedNumbers();
+
+        $this->quantityPerPage = $this->quantity;
     }
 
     public function updatedNumbers()
@@ -58,11 +65,13 @@ class Numbers extends Component
             ->whereIn('sale_id', $this->rifa->sales->pluck('id')->toArray())
             ->get();
 
-        $this->numbers = $numbers->filter(fn ($item) =>  $item->user_id == auth()->id())->pluck('number')->toArray();
-        $this->pending = $numbers->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
-        $this->pay = $numbers->filter(fn ($item) => in_array($item->status, ['paid', 'approved']))->pluck('number')->toArray();
-        $this->draft = $numbers->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray();
-        
+        $this->others = $numbers->filter(fn ($item) => $item->user_id != auth()->id())->pluck('number')->toArray();
+
+        $users = $numbers->filter(fn ($item) =>  $item->user_id == auth()->id()); 
+        $this->numbers = $users->filter(fn ($item) =>  $item->user_id == auth()->id())->pluck('number')->toArray();
+        $this->pending = $users->filter(fn ($item) => in_array($item->status, ['pending']))->pluck('number')->toArray();
+        $this->pay = $users->filter(fn ($item) => in_array($item->status, ['paid', 'approved']))->pluck('number')->toArray();
+        $this->draft = $users->filter(fn ($item) => in_array($item->status, ['draft']))->pluck('number')->toArray();
     }
 
     #[On('erro-nunber')]
@@ -121,7 +130,7 @@ class Numbers extends Component
                 'subtotal' => $val
             ]);
             $this->updatedNumbers();
-            $this->dispatch('cart-number-updated',  $this->sale->id );
+            $this->dispatch('cart-number-updated',  $this->sale->id);
         }
     }
 
@@ -145,9 +154,9 @@ class Numbers extends Component
 
     #[Computed]
     public function quantity()
-    { 
+    {
         $quantities = $this->rifa->quantity;
-         
+
         return $quantities;
     }
 
